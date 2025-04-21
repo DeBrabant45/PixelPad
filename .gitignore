@@ -1,0 +1,43 @@
+# Ignore build directories
+/build/
+/vcpkg/
+/CMakeCache.txt
+/CMakeFiles/
+/*.vs/
+/.vscode/
+/*.user
+/*.suo
+/*.userosscache
+/*.sln.docstates
+
+# Ignore vcpkg-related files
+/vcpkg.json
+/vcpkg.lock
+
+# Ignore Visual Studio files
+*.vcxproj*
+*.vcxproj.filters
+*.filters
+*.db
+*.idb
+*.pdb
+*.lib
+*.exp
+*.ilk
+*.sdf
+*.suo
+
+# Ignore CMake generated files
+CMakeLists.txt.user
+CMakeFiles/
+CMakeCache.txt
+
+# Ignore IDE files (VSCode, etc.)
+.vscode/
+
+# Ignore macOS Finder system files
+.DS_Store
+
+# Ignore Thumbs.db and desktop.ini (Windows-specific)
+Thumbs.db
+desktop.ini
