@@ -4,11 +4,11 @@
 
 namespace Core
 {
-	class CanvasModel
+	class Canvas
 	{
 	public:
-		CanvasModel(int width, int height);
-		~CanvasModel() = default;
+		Canvas(int width, int height);
+		~Canvas() = default;
 		void Clear();
 		void DrawPixel(int x, int y, int color);
 		void DrawLine(int startX, int startY, int endX, int endY, int color);

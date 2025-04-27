@@ -1,8 +1,8 @@
 # Core Layer
 
 add_library(${PIXEL_PAD_CORE_TARGET_NAME}
-    src/CanvasModel.cpp
-    include/CanvasModel.hpp
+    src/Graphics/Canvas.cpp
+    include/Graphics/Canvas.hpp
 )
 
 target_include_directories(${PIXEL_PAD_CORE_TARGET_NAME}

@@ -1,9 +1,9 @@
-#include "CanvasModel.hpp"
+#include "Graphics/Canvas.hpp"
 #include <iostream>
 
 namespace Core
 {
-	CanvasModel::CanvasModel(int width, int height) : 
+	Canvas::Canvas(int width, int height) : 
 		m_width{ width },
 		m_height{ height },
 		m_canvas(width * height, 0) 
@@ -11,7 +11,7 @@ namespace Core
 
 	}
 
-	void CanvasModel::Clear()
+	void Canvas::Clear()
 	{
 		if (m_canvas.empty())
 			return;
@@ -20,7 +20,7 @@ namespace Core
 		std::cout << "Canvas cleared." << std::endl;
 	}
 
-	void CanvasModel::DrawPixel(int x, int y, int color)
+	void Canvas::DrawPixel(int x, int y, int color)
 	{
 		if (x < 0 || x >= m_width || y < 0 || y >= m_height)
 		{
@@ -32,7 +32,7 @@ namespace Core
 	}
 
 	//Bresenham's Line Algorithm
-	void CanvasModel::DrawLine(int startX, int startY, int endX, int endY, int color)
+	void Canvas::DrawLine(int startX, int startY, int endX, int endY, int color)
 	{
 		// Calculate the horizontal and vertical distances between the start and end points
 		int deltaX = std::abs(endX - startX);  // Horizontal distance (x direction)
@@ -80,7 +80,7 @@ namespace Core
 		}
 	}
 
-	void CanvasModel::Resize(int width, int height)
+	void Canvas::Resize(int width, int height)
 	{
 		if (m_width == width && m_height == height)
 			return;
@@ -101,7 +101,7 @@ namespace Core
 		std::cout << "Canvas resized to " << width << "x" << height << "." << std::endl;
 	}
 
-	void CanvasModel::Fill(int color)
+	void Canvas::Fill(int color)
 	{
 		if (m_canvas.empty())
 		{
@@ -113,7 +113,7 @@ namespace Core
 		std::cout << "Canvas filled with color: " << color << std::endl;
 	}
 
-	int CanvasModel::GetPixel(int x, int y) const
+	int Canvas::GetPixel(int x, int y) const
 	{
 		if (x < 0 || x >= m_width || y < 0 || y >= m_height)
 		{

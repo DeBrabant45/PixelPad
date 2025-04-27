@@ -1,48 +1,48 @@
 #include <gtest/gtest.h>
-#include "CanvasModel.hpp"
+#include "Graphics/Canvas.hpp"
 
 using namespace Core;
 
 namespace CoreTests
 {
-    TEST(CanvasModelTests, InitializesWithCorrectSize)
+    TEST(CanvasTests, InitializesWithCorrectSize)
     {
-        CanvasModel canvas(10, 5);
+        Canvas canvas(10, 5);
         canvas.DrawPixel(0, 0, 255);
         canvas.DrawPixel(9, 4, 123);
 
         SUCCEED();
     }
 
-    TEST(CanvasModelTests, ClearsCanvas)
+    TEST(CanvasTests, ClearsCanvas)
     {
-        CanvasModel canvas(3, 3);
+        Canvas canvas(3, 3);
         canvas.DrawPixel(1, 1, 100);
         canvas.Clear();
 
         SUCCEED();
     }
 
-    TEST(CanvasModelTests, DrawPixelWithinBounds)
+    TEST(CanvasTests, DrawPixelWithinBounds)
     {
-        CanvasModel canvas(5, 5);
+        Canvas canvas(5, 5);
         canvas.DrawPixel(2, 3, 42);
 
         SUCCEED();
     }
 
-    TEST(CanvasModelTests, DrawPixelOutOfBoundsDoesNothing)
+    TEST(CanvasTests, DrawPixelOutOfBoundsDoesNothing)
     {
-        CanvasModel canvas(5, 5);
+        Canvas canvas(5, 5);
         canvas.DrawPixel(-1, -1, 999);
         canvas.DrawPixel(10, 10, 999);
 
         SUCCEED();
     }
 
-    TEST(CanvasModelTests, DrawLineHorizontal)
+    TEST(CanvasTests, DrawLineHorizontal)
     {
-        CanvasModel canvas(5, 3);
+        Canvas canvas(5, 3);
         canvas.DrawLine(0, 0, 4, 0, 255);  // Horizontal line at y=0
 
         // Check that the entire row is filled with color 255
@@ -52,9 +52,9 @@ namespace CoreTests
         }
     }
 
-    TEST(CanvasModelTests, DrawLineVertical)
+    TEST(CanvasTests, DrawLineVertical)
     {
-        CanvasModel canvas(3, 5);
+        Canvas canvas(3, 5);
         canvas.DrawLine(1, 0, 1, 4, 123);  // Vertical line at x=1
 
         // Check that the entire column is filled with color 123
@@ -64,9 +64,9 @@ namespace CoreTests
         }
     }
 
-    TEST(CanvasModelTests, DrawLineDiagonal)
+    TEST(CanvasTests, DrawLineDiagonal)
     {
-        CanvasModel canvas(5, 5);
+        Canvas canvas(5, 5);
         canvas.DrawLine(0, 0, 4, 4, 255);  // Diagonal line from (0,0) to (4,4)
 
         EXPECT_EQ(canvas.GetPixel(0, 0), 255);
@@ -76,18 +76,18 @@ namespace CoreTests
         EXPECT_EQ(canvas.GetPixel(4, 4), 255);
     }
 
-    TEST(CanvasModelTests, GetPixel)
+    TEST(CanvasTests, GetPixel)
     {
-		CanvasModel canvas(5, 5);
+		Canvas canvas(5, 5);
 		canvas.DrawPixel(2, 2, 42);
 		int pixelValue = canvas.GetPixel(2, 2);
 
 		EXPECT_EQ(pixelValue, 42);
     }
 
-    TEST(CanvasModelTests, FillCanvasWithSingleColor)
+    TEST(CanvasTests, FillCanvasWithSingleColor)
     {
-        CanvasModel canvas(3, 2);
+        Canvas canvas(3, 2);
         canvas.Fill(99);
 
         for (int y = 0; y < 2; ++y)
@@ -99,9 +99,9 @@ namespace CoreTests
         }
     }
 
-    TEST(CanvasModelTests, FillOverwritesPreviousPixels)
+    TEST(CanvasTests, FillOverwritesPreviousPixels)
     {
-        CanvasModel canvas(2, 2);
+        Canvas canvas(2, 2);
         canvas.DrawPixel(0, 0, 1);
         canvas.DrawPixel(1, 1, 2);
 
@@ -111,9 +111,9 @@ namespace CoreTests
         EXPECT_EQ(canvas.GetPixel(1, 1), 42);
     }
 
-    TEST(CanvasModelTests, ResizeLargerPreservesExistingPixels)
+    TEST(CanvasTests, ResizeLargerPreservesExistingPixels)
     {
-        CanvasModel canvas(2, 2);
+        Canvas canvas(2, 2);
         canvas.DrawPixel(0, 0, 1);
         canvas.DrawPixel(1, 1, 2);
 
@@ -124,18 +124,18 @@ namespace CoreTests
         EXPECT_EQ(canvas.GetPixel(3, 3), 0);
     }
 
-    TEST(CanvasModelTests, ResizeSmallerTruncatesPixels)
+    TEST(CanvasTests, ResizeSmallerTruncatesPixels)
     {
-        CanvasModel canvas(4, 4);
+        Canvas canvas(4, 4);
         canvas.DrawPixel(3, 3, 9);
         canvas.Resize(2, 2);
 
         EXPECT_EQ(canvas.GetPixel(0, 0), 0);
     }
 
-    TEST(CanvasModelTests, ResizeWithSameSizeKeepsData)
+    TEST(CanvasTests, ResizeWithSameSizeKeepsData)
     {
-        CanvasModel canvas(3, 3);
+        Canvas canvas(3, 3);
         canvas.DrawPixel(1, 1, 7);
         canvas.Resize(3, 3);
 

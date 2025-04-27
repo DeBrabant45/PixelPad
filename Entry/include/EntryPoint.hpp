@@ -2,7 +2,7 @@
 
 #include "Services/DrawService.hpp" 
 #include "Renderer.hpp"
-#include "CanvasModel.hpp"
+#include "Graphics/Canvas.hpp"
 
 namespace Entry
 {
@@ -19,6 +19,6 @@ namespace Entry
 
 	private:
 		Infrastructure::Renderer m_renderer;
-		Core::CanvasModel m_canvasModel;
+		Core::Canvas m_canvas;
 	};
 }
