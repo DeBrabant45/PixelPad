@@ -16,7 +16,7 @@ namespace Application
 
 	void DrawService::DrawLine(int startX, int startY, int endX, int endY, int color)
 	{
-
+		m_canvasModel.DrawLine(startX, startY, endX, endY, color);
 	}
 
 	void DrawService::ResizeCanvas(int width, int height)
@@ -36,7 +36,7 @@ namespace Application
 
 	std::pair<int, int> DrawService::GetCanvasSize() const
 	{
-		return std::pair<int, int>();
+		return std::make_pair(m_canvasModel.GetWidth(), m_canvasModel.GetHeight());
 	}
 
 	int DrawService::GetPixel(int x, int y) const

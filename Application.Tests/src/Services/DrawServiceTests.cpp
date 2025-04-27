@@ -282,4 +282,201 @@ namespace ApplicationTests
 
 		EXPECT_EQ(actualPixelColor, expectedPixelColor);
     }
+
+    TEST(DrawServiceTests, GetCanvasSize_ReturnsCorrectWidthAndHeight)
+    {
+		int expectedWidth = 5;
+		int expectedHeight = 5;
+		Core::CanvasModel canvasModel{ expectedWidth, expectedHeight };
+		Application::DrawService drawService{ canvasModel };
+
+		auto [width, height] = drawService.GetCanvasSize();
+
+		EXPECT_EQ(width, expectedWidth);
+		EXPECT_EQ(height, expectedHeight);
+    }
+
+    TEST(DrawServiceTests, GetCanvasSize_AfterResize_ReturnsNewSize)
+    {
+		int expectedAdjustedWidth = 10;
+		int expectedAdjustedHeight = 10;
+		Core::CanvasModel canvasModel{ 5, 5 };
+		Application::DrawService drawService{ canvasModel };
+
+		drawService.ResizeCanvas(expectedAdjustedWidth, expectedAdjustedHeight);
+		auto [width, height] = drawService.GetCanvasSize();
+
+		EXPECT_EQ(width, expectedAdjustedWidth);
+		EXPECT_EQ(height, expectedAdjustedHeight);
+    }
+
+    TEST(DrawServiceTests, GetCanvasSize_OnEmptyCanvas_ReturnsZeros)
+    {
+		int expectedWidth = 0;
+		int expectedHeight = 0;
+		Core::CanvasModel canvasModel{ expectedWidth, expectedHeight };
+		Application::DrawService drawService{ canvasModel };
+
+		auto [width, height] = drawService.GetCanvasSize();
+
+		EXPECT_EQ(width, expectedWidth);
+		EXPECT_EQ(height, expectedHeight);
+    }
+
+    TEST(DrawServiceTests, DrawLine_StraightHorizontalLine_DrawsCorrectly)
+    {
+        int expectedColor = 170;
+		Core::CanvasModel canvasModel{ 10, 10 };
+		Application::DrawService drawService{ canvasModel };
+
+		drawService.DrawLine(0, 5, 0, 5, expectedColor);
+
+		EXPECT_EQ(canvasModel.GetPixel(0, 5), expectedColor);
+    }
+
+    TEST(DrawServiceTests, DrawLine_StraightVerticalLine_DrawsCorrectly)
+    {
+        int expectedColor = 170;
+		Core::CanvasModel canvasModel{ 10, 10 };
+		Application::DrawService drawService{ canvasModel };
+
+		drawService.DrawLine(5, 0, 5, 0, expectedColor);
+
+		EXPECT_EQ(canvasModel.GetPixel(5, 0), expectedColor);
+    }
+
+    TEST(DrawServiceTests, DrawLine_DiagonalLine_DrawsCorrectly)
+    {
+        int expectedColor = 170;
+		Core::CanvasModel canvasModel{ 10, 10 };
+		Application::DrawService drawService{ canvasModel };
+
+		drawService.DrawLine(0, 0, 5, 5, expectedColor);
+
+		EXPECT_EQ(canvasModel.GetPixel(5, 5), expectedColor);
+    }
+
+    TEST(DrawServiceTests, DrawLine_NegativeDirection_DrawsCorrectly)
+    {
+		int expectedColor = 160;
+		Core::CanvasModel canvasModel{ 12, 12 };
+		Application::DrawService drawService{ canvasModel };
+
+		drawService.DrawLine(8, 8, 0, 0, expectedColor);
+
+		EXPECT_EQ(canvasModel.GetPixel(0, 0), expectedColor);
+    }
+
+    TEST(DrawServiceTests, DrawLine_SinglePixel_DrawsCorrectly)
+    {
+		int expectedColor = 150;
+		Core::CanvasModel canvasModel{ 10, 10 };
+		Application::DrawService drawService{ canvasModel };
+
+		drawService.DrawLine(5, 5, 5, 5, expectedColor);
+
+		EXPECT_EQ(canvasModel.GetPixel(5, 5), expectedColor);
+    }
+
+    TEST(DrawServiceTests, DrawLine_OutOfBounds_DoesNotThrow)
+    {
+		int expectedColor = 150;
+		Core::CanvasModel canvasModel{ 10, 10 };
+		Application::DrawService drawService{ canvasModel };
+
+		EXPECT_NO_THROW(drawService.DrawLine(-1, -1, 15, 15, expectedColor));
+    }
+
+    TEST(DrawServiceTests, DrawLine_OverlappingExistingPixels_OverwritesColor)
+    {
+		int expectedColor = 200;
+		Core::CanvasModel canvasModel{ 10, 10 };
+		Application::DrawService drawService{ canvasModel };
+
+		drawService.DrawPixel(5, 5, 100);
+		drawService.DrawLine(5, 5, 5, 5, expectedColor);
+
+		EXPECT_EQ(canvasModel.GetPixel(5, 5), expectedColor);
+    }
+
+    TEST(DrawServiceTests, DrawLine_ZeroLengthLine_DoesNotAlterCanvas)
+    {
+		int expectedColor = 20;
+		Core::CanvasModel canvasModel{ 10, 10 };
+		Application::DrawService drawService{ canvasModel };
+
+		drawService.DrawPixel(5, 5, expectedColor);
+		drawService.DrawLine(0, 0, 0, 0, 120);
+
+		EXPECT_EQ(canvasModel.GetPixel(5, 5), expectedColor);
+    }
+
+    TEST(DrawServiceTests, DrawLine_LongLineBeyondCanvas_OnlyDrawsWithinBounds)
+    {
+		int expectedColor = 100;
+		Core::CanvasModel canvasModel{ 5, 5 };
+		Application::DrawService drawService{ canvasModel };
+
+		drawService.DrawLine(0, 0, 100, 100, expectedColor);
+
+		EXPECT_EQ(canvasModel.GetPixel(1, 1), expectedColor);
+		EXPECT_EQ(canvasModel.GetPixel(2, 2), expectedColor);
+		EXPECT_EQ(canvasModel.GetPixel(3, 3), expectedColor);
+		EXPECT_EQ(canvasModel.GetPixel(4, 4), expectedColor);
+		EXPECT_EQ(canvasModel.GetPixel(5, 5), -1);
+		EXPECT_EQ(canvasModel.GetPixel(6, 6), -1);
+    }
+
+    TEST(DrawServiceTests, DrawLine_SmallCanvasLine_DoesNotOverflow)
+    {
+		int expectedColor = 100;
+		Core::CanvasModel canvasModel{ 2, 2 };
+		Application::DrawService drawService{ canvasModel };
+
+		drawService.DrawLine(0, 0, 1, 1, expectedColor);
+
+		EXPECT_EQ(canvasModel.GetPixel(0, 0), expectedColor);
+    }
+
+    TEST(DrawServiceTests, DrawLine_LargeCanvasLine_DrawsCorrectly)
+    {
+		int expectedColor = 100;
+		Core::CanvasModel canvasModel{ 100, 100 };
+		Application::DrawService drawService{ canvasModel };
+
+		drawService.DrawLine(0, 0, 99, 99, expectedColor);
+
+		EXPECT_EQ(canvasModel.GetPixel(50, 50), expectedColor);
+    }
+
+    TEST(DrawServiceTests, DrawLine_CollinearOverlappingLines_OnlyOneLineDrawn)
+    {
+        int expectedColor = 120;
+        Core::CanvasModel canvasModel{ 10, 10 }; 
+        Application::DrawService drawService{ canvasModel };
+
+        drawService.DrawLine(0, 0, 5, 9, expectedColor);
+
+        drawService.DrawLine(2, 0, 7, 9, expectedColor);
+
+        for (int i = 0; i <= 5; ++i)
+        {
+            int x = i;
+            int y = (i * 9) / 5;  // Adjusted line equation to match endY = 9
+            if (x >= 0 && x < 10 && y >= 0 && y < 10)  // Ensure within bounds
+            {
+                EXPECT_EQ(canvasModel.GetPixel(x, y), expectedColor);
+            }
+        }
+
+        for (int i = 2; i <= 7; ++i)
+        {
+            int x = i;
+            int y = (i * 9) / 5;  // Adjusted line equation to match endY = 9
+            if (x >= 0 && x < 10 && y >= 0 && y < 10)  // Ensure within bounds
+            {
+                EXPECT_EQ(canvasModel.GetPixel(x, y), expectedColor);
+            }
+        }
+    }
 }

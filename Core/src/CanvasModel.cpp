@@ -22,10 +22,13 @@ namespace Core
 
 	void CanvasModel::DrawPixel(int x, int y, int color)
 	{
-		if (x >= 0 && x < m_width && y >= 0 && y < m_height)
+		if (x < 0 || x >= m_width || y < 0 || y >= m_height)
 		{
-			m_canvas[y * m_width + x] = color;
+			std::cerr << "Warning: Attempted to draw pixel out of bounds at (" << x << ", " << y << ")\n";
+			return;
 		}
+
+		m_canvas[y * m_width + x] = color;
 	}
 
 	//Bresenham's Line Algorithm
