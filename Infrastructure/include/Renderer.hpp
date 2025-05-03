@@ -2,7 +2,7 @@
 
 class SDL_Renderer;
 
-namespace Infrastructure
+namespace PixelPad::Infrastructure
 {
 	class Renderer
 	{

@@ -1,7 +1,7 @@
 #include "Graphics/Canvas.hpp"
 #include <iostream>
 
-namespace Core
+namespace PixelPad::Core
 {
 	Canvas::Canvas(int width, int height) : 
 		m_width{ width },
@@ -122,5 +122,10 @@ namespace Core
 		}
 
 		return m_canvas[y * m_width + x];
+	}
+
+	std::vector<int> Core::Canvas::GetPixels() const
+	{
+		return m_canvas;
 	}
 }

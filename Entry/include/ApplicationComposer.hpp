@@ -1,6 +1,6 @@
 #pragma once 
 
-namespace Entry
+namespace PixelPad::Entry
 {
 	class ApplicationComposer
 	{

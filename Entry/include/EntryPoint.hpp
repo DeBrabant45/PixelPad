@@ -18,7 +18,7 @@ namespace Entry
 		void Shutdown();
 
 	private:
-		Infrastructure::Renderer m_renderer;
-		Core::Canvas m_canvas;
+		PixelPad::Infrastructure::Renderer m_renderer;
+		PixelPad::Core::Canvas m_canvas;
 	};
 }

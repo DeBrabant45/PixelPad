@@ -2,7 +2,7 @@
 
 #include <vector>
 
-namespace Core
+namespace PixelPad::Core
 {
 	class Canvas
 	{
@@ -14,9 +14,10 @@ namespace Core
 		void DrawLine(int startX, int startY, int endX, int endY, int color);
 		void Resize(int width, int height);
 		void Fill(int color);
-		int GetPixel(int x, int y) const;
 		int GetWidth() const { return m_width; }
 		int GetHeight() const { return m_height; }
+		int GetPixel(int x, int y) const;
+		std::vector<int> GetPixels() const;
 
 	private:
 		int m_width{ 0 };
