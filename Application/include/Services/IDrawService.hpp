@@ -2,7 +2,7 @@
 
 #include <utility>
 
-namespace Application
+namespace PixelPad::Application
 {
     class IDrawService
     {

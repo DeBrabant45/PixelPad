@@ -1,7 +1,7 @@
 #include "Services/DrawService.hpp"
 #include <iostream>
 
-namespace Application
+namespace PixelPad::Application
 {
 	DrawService::DrawService(Core::Canvas& canvas) :
 		m_canvas{ canvas }

@@ -3,26 +3,26 @@
 #include "Graphics/Canvas.hpp"
 #include "IDrawService.hpp"
 
-namespace Application
+namespace PixelPad::Application
 {
 	class DrawService : public IDrawService
 	{
 	public:
-		DrawService(Core::Canvas& canvas);
+		DrawService(PixelPad::Core::Canvas & canvas);
 		~DrawService() = default;
 
-        void DrawPixel(int x, int y, int color) override; // Done
-        void DrawLine(int startX, int startY, int endX, int endY, int color) override; 
-        void ResizeCanvas(int width, int height) override; // Done
-        void FillCanvas(int color) override; // Done
-        void ClearCanvas() override; // Done
-        std::pair<int, int> GetCanvasSize() const override; // Done
-        int GetPixel(int x, int y) const override; // Done
+        void DrawPixel(int x, int y, int color) override;
+        void DrawLine(int startX, int startY, int endX, int endY, int color) override;
+        void ResizeCanvas(int width, int height) override;
+        void FillCanvas(int color) override;
+        void ClearCanvas() override;
+        std::pair<int, int> GetCanvasSize() const override;
+        int GetPixel(int x, int y) const override;
 
         void SaveCanvasState() override;
         void LoadCanvasState() override;
 
 	private:
-		Core::Canvas& m_canvas;
+        PixelPad::Core::Canvas& m_canvas;
 	};
 }
