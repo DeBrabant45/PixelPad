@@ -3,7 +3,7 @@
 
 namespace PixelPad::Tests::Core
 {
-    TEST(CanvasTests, Initializes_WithCorrectSize)
+    TEST(CanvasTests, Constructor_ShouldInitializeCanvasWithCorrectSize)
     {
         PixelPad::Core::Canvas canvas(10, 5);
         canvas.DrawPixel(0, 0, 255);
@@ -12,7 +12,7 @@ namespace PixelPad::Tests::Core
         SUCCEED();
     }
 
-    TEST(CanvasTests, Clear_SetsAllPixelsToZero)
+    TEST(CanvasTests, Clear_ShouldSetAllPixelsToZero)
     {
         PixelPad::Core::Canvas canvas(3, 3);
         canvas.DrawPixel(1, 1, 100);
@@ -21,7 +21,7 @@ namespace PixelPad::Tests::Core
         SUCCEED();
     }
 
-    TEST(CanvasTests, DrawPixel_SetsValueWithinBounds)
+    TEST(CanvasTests, DrawPixel_ShouldSetPixelValue_WhenCoordinatesAreInBounds)
     {
         PixelPad::Core::Canvas canvas(5, 5);
         canvas.DrawPixel(2, 3, 42);
@@ -29,7 +29,7 @@ namespace PixelPad::Tests::Core
         SUCCEED();
     }
 
-    TEST(CanvasTests, DrawPixel_DoesNothingOutOfBounds)
+    TEST(CanvasTests, DrawPixel_ShouldDoNothing_WhenCoordinatesAreOutOfBounds)
     {
         PixelPad::Core::Canvas canvas(5, 5);
         canvas.DrawPixel(-1, -1, 999);
@@ -38,7 +38,7 @@ namespace PixelPad::Tests::Core
         SUCCEED();
     }
 
-    TEST(CanvasTests, DrawLine_DrawsHorizontalLineCorrectly)
+    TEST(CanvasTests, DrawLine_ShouldDrawHorizontalLine_WhenStartAndEndYAreSame)
     {
         PixelPad::Core::Canvas canvas(5, 3);
         canvas.DrawLine(0, 0, 4, 0, 255);
@@ -49,7 +49,7 @@ namespace PixelPad::Tests::Core
         }
     }
 
-    TEST(CanvasTests, DrawLine_DrawsVerticalLineCorrectly)
+    TEST(CanvasTests, DrawLine_ShouldDrawVerticalLine_WhenStartAndEndXAreSame)
     {
         PixelPad::Core::Canvas canvas(3, 5);
         canvas.DrawLine(1, 0, 1, 4, 123);
@@ -60,7 +60,7 @@ namespace PixelPad::Tests::Core
         }
     }
 
-    TEST(CanvasTests, DrawLine_DrawsDiagonalLineCorrectly)
+    TEST(CanvasTests, DrawLine_ShouldDrawDiagonalLine_WhenStartAndEndFormDiagonal)
     {
         PixelPad::Core::Canvas canvas(5, 5);
         canvas.DrawLine(0, 0, 4, 4, 255);
@@ -72,7 +72,7 @@ namespace PixelPad::Tests::Core
         EXPECT_EQ(canvas.GetPixel(4, 4), 255);
     }
 
-    TEST(CanvasTests, GetPixel_ReturnsCorrectValue)
+    TEST(CanvasTests, GetPixel_ShouldReturnCorrectValue_WhenPixelWasSet)
     {
         PixelPad::Core::Canvas canvas(5, 5);
         canvas.DrawPixel(2, 2, 42);
@@ -81,7 +81,7 @@ namespace PixelPad::Tests::Core
         EXPECT_EQ(pixelValue, 42);
     }
 
-    TEST(CanvasTests, Fill_SetsAllPixelsToColor)
+    TEST(CanvasTests, Fill_ShouldSetAllPixelsToSpecifiedColor)
     {
         PixelPad::Core::Canvas canvas(3, 2);
         canvas.Fill(99);
@@ -95,7 +95,7 @@ namespace PixelPad::Tests::Core
         }
     }
 
-    TEST(CanvasTests, Fill_OverwritesExistingPixels)
+    TEST(CanvasTests, Fill_ShouldOverwriteAllExistingPixelValues)
     {
         PixelPad::Core::Canvas canvas(2, 2);
         canvas.DrawPixel(0, 0, 1);
@@ -107,7 +107,7 @@ namespace PixelPad::Tests::Core
         EXPECT_EQ(canvas.GetPixel(1, 1), 42);
     }
 
-    TEST(CanvasTests, Resize_LargerKeepsExistingPixels)
+    TEST(CanvasTests, Resize_ShouldPreserveExistingPixels_WhenNewSizeIsLarger)
     {
         PixelPad::Core::Canvas canvas(2, 2);
         canvas.DrawPixel(0, 0, 1);
@@ -120,7 +120,7 @@ namespace PixelPad::Tests::Core
         EXPECT_EQ(canvas.GetPixel(3, 3), 0);
     }
 
-    TEST(CanvasTests, Resize_SmallerTruncatesData)
+    TEST(CanvasTests, Resize_ShouldTruncatePixelData_WhenNewSizeIsSmaller)
     {
         PixelPad::Core::Canvas canvas(4, 4);
         canvas.DrawPixel(3, 3, 9);
@@ -129,7 +129,7 @@ namespace PixelPad::Tests::Core
         EXPECT_EQ(canvas.GetPixel(0, 0), 0);
     }
 
-    TEST(CanvasTests, Resize_SameSizePreservesData)
+    TEST(CanvasTests, Resize_ShouldPreserveAllPixels_WhenNewSizeIsSame)
     {
         PixelPad::Core::Canvas canvas(3, 3);
         canvas.DrawPixel(1, 1, 7);
