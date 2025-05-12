@@ -2,7 +2,7 @@
 #include <iostream>
 #include <SDL3/SDL.h>
 
-namespace Infrastructure
+namespace PixelPad::Infrastructure
 {
     Renderer::Renderer()
     {

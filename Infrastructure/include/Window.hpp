@@ -1,6 +1,6 @@
 #pragma once
 
-namespace Infrastructure
+namespace PixelPad::Infrastructure
 {
 	class Window
 	{

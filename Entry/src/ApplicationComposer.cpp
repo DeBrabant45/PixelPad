@@ -1,6 +1,6 @@
 #include "ApplicationComposer.hpp"
 
-namespace Entry
+namespace PixelPad::Entry
 {
 
 }

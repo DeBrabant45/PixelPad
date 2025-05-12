@@ -1,14 +1,17 @@
 #pragma once
 
-#include "CanvasModel.hpp"
+#include "Graphics/Canvas.hpp"
+#include "Graphics/CanvasSnapshot.hpp"
 #include "IDrawService.hpp"
 
-namespace Application
+#include <memory>
+
+namespace PixelPad::Application
 {
 	class DrawService : public IDrawService
 	{
 	public:
-		DrawService(Core::CanvasModel& canvasModel);
+		DrawService(PixelPad::Core::Canvas & canvas);
 		~DrawService() = default;
 
         void DrawPixel(int x, int y, int color) override;
@@ -18,11 +21,11 @@ namespace Application
         void ClearCanvas() override;
         std::pair<int, int> GetCanvasSize() const override;
         int GetPixel(int x, int y) const override;
-
         void SaveCanvasState() override;
         void LoadCanvasState() override;
 
 	private:
-		Core::CanvasModel& m_canvasModel;
+        PixelPad::Core::Canvas& m_canvas;
+        std::unique_ptr<PixelPad::Core::CanvasSnapshot> m_canvasSnapshot;
 	};
 }

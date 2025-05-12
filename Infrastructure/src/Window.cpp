@@ -1,6 +1,6 @@
 #include "Window.hpp"
 
-namespace Infrastructure
+namespace PixelPad::Infrastructure
 {
 	void Window::Create()
 	{

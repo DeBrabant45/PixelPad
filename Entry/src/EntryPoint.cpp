@@ -4,7 +4,7 @@
 namespace Entry
 {
 	EntryPoint::EntryPoint() : 
-		m_canvasModel{ 800, 600 },
+		m_canvas{ 800, 600 },
 		m_renderer()
 	{
 

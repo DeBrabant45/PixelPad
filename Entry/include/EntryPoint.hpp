@@ -2,7 +2,7 @@
 
 #include "Services/DrawService.hpp" 
 #include "Renderer.hpp"
-#include "CanvasModel.hpp"
+#include "Graphics/Canvas.hpp"
 
 namespace Entry
 {
@@ -18,7 +18,7 @@ namespace Entry
 		void Shutdown();
 
 	private:
-		Infrastructure::Renderer m_renderer;
-		Core::CanvasModel m_canvasModel;
+		PixelPad::Infrastructure::Renderer m_renderer;
+		PixelPad::Core::Canvas m_canvas;
 	};
 }
