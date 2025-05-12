@@ -4,6 +4,8 @@
 
 namespace PixelPad::Core
 {
+	class Canvas;
+
 	class CanvasSnapshot
 	{
 	public:
@@ -12,6 +14,7 @@ namespace PixelPad::Core
 		int GetWidth() const;
 		int GetHeight() const;
 		const std::vector<int>& GetPixels() const;
+		void ApplyTo(Canvas& canvas) const;
 
 	private:
 		int m_width;
