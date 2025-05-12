@@ -479,4 +479,38 @@ namespace PixelPad::Tests::Application
             }
         }
     }
+
+    TEST(DrawServiceTests, SaveCanvasState_ShouldSaveCanvasState_WhenCalled)
+    {
+        PixelPad::Core::Canvas canvas{ 5, 5 };
+        PixelPad::Application::DrawService drawService{ canvas };
+        drawService.DrawPixel(2, 2, 123);
+
+        drawService.SaveCanvasState();
+
+        EXPECT_EQ(canvas.GetPixel(2, 2), 123);
+    }
+
+    TEST(DrawServiceTests, LoadCanvasState_ShouldRestoreCanvasState_WhenCalled)
+    {
+        PixelPad::Core::Canvas canvas{ 5, 5 };
+        PixelPad::Application::DrawService drawService{ canvas };
+        drawService.DrawPixel(2, 2, 123);
+        drawService.SaveCanvasState();
+
+        drawService.DrawPixel(2, 2, 255);
+        drawService.LoadCanvasState();
+
+        EXPECT_EQ(canvas.GetPixel(2, 2), 123);
+    }
+
+    TEST(DrawServiceTests, LoadCanvasState_ShouldDoNothing_WhenNoSnapshotHasBeenSaved)
+    {
+        PixelPad::Core::Canvas canvas{ 5, 5 };
+        PixelPad::Application::DrawService drawService{ canvas };
+
+        drawService.LoadCanvasState();
+
+        EXPECT_EQ(canvas.GetPixel(2, 2), 0);
+    }
 }

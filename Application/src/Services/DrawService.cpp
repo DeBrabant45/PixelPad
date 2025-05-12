@@ -1,10 +1,12 @@
 #include "Services/DrawService.hpp"
+#include "Graphics/CanvasSnapshot.hpp"
 #include <iostream>
 
 namespace PixelPad::Application
 {
-	DrawService::DrawService(Core::Canvas& canvas) :
-		m_canvas{ canvas }
+	DrawService::DrawService(PixelPad::Core::Canvas& canvas) :
+		m_canvas{ canvas },
+		m_canvasSnapshot{ }
 	{
 
 	}
@@ -46,11 +48,18 @@ namespace PixelPad::Application
 
 	void DrawService::SaveCanvasState()
 	{
-
+		m_canvasSnapshot = std::make_unique<PixelPad::Core::CanvasSnapshot>(
+			m_canvas.GetWidth(),
+			m_canvas.GetHeight(),
+			m_canvas.GetPixels()
+		);
 	}
 
 	void DrawService::LoadCanvasState()
 	{
+		if (!m_canvasSnapshot) 
+			return;
 
+		m_canvasSnapshot->ApplyTo(m_canvas);
 	}
 }

@@ -1,7 +1,10 @@
 #pragma once
 
 #include "Graphics/Canvas.hpp"
+#include "Graphics/CanvasSnapshot.hpp"
 #include "IDrawService.hpp"
+
+#include <memory>
 
 namespace PixelPad::Application
 {
@@ -18,11 +21,11 @@ namespace PixelPad::Application
         void ClearCanvas() override;
         std::pair<int, int> GetCanvasSize() const override;
         int GetPixel(int x, int y) const override;
-
         void SaveCanvasState() override;
         void LoadCanvasState() override;
 
 	private:
         PixelPad::Core::Canvas& m_canvas;
+        std::unique_ptr<PixelPad::Core::CanvasSnapshot> m_canvasSnapshot;
 	};
 }
