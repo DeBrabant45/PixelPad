@@ -8,18 +8,26 @@ IF NOT EXIST "vcpkg" (
     echo vcpkg already cloned
 )
 
-REM Build vcpkg if it hasn't been built yet
-IF NOT EXIST "vcpkg\bootstrap-vcpkg.bat" (
-    echo Building vcpkg...
+REM Bootstrap vcpkg if it hasn't been bootstrapped yet
+IF NOT EXIST "vcpkg\vcpkg.exe" (
+    echo Bootstrapping vcpkg...
     cd vcpkg
-    .\bootstrap-vcpkg.bat
+    call bootstrap-vcpkg.bat
     cd ..
 ) ELSE (
-    echo vcpkg already built
+    echo vcpkg already bootstrapped
 )
 
 REM Install required dependencies based on vcpkg.json
 echo Installing dependencies...
 vcpkg\vcpkg install
 
-echo vcpkg setup complete!
+REM Create build directory if it doesn't exist
+IF NOT EXIST "build" (
+    echo Creating build directory...
+    mkdir build
+) ELSE (
+    echo Build directory already exists
+)
+
+echo Setup complete!
