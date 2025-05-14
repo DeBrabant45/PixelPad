@@ -1,7 +1,5 @@
 #pragma once
 
-struct SDL_Window;
-
 namespace PixelPad::Infrastructure
 {
 	class IWindow
@@ -14,6 +12,6 @@ namespace PixelPad::Infrastructure
         virtual bool IsOpen() const = 0;
         virtual void PollEvents() = 0;
         virtual void Shutdown() = 0;
-        virtual SDL_Window* GetNativeWindow() const = 0;
+        virtual void* GetNativeWindow() const = 0;
 	};
 }

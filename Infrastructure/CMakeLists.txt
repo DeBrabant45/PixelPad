@@ -1,15 +1,15 @@
 # Infrastructure Layer
 
 add_library(${PIXEL_PAD_INFRASTRUCTURE_TARGET_NAME}
-    src/Renderer.cpp
-    include/Renderer.hpp
+    include/Renderers/IRenderer.hpp
 
-    src/Window.cpp
-    include/Window.hpp
+    src/Renderers/SDLRenderer.cpp
+    include/Renderers/SDLRenderer.hpp
 
-    include/IRenderer.hpp
+    include/Windows/IWindow.hpp
 
-    include/IWindow.hpp
+    src/Windows/SDLWindow.cpp
+    include/Windows/SDLWindow.hpp
 )
 
 find_package(SDL3 CONFIG REQUIRED)

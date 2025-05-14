@@ -1,15 +1,16 @@
-#include "Renderer.hpp"
+#include "Renderers/SDLRenderer.hpp"
+#include "Windows/IWindow.hpp"
+#include "Graphics/Canvas.hpp"
+
 #include <iostream>
 #include <SDL3/SDL.h>
-#include "Window.hpp"
-#include "Graphics/Canvas.hpp"
 
 namespace PixelPad::Infrastructure
 {
-    Renderer::Renderer(IWindow& window) :
+    SDLRenderer::SDLRenderer(IWindow& window) :
         m_window(window)
     {
-        SDL_Window* sdlWindow = m_window.GetNativeWindow();
+        SDL_Window* sdlWindow = static_cast<SDL_Window*>(m_window.GetNativeWindow());
         if (!sdlWindow)
         {
             std::cerr << "SDL Window is not available." << std::endl;
@@ -24,7 +25,7 @@ namespace PixelPad::Infrastructure
         }
     }
 
-    Renderer::~Renderer()
+    SDLRenderer::~SDLRenderer()
     {
         if (m_sdlRenderer)
         {
@@ -32,7 +33,7 @@ namespace PixelPad::Infrastructure
         }
     }
 
-    void Renderer::ClearScreen()
+    void SDLRenderer::ClearScreen()
     {
         if (m_sdlRenderer)
         {
@@ -41,7 +42,7 @@ namespace PixelPad::Infrastructure
         }
     }
 
-    void Renderer::Render(const PixelPad::Core::Canvas& canvas)
+    void SDLRenderer::Render(const PixelPad::Core::Canvas& canvas)
     {
         int width = canvas.GetWidth();
         int height = canvas.GetHeight();
@@ -71,7 +72,6 @@ namespace PixelPad::Infrastructure
             return;
         }
 
-        // Copy pixel data row by row
         for (int y = 0; y < height; ++y)
         {
             std::memcpy(
@@ -88,7 +88,7 @@ namespace PixelPad::Infrastructure
         SDL_DestroyTexture(texture);
     }
 
-    void Renderer::Present()
+    void SDLRenderer::Present()
     {
         if (m_sdlRenderer)
         {
@@ -96,12 +96,13 @@ namespace PixelPad::Infrastructure
         }
     }
 
-    void Renderer::Resize(int newWidth, int newHeight)
+	// ToDo: Implement the Resize method to handle window resizing
+    void SDLRenderer::Resize(int newWidth, int newHeight)
     {
-        // Optionally handle resizing logic (e.g., re-create the renderer if needed)
+
     }
 
-    void Renderer::Shutdown()
+    void SDLRenderer::Shutdown()
     {
         if (m_sdlRenderer)
         {

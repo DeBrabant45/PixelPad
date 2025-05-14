@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Renderer.hpp"
+#include "Renderers/SDLRenderer.hpp"
 #include "Graphics/Canvas.hpp"
-#include "Window.hpp"
+#include "Windows/SDLWindow.hpp"
 #include "Services/DrawService.hpp"
 #include "Controllers/CanvasController.hpp"
 
@@ -19,8 +19,8 @@ namespace PixelPad::Presentation
 		void Shutdown();
 
 	private:
-		PixelPad::Infrastructure::Window m_window;
-		PixelPad::Infrastructure::Renderer m_renderer;
+		PixelPad::Infrastructure::SDLWindow m_window;
+		PixelPad::Infrastructure::SDLRenderer m_renderer;
 		PixelPad::Core::Canvas m_canvas;
 		PixelPad::Application::DrawService m_drawService;
 		PixelPad::Presentation::CanvasController m_canvasController;

@@ -1,23 +1,23 @@
 #pragma once
 
-#include "IWindow.hpp"
+#include "Windows/IWindow.hpp"
 
 struct SDL_Window;
 
 namespace PixelPad::Infrastructure
 {
-	class Window : public IWindow
+	class SDLWindow : public IWindow
 	{
 	public:
-		Window(int width, int height, const char* title);
-		~Window() override;
+		SDLWindow(int width, int height, const char* title);
+		~SDLWindow() override;
 		int GetWidth() const override;
 		int GetHeight() const override;
 		void Resize(int newWidth, int newHeight) override;
 		bool IsOpen() const override;
 		void PollEvents() override;
 		void Shutdown() override;
-		SDL_Window* GetNativeWindow() const override;
+		void* GetNativeWindow() const override;
 
 	private:
 		SDL_Window* m_window{ nullptr };

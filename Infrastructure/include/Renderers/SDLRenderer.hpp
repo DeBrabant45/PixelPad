@@ -1,7 +1,7 @@
 #pragma once
 
-#include "IRenderer.hpp"
-#include "IWindow.hpp"
+#include "Renderers/IRenderer.hpp"
+#include "Windows/IWindow.hpp"
 
 struct SDL_Renderer;
 struct SDL_Window;
@@ -13,11 +13,11 @@ namespace PixelPad::Core
 
 namespace PixelPad::Infrastructure
 {
-	class Renderer : public IRenderer
+	class SDLRenderer : public IRenderer
 	{
 	public:
-		Renderer(IWindow& window);
-		~Renderer() override;
+		SDLRenderer(IWindow& window);
+		~SDLRenderer() override;
 		void ClearScreen() override;
 		void Render(const PixelPad::Core::Canvas& canvas) override;
 		void Present() override;

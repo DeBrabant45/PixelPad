@@ -1,10 +1,11 @@
-#include "Window.hpp"
+#include "Windows/SDLWindow.hpp"
+
 #include <SDL3/SDL.h>
 #include <iostream>
 
 namespace PixelPad::Infrastructure
 {
-	Window::Window(int width, int height, const char* title) :
+	SDLWindow::SDLWindow(int width, int height, const char* title) :
 		m_width(width),
 		m_height(height)
 	{
@@ -25,22 +26,22 @@ namespace PixelPad::Infrastructure
 		m_isOpen = true;
 	}
 
-	Window::~Window()
+	SDLWindow::~SDLWindow()
 	{
 		Shutdown();
 	}
 
-	int Window::GetWidth() const
+	int SDLWindow::GetWidth() const
 	{
 		return m_width;
 	}
 
-	int Window::GetHeight() const
+	int SDLWindow::GetHeight() const
 	{
 		return m_height;
 	}
 
-	void Window::Resize(int newWidth, int newHeight)
+	void SDLWindow::Resize(int newWidth, int newHeight)
 	{
 		if (m_window == nullptr)
 		{
@@ -53,12 +54,12 @@ namespace PixelPad::Infrastructure
 		m_height = newHeight;
 	}
 
-	bool Window::IsOpen() const
+	bool SDLWindow::IsOpen() const
 	{
 		return m_isOpen;
 	}
 
-	void Window::PollEvents()
+	void SDLWindow::PollEvents()
 	{
 		SDL_Event event;
 		while (SDL_PollEvent(&event))
@@ -75,7 +76,7 @@ namespace PixelPad::Infrastructure
 		}
 	}
 
-	void Window::Shutdown()
+	void SDLWindow::Shutdown()
 	{
 		if (m_window)
 		{
@@ -87,8 +88,8 @@ namespace PixelPad::Infrastructure
 		m_isOpen = false;
 	}
 
-	SDL_Window* Window::GetNativeWindow() const
+	void* SDLWindow::GetNativeWindow() const
 	{
-		return m_window;
+		return static_cast<void*>(m_window);
 	}
 }
