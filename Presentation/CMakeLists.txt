@@ -1,8 +1,8 @@
 # Presentation Layer
 
 add_executable(${PIXEL_PAD_PRESENTATION_TARGET_NAME}
-    src/CanvasController.cpp
-    include/CanvasController.hpp
+    src/Controllers/CanvasController.cpp
+    include/Controllers/CanvasController.hpp
 
     src/PixelPadApplication.cpp
     include/PixelPadApplication.hpp

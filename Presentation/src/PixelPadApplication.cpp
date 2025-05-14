@@ -6,7 +6,8 @@ namespace PixelPad::Presentation
         m_window(640, 480, "PixelPad Application"),
         m_renderer(m_window),
         m_canvas(m_window.GetWidth(), m_window.GetHeight()),
-        m_drawService(m_canvas)
+        m_drawService(m_canvas),
+        m_canvasController(m_canvas, m_drawService)
     {
 
     }
@@ -22,15 +23,11 @@ namespace PixelPad::Presentation
         {
             m_window.PollEvents();
 
-            // Optional but harmless
             m_renderer.ClearScreen();
 
-            // Fill canvas with white (opaque!)
-            m_canvas.Fill(0xFFFFFFFF);
-
-            // Draw something visible
-            m_drawService.DrawPixel(100, 100, 0xFFFF00FF);     // Magenta
-            m_drawService.DrawLine(50, 50, 200, 200, 0xFF000000); // Green
+            m_canvasController.Fill();
+            m_canvasController.DrawPixel(100, 100, 0xFFFF00FF);
+            m_canvasController.DrawLine(50, 50, 200, 200, 0xFF000000);
 
             m_renderer.Render(m_canvas);
             m_renderer.Present();
