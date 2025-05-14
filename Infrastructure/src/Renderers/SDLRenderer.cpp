@@ -27,10 +27,7 @@ namespace PixelPad::Infrastructure
 
     SDLRenderer::~SDLRenderer()
     {
-        if (m_sdlRenderer)
-        {
-            SDL_DestroyRenderer(m_sdlRenderer);
-        }
+		Shutdown();
     }
 
     void SDLRenderer::ClearScreen()
