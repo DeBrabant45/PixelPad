@@ -1,4 +1,5 @@
 #include "PixelPadApplication.hpp"
+
 #include <iostream>
 
 int main()
