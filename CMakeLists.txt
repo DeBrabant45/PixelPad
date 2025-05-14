@@ -10,7 +10,6 @@ set(PIXEL_PAD_CORE_TARGET_NAME            PixelPad.Core)
 set(PIXEL_PAD_APPLICATION_TARGET_NAME     PixelPad.Application)
 set(PIXEL_PAD_PRESENTATION_TARGET_NAME    PixelPad.Presentation)
 set(PIXEL_PAD_INFRASTRUCTURE_TARGET_NAME  PixelPad.Infrastructure)
-set(PIXEL_PAD_ENTRY_TARGET_NAME           PixelPad.Entry)
 
 set(PIXEL_PAD_CORE_TESTS_TARGET_NAME         PixelPad.Core.Tests)
 set(PIXEL_PAD_APPLICATION_TESTS_TARGET_NAME  PixelPad.Application.Tests)
@@ -21,9 +20,8 @@ enable_testing()
 # Add layers
 add_subdirectory(Core)
 add_subdirectory(Application)
-add_subdirectory(Presentation)
 add_subdirectory(Infrastructure)
-add_subdirectory(Entry)
+add_subdirectory(Presentation)
 
 # Add Test layers
 add_subdirectory(Core.Tests)
