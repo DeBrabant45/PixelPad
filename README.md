@@ -6,11 +6,10 @@ PixelPad is a drawing application built with C++ that follows a Test-Driven Deve
 ## Architecture Overview
 
 ### Layers
-- **Core Layer**: Contains the base functionality, including the `CanvasModel` class, which represents the canvas and handles pixel manipulation.
-- **Application Layer**: Implements services like `DrawService`, which interacts with the `CanvasModel` to execute drawing operations, such as drawing pixels or lines.
-- **Presentation Layer**: Responsible for displaying the canvas to the user and handling UI elements.
+- **Core Layer**: Contains the base functionality, including the `Canvas` class, which represents the canvas and handles pixel manipulation.
+- **Application Layer**: Implements services like `DrawService`, which interacts with the `Canvas` to execute drawing operations, such as drawing pixels or lines.
 - **Infrastructure Layer**: Contains utilities and helper classes to support the core and application layers.
-- **Entry Layer**: The entry point of the application, handling the startup process.
+- **Presentation Layer**: Serves as the UI layer and main entry point of the application. It includes the main() function, initializes the rendering window, processes user input (keyboard, mouse), and renders the canvas to the screen using services and models from the Application and Core layers.
 
 ### Test-Driven Development (TDD) Approach
 
@@ -74,9 +73,6 @@ PixelPad/
 │   ├── src/
 │   └── include/
 ├── Presentation/
-│   ├── src/
-│   └── include/
-├── Entry/
 │   ├── src/
 │   └── include/
 ├── CMakeLists.txt

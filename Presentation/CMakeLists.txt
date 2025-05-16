@@ -1,8 +1,13 @@
 # Presentation Layer
 
-add_library(${PIXEL_PAD_PRESENTATION_TARGET_NAME}
-    src/CanvasController.cpp
-    include/CanvasController.hpp
+add_executable(${PIXEL_PAD_PRESENTATION_TARGET_NAME}
+    src/Controllers/CanvasController.cpp
+    include/Controllers/CanvasController.hpp
+
+    src/PixelPadApplication.cpp
+    include/PixelPadApplication.hpp
+
+    src/Main.cpp
 )
 
 target_include_directories(${PIXEL_PAD_PRESENTATION_TARGET_NAME}
@@ -10,6 +15,8 @@ target_include_directories(${PIXEL_PAD_PRESENTATION_TARGET_NAME}
 )
 
 target_link_libraries(${PIXEL_PAD_PRESENTATION_TARGET_NAME}
-    PRIVATE
+   PRIVATE
+        ${PIXEL_PAD_CORE_TARGET_NAME}
         ${PIXEL_PAD_APPLICATION_TARGET_NAME}
+        ${PIXEL_PAD_INFRASTRUCTURE_TARGET_NAME}
 )

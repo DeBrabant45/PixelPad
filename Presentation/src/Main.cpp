@@ -1,11 +1,12 @@
-#include "EntryPoint.hpp"
+#include "PixelPadApplication.hpp"
+
 #include <iostream>
 
 int main()
 {
     try
     {
-        Entry::EntryPoint entryPoint;
+        PixelPad::Presentation::PixelPadApplication entryPoint;
         entryPoint.Run();
     }
     catch (const std::exception& e)
