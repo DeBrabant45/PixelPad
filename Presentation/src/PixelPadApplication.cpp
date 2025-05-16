@@ -3,8 +3,10 @@
 namespace PixelPad::Presentation
 {
     PixelPadApplication::PixelPadApplication() :
-        m_window(640, 480, "PixelPad Application"),
+		m_eventBus(),
+        m_window(640, 480, "PixelPad Application", m_eventBus),
         m_renderer(m_window),
+		m_input(m_eventBus),
         m_canvas(m_window.GetWidth(), m_window.GetHeight()),
         m_drawService(m_canvas),
         m_canvasController(m_canvas, m_drawService)
@@ -21,7 +23,7 @@ namespace PixelPad::Presentation
     {
         while (m_window.IsOpen())
         {
-            m_window.PollEvents();
+			m_input.PollEvents();
 
             m_renderer.ClearScreen();
 

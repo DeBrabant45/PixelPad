@@ -10,6 +10,17 @@ add_library(${PIXEL_PAD_INFRASTRUCTURE_TARGET_NAME}
 
     src/Windows/SDLWindow.cpp
     include/Windows/SDLWindow.hpp
+
+    include/Inputs/IInput.hpp
+
+    src/Inputs/SDLInput.cpp
+    include/Inputs/SDLInput.hpp
+
+    src/Buses/EventBus.cpp
+    include/Buses/EventBus.hpp
+
+    include/Events/MouseButtonEvent.hpp
+    include/Events/WindowCloseEvent.hpp
 )
 
 find_package(SDL3 CONFIG REQUIRED)
