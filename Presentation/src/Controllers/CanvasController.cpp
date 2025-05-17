@@ -26,6 +26,11 @@ namespace PixelPad::Presentation
 		m_drawService.DrawLine(x1, y1, x2, y2, color);
 	}
 
+	void Presentation::CanvasController::Resize(int width, int height)
+	{
+		m_drawService.ResizeCanvas(width, height);
+	}
+
 	void CanvasController::Clear()
 	{
 		m_drawService.ClearCanvas();

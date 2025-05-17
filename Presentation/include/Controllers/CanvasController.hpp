@@ -13,6 +13,7 @@ namespace PixelPad::Presentation
 		void SetBackgroundColor(int color);
 		void DrawPixel(int x, int y, int color);
 		void DrawLine(int x1, int y1, int x2, int y2, int color);
+		void Resize(int width, int height);
 		void Clear();
 		void Fill();
 

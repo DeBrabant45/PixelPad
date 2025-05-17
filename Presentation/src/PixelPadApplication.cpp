@@ -21,6 +21,7 @@ namespace PixelPad::Presentation
 
     void PixelPadApplication::Run()
     {
+		bool hasResized = false;
         while (m_window.IsOpen())
         {
 			m_input.PollEvents();
@@ -33,6 +34,14 @@ namespace PixelPad::Presentation
 
             m_renderer.Render(m_canvas);
             m_renderer.Present();
+
+			// Simple Window resize testing
+            if (!hasResized)
+            {
+                m_canvasController.Resize(800, 600);
+				m_window.Resize(800, 600);
+				hasResized = true;
+            }
         }
     }
 
