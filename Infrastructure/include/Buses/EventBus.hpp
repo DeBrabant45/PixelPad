@@ -1,42 +1,64 @@
 #pragma once
 
 #include <functional>
-#include <unordered_map>
 #include <vector>
-#include <typeindex>
-#include <memory>
+#include <algorithm>
+#include <utility>
+#include <cstddef>
 
 namespace PixelPad::Infrastructure
 {
-	class EventBus
-	{
-	public:
+    class EventBus
+    {
+    public:
         template<typename Event>
         using HandlerFunc = std::function<void(const Event&)>;
 
+        using SubscriptionToken = size_t;
+
         template<typename Event>
-        void Subscribe(HandlerFunc<Event> handler)
+        SubscriptionToken Subscribe(HandlerFunc<Event> handler)
         {
             auto& handlers = GetHandlers<Event>();
-            handlers.push_back(std::move(handler));
+            SubscriptionToken token = ++m_lastToken;
+            handlers.emplace_back(token, std::move(handler));
+
+            return token;
+        }
+
+        template<typename Event>
+        void Unsubscribe(SubscriptionToken token)
+        {
+            auto& handlers = GetHandlers<Event>();
+
+            const auto isMatchingToken = [token](const auto& handlerPair)
+            {
+               const auto& [handlerToken, _] = handlerPair;
+               return handlerToken == token;
+            };
+
+            handlers.erase(std::remove_if(handlers.begin(), handlers.end(), isMatchingToken),
+                handlers.end());
         }
 
         template<typename Event>
         void Publish(const Event& event) const
         {
             auto& handlers = GetHandlers<Event>();
-            for (const auto& handler : handlers)
+            for (const auto& [token, handler] : handlers)
             {
                 handler(event);
             }
         }
 
-	private:
+    private:
         template<typename Event>
-        std::vector<HandlerFunc<Event>>& GetHandlers() const
+        std::vector<std::pair<SubscriptionToken, HandlerFunc<Event>>>& GetHandlers() const
         {
-            static std::vector<HandlerFunc<Event>> handlers;
+            static std::vector<std::pair<SubscriptionToken, HandlerFunc<Event>>> handlers;
             return handlers;
         }
-	};
+
+        SubscriptionToken m_lastToken = 0;
+    };
 }

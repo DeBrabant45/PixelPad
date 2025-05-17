@@ -10,6 +10,7 @@ namespace PixelPad::Presentation
 	{
 
 	}
+
 	void CanvasController::SetBackgroundColor(int color)
 	{
 		m_backgroundColor = color;

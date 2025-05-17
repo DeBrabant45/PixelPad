@@ -26,6 +26,6 @@ namespace PixelPad::Infrastructure
 
 	private:
 		IWindow& m_window;
-		SDL_Renderer* m_sdlRenderer = nullptr;
+		SDL_Renderer* m_sdlRenderer{ nullptr };
 	};
 }

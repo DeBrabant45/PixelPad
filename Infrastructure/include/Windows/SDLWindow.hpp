@@ -12,17 +12,18 @@ namespace PixelPad::Infrastructure
 	public:
 		SDLWindow(int width, int height, const char* title, EventBus& bus);
 		~SDLWindow() override;
+		void Shutdown() override;
 		int GetWidth() const override;
 		int GetHeight() const override;
 		void Resize(int newWidth, int newHeight) override;
 		bool IsOpen() const override;
 		void Close() override;
-		void Shutdown() override;
 		void* GetNativeWindow() const override;
 
 	private:
 		void CreateSDLWindow(int width, int height, const char* title);
 		void RegisterEventHandlers();
+		void UnregisterEventHandlers();
 
 	private:
 		SDL_Window* m_window{ nullptr };
@@ -30,5 +31,6 @@ namespace PixelPad::Infrastructure
 		int m_height{ 600 };
 		bool m_isOpen{ true };
 		EventBus& m_eventBus;
+		EventBus::SubscriptionToken m_windowCloseEventToken;
 	};
 }
