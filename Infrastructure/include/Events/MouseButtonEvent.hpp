@@ -1,11 +1,14 @@
 #pragma once
 
+#include "Inputs/MouseButton.hpp"
+
 namespace PixelPad::Infrastructure
 {
     struct MouseButtonEvent
     {
-        float X;
-        float Y;
+        int X;
+        int Y;
         bool IsPressed;
+        MouseButton Button;
     };
 }

@@ -16,6 +16,8 @@ add_library(${PIXEL_PAD_INFRASTRUCTURE_TARGET_NAME}
     src/Inputs/SDLInput.cpp
     include/Inputs/SDLInput.hpp
 
+    include/Inputs/MouseButton.hpp
+
     src/Buses/EventBus.cpp
     include/Buses/EventBus.hpp
 

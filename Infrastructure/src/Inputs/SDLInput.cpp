@@ -18,21 +18,41 @@ namespace PixelPad::Infrastructure
         SDL_Event event;
         while (SDL_PollEvent(&event))
         {
-            switch (event.type)
-            {
-            case SDL_EVENT_QUIT:
-            case SDL_EVENT_WINDOW_CLOSE_REQUESTED:
-                m_eventBus.Publish(WindowCloseEvent{ true });
-                break;
+            ProcessWindowCloseEvent(event.type);
+            ProcessMouseButtonEvent(event.type, event.button);
+        }
+    }
 
-            case SDL_EVENT_MOUSE_BUTTON_DOWN:
-                m_eventBus.Publish(MouseButtonEvent{ event.button.x, event.button.y, true });
-                break;
+    void SDLInput::ProcessWindowCloseEvent(unsigned int type)
+    {
+        if (type != SDL_EVENT_QUIT && type != SDL_EVENT_WINDOW_CLOSE_REQUESTED)
+            return;
 
-            case SDL_EVENT_MOUSE_BUTTON_UP:
-                m_eventBus.Publish(MouseButtonEvent{ event.button.x, event.button.y, false });
-                break;
-            }
+        m_eventBus.Publish(WindowCloseEvent{ true });
+    }
+
+    void SDLInput::ProcessMouseButtonEvent(unsigned int type, SDL_MouseButtonEvent& button)
+    {
+        if (type != SDL_EVENT_MOUSE_BUTTON_DOWN && type != SDL_EVENT_MOUSE_BUTTON_UP)
+            return;
+
+        bool isPressed = type == SDL_EVENT_MOUSE_BUTTON_DOWN;
+        int x = button.x;
+        int y = button.y;
+
+        switch (button.button)
+        {
+        case SDL_BUTTON_LEFT:
+            m_eventBus.Publish(MouseButtonEvent{ x, y, isPressed, MouseButton::Left });
+            break;
+        case SDL_BUTTON_RIGHT:
+            m_eventBus.Publish(MouseButtonEvent{ x, y, isPressed, MouseButton::Right });
+            break;
+        case SDL_BUTTON_MIDDLE:
+            m_eventBus.Publish(MouseButtonEvent{ x, y, isPressed, MouseButton::Middle });
+            break;
+        default:
+            break;
         }
     }
 }
