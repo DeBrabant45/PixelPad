@@ -6,26 +6,12 @@
 
 namespace PixelPad::Infrastructure
 {
-	SDLWindow::SDLWindow(
-		int width, 
-		int height, 
-		const char* title, 
-		EventBus& eventBus) :
+	SDLWindow::SDLWindow(int width, int height, const char* title) :
 		m_width(width),
 		m_height(height),
-		m_isOpen(true),
-		m_eventBus(eventBus)
+		m_isOpen(true)
 	{
-		RegisterEventHandlers();
 		CreateSDLWindow(width, height, title);
-	}
-
-	void SDLWindow::RegisterEventHandlers()
-	{
-		m_windowCloseEventToken = m_eventBus.Subscribe<WindowCloseEvent>([this](const WindowCloseEvent&)
-		{
-			this->Close();
-		});
 	}
 
 	void SDLWindow::CreateSDLWindow(int width, int height, const char* title)
@@ -49,13 +35,7 @@ namespace PixelPad::Infrastructure
 
 	SDLWindow::~SDLWindow()
 	{
-		UnregisterEventHandlers();
 		Shutdown();
-	}
-
-	void SDLWindow::UnregisterEventHandlers()
-	{
-		m_eventBus.Unsubscribe<WindowCloseEvent>(m_windowCloseEventToken);
 	}
 
 	void SDLWindow::Shutdown()
