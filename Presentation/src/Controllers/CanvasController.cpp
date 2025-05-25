@@ -1,14 +1,46 @@
 #include "Controllers/CanvasController.hpp"
+#include "Events/MouseButtonEvent.hpp"
 
 namespace PixelPad::Presentation
 {
 	CanvasController::CanvasController(
 		PixelPad::Core::Canvas& canvas,
-		Application::DrawService& drawService) :
+		Application::IDrawService& drawService,
+		PixelPad::Infrastructure::EventBus& eventBus) :
 		m_canvas(canvas),
-		m_drawService(drawService)
+		m_drawService(drawService),
+		m_backgroundColor(0xFFFFFFFF),
+		m_eventBus(eventBus),
+		m_mouseEventToken()
 	{
+		RegisterEventHandlers();
+	}
 
+	void Presentation::CanvasController::RegisterEventHandlers()
+	{
+		// Sample Draw line eventing for testing
+		m_mouseEventToken = m_eventBus.Subscribe<PixelPad::Infrastructure::MouseButtonEvent>(
+			[this](const PixelPad::Infrastructure::MouseButtonEvent& evt)
+			{
+
+				if (m_prevX != -1 && m_prevY != -1)
+				{
+					DrawLine(m_prevX, m_prevY, evt.X, evt.Y, 0xFF000000);
+				}
+
+				m_prevX = evt.X;
+				m_prevY = evt.Y;
+			});
+	}
+
+	Presentation::CanvasController::~CanvasController()
+	{
+		UnregisterEventHandlers();
+	}
+
+	void Presentation::CanvasController::UnregisterEventHandlers()
+	{
+		m_eventBus.Unsubscribe<PixelPad::Infrastructure::MouseButtonEvent>(m_mouseEventToken);
 	}
 
 	void CanvasController::SetBackgroundColor(int color)

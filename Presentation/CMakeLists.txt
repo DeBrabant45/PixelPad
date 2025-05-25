@@ -4,6 +4,9 @@ add_executable(${PIXEL_PAD_PRESENTATION_TARGET_NAME}
     src/Controllers/CanvasController.cpp
     include/Controllers/CanvasController.hpp
 
+    src/Controllers/WindowController.cpp
+    include/Controllers/WindowController.hpp
+
     src/PixelPadApplication.cpp
     include/PixelPadApplication.hpp
 
