@@ -11,13 +11,16 @@ namespace PixelPad::Infrastructure
 	public:
 		SDLWindow(int width, int height, const char* title);
 		~SDLWindow() override;
+		void Shutdown() override;
 		int GetWidth() const override;
 		int GetHeight() const override;
 		void Resize(int newWidth, int newHeight) override;
 		bool IsOpen() const override;
-		void PollEvents() override;
-		void Shutdown() override;
+		void Close() override;
 		void* GetNativeWindow() const override;
+
+	private:
+		void CreateSDLWindow(int width, int height, const char* title);
 
 	private:
 		SDL_Window* m_window{ nullptr };

@@ -1,4 +1,5 @@
 #include "Windows/SDLWindow.hpp"
+#include "Events/WindowCloseEvent.hpp"
 
 #include <SDL3/SDL.h>
 #include <iostream>
@@ -7,7 +8,13 @@ namespace PixelPad::Infrastructure
 {
 	SDLWindow::SDLWindow(int width, int height, const char* title) :
 		m_width(width),
-		m_height(height)
+		m_height(height),
+		m_isOpen(true)
+	{
+		CreateSDLWindow(width, height, title);
+	}
+
+	void SDLWindow::CreateSDLWindow(int width, int height, const char* title)
 	{
 		if (!SDL_Init(SDL_INIT_VIDEO))
 		{
@@ -29,6 +36,18 @@ namespace PixelPad::Infrastructure
 	SDLWindow::~SDLWindow()
 	{
 		Shutdown();
+	}
+
+	void SDLWindow::Shutdown()
+	{
+		if (m_window)
+		{
+			SDL_DestroyWindow(m_window);
+			m_window = nullptr;
+		}
+
+		SDL_Quit();
+		m_isOpen = false;
 	}
 
 	int SDLWindow::GetWidth() const
@@ -59,32 +78,8 @@ namespace PixelPad::Infrastructure
 		return m_isOpen;
 	}
 
-	void SDLWindow::PollEvents()
+	void SDLWindow::Close()
 	{
-		SDL_Event event;
-		while (SDL_PollEvent(&event))
-		{
-			if (event.type == SDL_EVENT_QUIT)
-			{
-				m_isOpen = false;
-			}
-			else if (event.type == SDL_EVENT_WINDOW_RESIZED)
-			{
-				m_width = event.window.data1;
-				m_height = event.window.data2;
-			}
-		}
-	}
-
-	void SDLWindow::Shutdown()
-	{
-		if (m_window)
-		{
-			SDL_DestroyWindow(m_window);
-			m_window = nullptr;
-		}
-
-		SDL_Quit();
 		m_isOpen = false;
 	}
 

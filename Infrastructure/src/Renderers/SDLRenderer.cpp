@@ -8,7 +8,16 @@
 namespace PixelPad::Infrastructure
 {
     SDLRenderer::SDLRenderer(IWindow& window) :
-        m_window(window)
+        m_window(window),
+		m_sdlRenderer(nullptr),
+		m_canvasTexture(nullptr),
+		m_canvasWidth(0),
+		m_canvasHeight(0)
+    {
+        CreateRenderer();
+    }
+
+    void SDLRenderer::CreateRenderer()
     {
         SDL_Window* sdlWindow = static_cast<SDL_Window*>(m_window.GetNativeWindow());
         if (!sdlWindow)
@@ -30,13 +39,32 @@ namespace PixelPad::Infrastructure
 		Shutdown();
     }
 
-    void SDLRenderer::ClearScreen()
+    void SDLRenderer::Shutdown()
     {
         if (m_sdlRenderer)
         {
-            SDL_SetRenderDrawColor(m_sdlRenderer, 0, 0, 0, 255); // Clear with black color
-            SDL_RenderClear(m_sdlRenderer);
+            SDL_DestroyRenderer(m_sdlRenderer);
+            m_sdlRenderer = nullptr;
         }
+
+        if (m_canvasTexture)
+        {
+            SDL_DestroyTexture(m_canvasTexture);
+            m_canvasTexture = nullptr;
+        }
+    }
+
+    void SDLRenderer::ClearScreen()
+    {
+        if (!m_sdlRenderer)
+        {
+            std::cerr << "SDL Renderer is null and cannot clear screen!" << std::endl;
+            return;
+        }
+
+        // Clear with black color
+        SDL_SetRenderDrawColor(m_sdlRenderer, 0, 0, 0, 255);
+        SDL_RenderClear(m_sdlRenderer);
     }
 
     void SDLRenderer::Render(const PixelPad::Core::Canvas& canvas)
@@ -45,7 +73,25 @@ namespace PixelPad::Infrastructure
         int height = canvas.GetHeight();
         const std::vector<int>& pixels = canvas.GetPixels();
 
-        SDL_Texture* texture = SDL_CreateTexture(
+        CreateCanvasTexture(width, height);
+        if (!m_canvasTexture) 
+            return;
+
+        if (!UpdateTextures(pixels, width, height)) 
+            return;
+
+        SDL_RenderTexture(m_sdlRenderer, m_canvasTexture, nullptr, nullptr);
+    }
+
+    void SDLRenderer::CreateCanvasTexture(int width, int height)
+    {
+        if (m_canvasTexture && (m_canvasWidth == width && m_canvasHeight == height))
+            return;
+
+        if (m_canvasTexture)
+            SDL_DestroyTexture(m_canvasTexture);
+
+        m_canvasTexture = SDL_CreateTexture(
             m_sdlRenderer,
             SDL_PIXELFORMAT_ARGB8888,
             SDL_TEXTUREACCESS_STREAMING,
@@ -53,20 +99,25 @@ namespace PixelPad::Infrastructure
             height
         );
 
-        if (!texture)
+        if (!m_canvasTexture)
         {
             std::cerr << "Failed to create texture: " << SDL_GetError() << std::endl;
             return;
         }
 
+        m_canvasWidth = width;
+        m_canvasHeight = height;
+    }
+
+    bool SDLRenderer::UpdateTextures(const std::vector<int>& pixels, int width, int height)
+    {
         void* texturePixels = nullptr;
         int pitch = 0;
 
-        if (!SDL_LockTexture(texture, nullptr, &texturePixels, &pitch))
+        if (!SDL_LockTexture(m_canvasTexture, nullptr, &texturePixels, &pitch))
         {
             std::cerr << "Failed to lock texture: " << SDL_GetError() << std::endl;
-            SDL_DestroyTexture(texture);
-            return;
+            return false;
         }
 
         for (int y = 0; y < height; ++y)
@@ -78,33 +129,18 @@ namespace PixelPad::Infrastructure
             );
         }
 
-        SDL_UnlockTexture(texture);
-
-        SDL_RenderTexture(m_sdlRenderer, texture, nullptr, nullptr);
-
-        SDL_DestroyTexture(texture);
+        SDL_UnlockTexture(m_canvasTexture);
+        return true;
     }
 
     void SDLRenderer::Present()
     {
-        if (m_sdlRenderer)
+        if (!m_sdlRenderer)
         {
-            SDL_RenderPresent(m_sdlRenderer); 
+            std::cerr << "SDL Renderer is null and cannot present to screen!" << std::endl;
+            return;
         }
-    }
 
-	// ToDo: Implement the Resize method to handle window resizing
-    void SDLRenderer::Resize(int newWidth, int newHeight)
-    {
-
-    }
-
-    void SDLRenderer::Shutdown()
-    {
-        if (m_sdlRenderer)
-        {
-            SDL_DestroyRenderer(m_sdlRenderer);
-            m_sdlRenderer = nullptr;
-        }
+        SDL_RenderPresent(m_sdlRenderer);
     }
 }

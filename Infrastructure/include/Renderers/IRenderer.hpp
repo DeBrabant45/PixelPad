@@ -17,7 +17,6 @@ namespace PixelPad::Infrastructure
         virtual void ClearScreen() = 0;
         virtual void Render(const PixelPad::Core::Canvas& canvas) = 0;
         virtual void Present() = 0;
-        virtual void Resize(int newWidth, int newHeight) = 0;
         virtual void Shutdown() = 0;
     };
 }

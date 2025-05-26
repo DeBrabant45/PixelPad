@@ -10,7 +10,7 @@ namespace PixelPad::Infrastructure
         virtual int GetHeight() const = 0;
         virtual void Resize(int newWidth, int newHeight) = 0;
         virtual bool IsOpen() const = 0;
-        virtual void PollEvents() = 0;
+        virtual void Close() = 0;
         virtual void Shutdown() = 0;
         virtual void* GetNativeWindow() const = 0;
 	};
