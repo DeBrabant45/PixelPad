@@ -5,6 +5,9 @@
 #include <algorithm>
 #include <utility>
 #include <cstddef>
+#include <typeindex>
+#include <unordered_map>
+#include <any>
 
 namespace PixelPad::Infrastructure
 {
@@ -13,7 +16,6 @@ namespace PixelPad::Infrastructure
     public:
         template<typename Event>
         using HandlerFunc = std::function<void(const Event&)>;
-
         using SubscriptionToken = size_t;
 
         template<typename Event>
@@ -30,21 +32,30 @@ namespace PixelPad::Infrastructure
         void Unsubscribe(SubscriptionToken token)
         {
             auto& handlers = GetHandlers<Event>();
-
-            const auto isMatchingToken = [token](const auto& handlerPair)
-            {
-               const auto& [handlerToken, _] = handlerPair;
-               return handlerToken == token;
-            };
-
-            handlers.erase(std::remove_if(handlers.begin(), handlers.end(), isMatchingToken),
+            handlers.erase(
+                std::remove_if(handlers.begin(), handlers.end(),
+                    [token](const auto& handlerPair)
+                    {
+                        return handlerPair.first == token;
+                    }),
                 handlers.end());
+        }
+
+        template<typename Event>
+        bool HasSubscriber(SubscriptionToken token) const
+        {
+            const auto& handlers = GetHandlers<Event>();
+            return std::any_of(handlers.begin(), handlers.end(),
+                [token](const auto& handlerPair)
+                {
+                    return handlerPair.first == token;
+                });
         }
 
         template<typename Event>
         void Publish(const Event& event) const
         {
-            auto& handlers = GetHandlers<Event>();
+            const auto& handlers = GetHandlers<Event>();
             for (const auto& [token, handler] : handlers)
             {
                 handler(event);
@@ -53,12 +64,21 @@ namespace PixelPad::Infrastructure
 
     private:
         template<typename Event>
-        std::vector<std::pair<SubscriptionToken, HandlerFunc<Event>>>& GetHandlers() const
+        using HandlerList = std::vector<std::pair<SubscriptionToken, HandlerFunc<Event>>>;
+
+        template<typename Event>
+        HandlerList<Event>& GetHandlers() const
         {
-            static std::vector<std::pair<SubscriptionToken, HandlerFunc<Event>>> handlers;
-            return handlers;
+            auto& anyRef = m_handlerMap[typeid(Event)];
+            if (!anyRef.has_value())
+            {
+                anyRef = HandlerList<Event>{};
+            }
+            return std::any_cast<HandlerList<Event>&>(anyRef);
         }
 
+    private:
+        mutable std::unordered_map<std::type_index, std::any> m_handlerMap;
         SubscriptionToken m_lastToken = 0;
     };
 }

@@ -1,12 +1,10 @@
 #pragma once
 
-#include "Windows/IWindow.hpp"
 #include "Buses/EventBus.hpp"
 
 namespace PixelPad::Infrastructure
 {
 	class IWindow;
-	class EventBus;
 }
 
 namespace PixelPad::Presentation

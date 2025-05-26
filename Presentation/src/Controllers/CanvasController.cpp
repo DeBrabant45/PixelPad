@@ -18,7 +18,7 @@ namespace PixelPad::Presentation
 
 	void Presentation::CanvasController::RegisterEventHandlers()
 	{
-		// Sample Draw line eventing for testing
+		// Sample Draw line event for testing
 		m_mouseEventToken = m_eventBus.Subscribe<PixelPad::Infrastructure::MouseButtonEvent>(
 			[this](const PixelPad::Infrastructure::MouseButtonEvent& evt)
 			{

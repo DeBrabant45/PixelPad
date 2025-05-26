@@ -13,6 +13,7 @@ set(PIXEL_PAD_INFRASTRUCTURE_TARGET_NAME  PixelPad.Infrastructure)
 
 set(PIXEL_PAD_CORE_TESTS_TARGET_NAME         PixelPad.Core.Tests)
 set(PIXEL_PAD_APPLICATION_TESTS_TARGET_NAME  PixelPad.Application.Tests)
+set(PIXEL_PAD_INFRASTRUCTURE_TESTS_TARGET_NAME  PixelPad.Infrastructure.Tests)
 
 # Enable testing once at root
 enable_testing()
@@ -26,3 +27,4 @@ add_subdirectory(Presentation)
 # Add Test layers
 add_subdirectory(Core.Tests)
 add_subdirectory(Application.Tests)
+add_subdirectory(Infrastructure.Tests)
