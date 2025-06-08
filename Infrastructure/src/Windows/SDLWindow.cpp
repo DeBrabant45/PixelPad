@@ -22,11 +22,24 @@ namespace PixelPad::Infrastructure
 			std::cerr << "SDL Init failed: " << SDL_GetError() << std::endl;
 			return;
 		}
-		m_window = SDL_CreateWindow(title, width, height, SDL_WINDOW_OPENGL);
+
+		m_window = SDL_CreateWindow(
+			title, 
+			width, 
+			height, 
+			SDL_WINDOW_OPENGL | 
+			SDL_WINDOW_RESIZABLE);
+
 		if (!m_window)
 		{
 			m_isOpen = false;
 			std::cerr << "SDL Window Creation failed: " << SDL_GetError() << std::endl;
+			return;
+		}
+
+		if (!SDL_SetWindowResizable(m_window, true))
+		{
+			std::cerr << "SDL Window Resizable failed: " << SDL_GetError() << std::endl;
 			return;
 		}
 
