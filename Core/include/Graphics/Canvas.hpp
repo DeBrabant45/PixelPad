@@ -7,7 +7,7 @@ namespace PixelPad::Core
 	class Canvas
 	{
 	public:
-		Canvas(int width, int height);
+		Canvas(int width, int height, uint32_t backgroundColor);
 		~Canvas() = default;
 		void Clear();
 		void DrawPixel(int x, int y, int color);
@@ -22,6 +22,7 @@ namespace PixelPad::Core
 	private:
 		int m_width{ 0 };
 		int m_height{ 0 };
+		uint32_t m_backgroundColor{ 0xFFFFFFFF };
 		std::vector<int> m_canvas;
 	};
 }

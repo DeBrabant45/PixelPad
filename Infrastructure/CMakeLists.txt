@@ -23,6 +23,7 @@ add_library(${PIXEL_PAD_INFRASTRUCTURE_TARGET_NAME}
 
     include/Events/MouseButtonEvent.hpp
     include/Events/WindowCloseEvent.hpp
+    include/Events/WindowResizeEvent.hpp
 )
 
 find_package(SDL3 CONFIG REQUIRED)

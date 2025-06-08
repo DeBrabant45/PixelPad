@@ -4,6 +4,8 @@
 #include "Events/MouseButtonEvent.hpp"
 
 #include <SDL3/SDL.h>
+#include <Events/WindowResizeEvent.hpp>
+#include <iostream>
 
 namespace PixelPad::Infrastructure
 {
@@ -20,6 +22,13 @@ namespace PixelPad::Infrastructure
         {
             ProcessWindowCloseEvent(event.type);
             ProcessMouseButtonEvent(event.type, event.button);
+            if (event.type == SDL_EVENT_WINDOW_RESIZED)
+            {
+                int width = event.window.data1;
+                int height = event.window.data2;
+                m_eventBus.Publish(WindowResizeEvent{ width, height });
+                std::cerr << "Window Resize command init: " << width << "x" << height << std::endl;
+            }
         }
     }
 

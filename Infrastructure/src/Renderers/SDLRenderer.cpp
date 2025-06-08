@@ -80,7 +80,8 @@ namespace PixelPad::Infrastructure
         if (!UpdateTextures(pixels, width, height)) 
             return;
 
-        SDL_RenderTexture(m_sdlRenderer, m_canvasTexture, nullptr, nullptr);
+        SDL_FRect dstRect = { 0, 0, static_cast<float>(width), static_cast<float>(height) };
+        SDL_RenderTexture(m_sdlRenderer, m_canvasTexture, nullptr, &dstRect);
     }
 
     void SDLRenderer::CreateCanvasTexture(int width, int height)
