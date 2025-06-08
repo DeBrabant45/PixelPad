@@ -8,6 +8,7 @@
 #include "Services/DrawService.hpp"
 #include "Controllers/CanvasController.hpp"
 #include "Controllers/WindowController.hpp"
+#include "Controllers/RendererController.hpp"
 
 namespace PixelPad::Presentation
 {
@@ -30,5 +31,6 @@ namespace PixelPad::Presentation
 		PixelPad::Application::DrawService m_drawService;
 		PixelPad::Presentation::CanvasController m_canvasController;
 		PixelPad::Presentation::WindowController m_windowController;
+		PixelPad::Presentation::RendererController m_rendererController;
 	};
 }
