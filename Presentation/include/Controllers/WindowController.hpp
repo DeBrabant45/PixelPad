@@ -26,5 +26,6 @@ namespace PixelPad::Presentation
 		PixelPad::Infrastructure::EventBus& m_eventBus;
 		PixelPad::Infrastructure::IWindow& m_window;
 		PixelPad::Infrastructure::EventBus::SubscriptionToken m_windowCloseEventToken;
+		PixelPad::Infrastructure::EventBus::SubscriptionToken m_windowResizeEventToken;
 	};
 }
