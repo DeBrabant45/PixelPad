@@ -3,10 +3,11 @@
 
 namespace PixelPad::Core
 {
-	Canvas::Canvas(int width, int height) : 
+	Canvas::Canvas(int width, int height, uint32_t backgroundColor) :
 		m_width{ width },
 		m_height{ height },
-		m_canvas(width * height, 0) 
+		m_backgroundColor{ backgroundColor },
+		m_canvas(width * height, backgroundColor) 
 	{
 
 	}
@@ -85,7 +86,7 @@ namespace PixelPad::Core
 		if (m_width == width && m_height == height)
 			return;
 
-		auto newCanvas = std::vector<int>(width * height, 0);
+		auto newCanvas = std::vector<int>(width * height, m_backgroundColor);
 		for (int y = 0; y < std::min(m_height, height); ++y)
 		{
 			for (int x = 0; x < std::min(m_width, width); ++x)

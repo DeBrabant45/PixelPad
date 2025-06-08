@@ -51,7 +51,7 @@ namespace PixelPad::Tests::Core
     {
         std::vector<int> pixels = { 1, 2, 3, 4, 5, 6 };
         PixelPad::Core::CanvasSnapshot snapshot(2, 2, pixels);
-        PixelPad::Core::Canvas canvas(10, 10);
+        PixelPad::Core::Canvas canvas(10, 10, 0);
 
         snapshot.ApplyTo(canvas);
 
@@ -67,7 +67,7 @@ namespace PixelPad::Tests::Core
     {
         std::vector<int> pixels = { 5, 6, 7, 8 };
         PixelPad::Core::CanvasSnapshot snapshot(2, 2, pixels);
-        PixelPad::Core::Canvas canvas(2, 2);
+        PixelPad::Core::Canvas canvas(2, 2, 0);
 
         canvas.DrawPixel(1, 1, 99);
         canvas.DrawPixel(2, 2, 88);
@@ -81,7 +81,7 @@ namespace PixelPad::Tests::Core
     {
         std::vector<int> pixels = { 10, 20, 30, 40 };
         PixelPad::Core::CanvasSnapshot snapshot(2, 2, pixels);
-        PixelPad::Core::Canvas canvas(1, 1);
+        PixelPad::Core::Canvas canvas(1, 1, 0);
 
 		snapshot.ApplyTo(canvas);
 
@@ -93,7 +93,7 @@ namespace PixelPad::Tests::Core
     {
         std::vector<int> emptyPixels;
         PixelPad::Core::CanvasSnapshot snapshot(0, 0, emptyPixels);
-        PixelPad::Core::Canvas canvas(2, 2);
+        PixelPad::Core::Canvas canvas(2, 2, 0);
 
 		snapshot.ApplyTo(canvas);
 
@@ -106,8 +106,8 @@ namespace PixelPad::Tests::Core
     {
         std::vector<int> pixels = { 1, 2, 3, 4 };
         PixelPad::Core::CanvasSnapshot snapshot(2, 2, pixels);
-        PixelPad::Core::Canvas canvasOne(1, 1);
-        PixelPad::Core::Canvas canvasTwo(3, 3);
+        PixelPad::Core::Canvas canvasOne(1, 1, 0);
+        PixelPad::Core::Canvas canvasTwo(3, 3, 0);
 
 		snapshot.ApplyTo(canvasOne);
 		snapshot.ApplyTo(canvasTwo);
