@@ -2,9 +2,10 @@
 #include "Windows/IWindow.hpp"
 #include "Events/WindowCloseEvent.hpp"
 #include "Events/MouseButtonEvent.hpp"
+#include "Events/WindowResizeEvent.hpp"
+#include "Enums/MouseButton.hpp"
 
 #include <SDL3/SDL.h>
-#include <Events/WindowResizeEvent.hpp>
 #include <iostream>
 
 namespace PixelPad::Infrastructure
@@ -26,7 +27,7 @@ namespace PixelPad::Infrastructure
             {
                 int width = event.window.data1;
                 int height = event.window.data2;
-                m_eventBus.Publish(WindowResizeEvent{ width, height });
+                m_eventBus.Publish(PixelPad::Application::WindowResizeEvent{ width, height });
                 std::cerr << "Window Resize command init: " << width << "x" << height << std::endl;
             }
         }
@@ -37,7 +38,7 @@ namespace PixelPad::Infrastructure
         if (type != SDL_EVENT_QUIT && type != SDL_EVENT_WINDOW_CLOSE_REQUESTED)
             return;
 
-        m_eventBus.Publish(WindowCloseEvent{ true });
+        m_eventBus.Publish(PixelPad::Application::WindowCloseEvent{ true });
     }
 
     void SDLInput::ProcessMouseButtonEvent(unsigned int type, SDL_MouseButtonEvent& button)
@@ -52,13 +53,13 @@ namespace PixelPad::Infrastructure
         switch (button.button)
         {
         case SDL_BUTTON_LEFT:
-            m_eventBus.Publish(MouseButtonEvent{ x, y, isPressed, MouseButton::Left });
+            m_eventBus.Publish(PixelPad::Application::MouseButtonEvent{ x, y, isPressed, PixelPad::Application::MouseButton::Left });
             break;
         case SDL_BUTTON_RIGHT:
-            m_eventBus.Publish(MouseButtonEvent{ x, y, isPressed, MouseButton::Right });
+            m_eventBus.Publish(PixelPad::Application::MouseButtonEvent{ x, y, isPressed, PixelPad::Application::MouseButton::Right });
             break;
         case SDL_BUTTON_MIDDLE:
-            m_eventBus.Publish(MouseButtonEvent{ x, y, isPressed, MouseButton::Middle });
+            m_eventBus.Publish(PixelPad::Application::MouseButtonEvent{ x, y, isPressed, PixelPad::Application::MouseButton::Middle });
             break;
         default:
             break;

@@ -19,8 +19,8 @@ namespace PixelPad::Presentation
 	void Presentation::CanvasController::RegisterEventHandlers()
 	{
 		// Sample Draw line event for testing
-		m_mouseEventToken = m_eventBus.Subscribe<PixelPad::Infrastructure::MouseButtonEvent>(
-			[this](const PixelPad::Infrastructure::MouseButtonEvent& evt)
+		m_mouseEventToken = m_eventBus.Subscribe<PixelPad::Application::MouseButtonEvent>(
+			[this](const PixelPad::Application::MouseButtonEvent& evt)
 			{
 
 				if (m_prevX != -1 && m_prevY != -1)
@@ -31,6 +31,11 @@ namespace PixelPad::Presentation
 				m_prevX = evt.X;
 				m_prevY = evt.Y;
 			});
+
+		// We need to take in an input 1, 2, 3 and this will determine the drawe type the user wants to use
+		// We do not want to call individual draw methods 
+		// Need to detemine if we want to uses a DTO to convert the mouse event to the Application layer
+		// Can converting one struct to another cause waste of memory?
 	}
 
 	Presentation::CanvasController::~CanvasController()
@@ -40,7 +45,7 @@ namespace PixelPad::Presentation
 
 	void Presentation::CanvasController::UnregisterEventHandlers()
 	{
-		m_eventBus.Unsubscribe<PixelPad::Infrastructure::MouseButtonEvent>(m_mouseEventToken);
+		m_eventBus.Unsubscribe<PixelPad::Application::MouseButtonEvent>(m_mouseEventToken);
 	}
 
 	void CanvasController::SetBackgroundColor(int color)

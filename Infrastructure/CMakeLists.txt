@@ -37,4 +37,5 @@ target_link_libraries(${PIXEL_PAD_INFRASTRUCTURE_TARGET_NAME}
     PRIVATE  
         SDL3::SDL3-shared
         ${PIXEL_PAD_CORE_TARGET_NAME}
+        ${PIXEL_PAD_APPLICATION_TARGET_NAME}
 )

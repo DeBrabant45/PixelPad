@@ -17,14 +17,14 @@ namespace PixelPad::Presentation
 
 	void WindowController::RegisterEventHandlers()
 	{
-		m_windowCloseEventToken = m_eventBus.Subscribe<PixelPad::Infrastructure::WindowCloseEvent>
-			([this](const PixelPad::Infrastructure::WindowCloseEvent&)
+		m_windowCloseEventToken = m_eventBus.Subscribe<PixelPad::Application::WindowCloseEvent>
+			([this](const PixelPad::Application::WindowCloseEvent&)
 			{
 				m_window.Close();
 			});
 
-		m_windowResizeEventToken = m_eventBus.Subscribe<PixelPad::Infrastructure::WindowResizeEvent>(
-			[this](const PixelPad::Infrastructure::WindowResizeEvent& evt)
+		m_windowResizeEventToken = m_eventBus.Subscribe<PixelPad::Application::WindowResizeEvent>(
+			[this](const PixelPad::Application::WindowResizeEvent& evt)
 			{
 				m_window.Resize(evt.Width, evt.Height);
 			});
@@ -37,8 +37,8 @@ namespace PixelPad::Presentation
 
 	void WindowController::UnregisterEventHandlers()
 	{
-		m_eventBus.Unsubscribe<PixelPad::Infrastructure::WindowCloseEvent>(m_windowCloseEventToken);
-		m_eventBus.Unsubscribe<PixelPad::Infrastructure::WindowResizeEvent>(m_windowResizeEventToken);
+		m_eventBus.Unsubscribe<PixelPad::Application::WindowCloseEvent>(m_windowCloseEventToken);
+		m_eventBus.Unsubscribe<PixelPad::Application::WindowResizeEvent>(m_windowResizeEventToken);
 	}
 
 	void WindowController::Resize(int newWidth, int newHeight)

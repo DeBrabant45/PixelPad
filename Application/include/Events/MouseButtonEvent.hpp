@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Inputs/MouseButton.hpp"
+#include "Enums/MouseButton.hpp"
 
-namespace PixelPad::Infrastructure
+namespace PixelPad::Application
 {
     struct MouseButtonEvent
     {
