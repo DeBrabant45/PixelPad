@@ -10,7 +10,6 @@ namespace PixelPad::Presentation
 		PixelPad::Infrastructure::EventBus& eventBus) :
 		m_canvas(canvas),
 		m_drawService(drawService),
-		m_backgroundColor(0xFFFFFFFF),
 		m_eventBus(eventBus),
 		m_mouseEventToken(),
 		m_toolTypeChangeEventToken()

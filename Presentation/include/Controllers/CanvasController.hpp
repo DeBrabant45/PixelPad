@@ -28,7 +28,6 @@ namespace PixelPad::Presentation
 	private:
 		Core::Canvas& m_canvas;
 		Application::IDrawService& m_drawService;
-		int m_backgroundColor = 0xFFFFFFFF;
 		PixelPad::Infrastructure::EventBus& m_eventBus;
 		PixelPad::Infrastructure::EventBus::SubscriptionToken m_mouseEventToken;
 		PixelPad::Infrastructure::EventBus::SubscriptionToken m_toolTypeChangeEventToken;
