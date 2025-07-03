@@ -33,23 +33,23 @@ namespace PixelPad::Presentation
 			});
 	}
 
+	void CanvasController::OnDraw(const PixelPad::Application::MouseButtonEvent& mouseButtonEvent)
+	{
+		m_drawService.ProcessDrawInput(mouseButtonEvent);
+	}
+
+	void CanvasController::OnToolTypeChange(const PixelPad::Application::ToolTypeChangedEvent& toolTypeChangedEvent)
+	{
+		m_drawService.SetToolType(toolTypeChangedEvent.NewTool);
+	}
+
 	Presentation::CanvasController::~CanvasController()
 	{
 		UnregisterEventHandlers();
 	}
 
-	void CanvasController::OnToolTypeChange(const PixelPad::Application::ToolTypeChangedEvent& toolTypeChangedEvent)
-	{
-
-	}
-
 	void Presentation::CanvasController::UnregisterEventHandlers()
 	{
 		m_eventBus.Unsubscribe<PixelPad::Application::MouseButtonEvent>(m_mouseEventToken);
-	}
-
-	void CanvasController::OnDraw(const PixelPad::Application::MouseButtonEvent& mouseButtonEvent)
-	{
-		m_drawService.ProcessDrawInput(mouseButtonEvent);
 	}
 }
