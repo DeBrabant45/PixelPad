@@ -16,14 +16,8 @@ add_library(${PIXEL_PAD_INFRASTRUCTURE_TARGET_NAME}
     src/Inputs/SDLInput.cpp
     include/Inputs/SDLInput.hpp
 
-    include/Inputs/MouseButton.hpp
-
     src/Buses/EventBus.cpp
     include/Buses/EventBus.hpp
-
-    include/Events/MouseButtonEvent.hpp
-    include/Events/WindowCloseEvent.hpp
-    include/Events/WindowResizeEvent.hpp
 )
 
 find_package(SDL3 CONFIG REQUIRED)
