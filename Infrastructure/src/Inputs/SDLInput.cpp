@@ -22,7 +22,8 @@ namespace PixelPad::Infrastructure
         while (SDL_PollEvent(&event))
         {
             ProcessWindowCloseEvent(event.type);
-            ProcessMouseButtonEvent(event.type, event.button);
+            ProcessMouseButtonEvent(event.type, event.button); 
+            ProcessMouseMotionEvent(event.type, event.motion);
             if (event.type == SDL_EVENT_WINDOW_RESIZED)
             {
                 int width = event.window.data1;
@@ -63,6 +64,28 @@ namespace PixelPad::Infrastructure
             break;
         default:
             break;
+        }
+    }
+
+    void SDLInput::ProcessMouseMotionEvent(unsigned int type, SDL_MouseMotionEvent& motion)
+    {
+        if (type != SDL_EVENT_MOUSE_MOTION)
+            return;
+
+        float x = 0.f, y = 0.f;
+        Uint32 buttons = SDL_GetMouseState(&x, &y);
+
+        if (buttons & SDL_BUTTON_LMASK)
+        {
+            m_eventBus.Publish(PixelPad::Application::MouseButtonEvent{ static_cast<int>(x), static_cast<int>(y), true, PixelPad::Application::MouseButton::Left });
+        }
+        if (buttons & SDL_BUTTON_RMASK)
+        {
+            m_eventBus.Publish(PixelPad::Application::MouseButtonEvent{ static_cast<int>(x), static_cast<int>(y), true, PixelPad::Application::MouseButton::Right });
+        }
+        if (buttons & SDL_BUTTON_MMASK)
+        {
+            m_eventBus.Publish(PixelPad::Application::MouseButtonEvent{ static_cast<int>(x), static_cast<int>(y), true, PixelPad::Application::MouseButton::Middle });
         }
     }
 }

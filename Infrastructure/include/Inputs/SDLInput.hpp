@@ -4,6 +4,7 @@
 #include "Buses/EventBus.hpp"
 
 struct SDL_MouseButtonEvent;
+struct SDL_MouseMotionEvent;
 
 namespace PixelPad::Infrastructure
 {
@@ -16,7 +17,8 @@ namespace PixelPad::Infrastructure
 
 	private:
 		void ProcessWindowCloseEvent(unsigned int type);
-		void ProcessMouseButtonEvent(unsigned int type, SDL_MouseButtonEvent& button);
+		void ProcessMouseButtonEvent(unsigned int type, SDL_MouseButtonEvent& button); 
+		void ProcessMouseMotionEvent(unsigned int type, SDL_MouseMotionEvent& motion);
 
 	private:
 		EventBus& m_eventBus;
