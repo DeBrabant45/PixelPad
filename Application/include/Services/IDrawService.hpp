@@ -4,6 +4,9 @@
 
 namespace PixelPad::Application
 {
+    struct MouseButtonEvent;
+    enum class ToolType;
+
     class IDrawService
     {
     public:
@@ -14,6 +17,8 @@ namespace PixelPad::Application
         virtual void ClearCanvas() = 0;
         virtual std::pair<int, int> GetCanvasSize() const = 0;
         virtual int GetPixel(int x, int y) const = 0;
+        virtual void ProcessDrawInput(const MouseButtonEvent& mouseButtonEvent) = 0;
+        virtual void SetToolType(const ToolType& toolType) = 0;
 
         virtual void SaveCanvasState() = 0;
         virtual void LoadCanvasState() = 0;

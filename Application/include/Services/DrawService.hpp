@@ -3,6 +3,7 @@
 #include "Graphics/Canvas.hpp"
 #include "Graphics/CanvasSnapshot.hpp"
 #include "IDrawService.hpp"
+#include "Enums/ToolType.hpp"
 
 #include <memory>
 
@@ -23,9 +24,17 @@ namespace PixelPad::Application
         int GetPixel(int x, int y) const override;
         void SaveCanvasState() override;
         void LoadCanvasState() override;
+        void ProcessDrawInput(const MouseButtonEvent& mouseButtonEvent) override;
+        void SetToolType(const ToolType& toolType) override;
+
+    private:
+        void DrawWithPencil(const MouseButtonEvent& mouseButtonEvent);
 
 	private:
         PixelPad::Core::Canvas& m_canvas;
         std::unique_ptr<PixelPad::Core::CanvasSnapshot> m_canvasSnapshot;
+		ToolType m_currentToolType;
+        int m_lastXCoordinate;
+		int m_lastYCoordinate;
 	};
 }

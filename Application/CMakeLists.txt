@@ -12,6 +12,7 @@ add_library(${PIXEL_PAD_APPLICATION_TARGET_NAME}
     include/Events/MouseButtonEvent.hpp
     include/Events/WindowCloseEvent.hpp
     include/Events/WindowResizeEvent.hpp
+    include/Events/ToolTypeChangedEvent.hpp
 )
 
 target_include_directories(${PIXEL_PAD_APPLICATION_TARGET_NAME}
