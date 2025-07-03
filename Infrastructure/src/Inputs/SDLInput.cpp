@@ -24,13 +24,7 @@ namespace PixelPad::Infrastructure
             ProcessWindowCloseEvent(event.type);
             ProcessMouseButtonEvent(event.type, event.button); 
             ProcessMouseMotionEvent(event.type, event.motion);
-            if (event.type == SDL_EVENT_WINDOW_RESIZED)
-            {
-                int width = event.window.data1;
-                int height = event.window.data2;
-                m_eventBus.Publish(PixelPad::Application::WindowResizeEvent{ width, height });
-                std::cerr << "Window Resize command init: " << width << "x" << height << std::endl;
-            }
+            ProcessWindowResizeEvent(event.type, event.window);
         }
     }
 
@@ -42,7 +36,18 @@ namespace PixelPad::Infrastructure
         m_eventBus.Publish(PixelPad::Application::WindowCloseEvent{ true });
     }
 
-    void SDLInput::ProcessMouseButtonEvent(unsigned int type, SDL_MouseButtonEvent& button)
+    void SDLInput::ProcessWindowResizeEvent(unsigned int type, const SDL_WindowEvent& window)
+    {
+        if (type != SDL_EVENT_WINDOW_RESIZED)
+            return;
+
+        int width = window.data1;
+        int height = window.data2;
+        m_eventBus.Publish(PixelPad::Application::WindowResizeEvent{ width, height });
+        std::cerr << "Window Resize command init: " << width << "x" << height << std::endl;
+    }
+
+    void SDLInput::ProcessMouseButtonEvent(unsigned int type, const SDL_MouseButtonEvent& button)
     {
         if (type != SDL_EVENT_MOUSE_BUTTON_DOWN && type != SDL_EVENT_MOUSE_BUTTON_UP)
             return;
@@ -67,7 +72,7 @@ namespace PixelPad::Infrastructure
         }
     }
 
-    void SDLInput::ProcessMouseMotionEvent(unsigned int type, SDL_MouseMotionEvent& motion)
+    void SDLInput::ProcessMouseMotionEvent(unsigned int type, const SDL_MouseMotionEvent& motion)
     {
         if (type != SDL_EVENT_MOUSE_MOTION)
             return;

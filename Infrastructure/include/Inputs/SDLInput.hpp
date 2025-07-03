@@ -5,6 +5,7 @@
 
 struct SDL_MouseButtonEvent;
 struct SDL_MouseMotionEvent;
+struct SDL_WindowEvent;
 
 namespace PixelPad::Infrastructure
 {
@@ -17,8 +18,9 @@ namespace PixelPad::Infrastructure
 
 	private:
 		void ProcessWindowCloseEvent(unsigned int type);
-		void ProcessMouseButtonEvent(unsigned int type, SDL_MouseButtonEvent& button); 
-		void ProcessMouseMotionEvent(unsigned int type, SDL_MouseMotionEvent& motion);
+		void ProcessWindowResizeEvent(unsigned int type, const SDL_WindowEvent& window);
+		void ProcessMouseButtonEvent(unsigned int type, const SDL_MouseButtonEvent& button); 
+		void ProcessMouseMotionEvent(unsigned int type, const SDL_MouseMotionEvent& motion);
 
 	private:
 		EventBus& m_eventBus;
