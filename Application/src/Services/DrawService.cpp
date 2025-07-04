@@ -54,6 +54,14 @@ namespace PixelPad::Application
 	void DrawService::SetToolType(const ToolType& toolType)
 	{
 		m_currentToolType = toolType;
+		ResetLastCoordinates();
+
+	}
+
+	void DrawService::ResetLastCoordinates()
+	{
+		m_lastXCoordinate = -1;
+		m_lastYCoordinate = -1;
 	}
 
 	void DrawService::ProcessDrawInput(const PixelPad::Application::MouseButtonEvent& mouseButtonEvent)
@@ -66,6 +74,7 @@ namespace PixelPad::Application
 			DrawWithPencil(mouseButtonEvent);
 			break;
 		case PixelPad::Application::ToolType::Line:
+			DrawWithLineTool(mouseButtonEvent);
 			break;
 		case PixelPad::Application::ToolType::Fill:
 			break;
@@ -96,8 +105,26 @@ namespace PixelPad::Application
 		}
 		else
 		{
-			m_lastXCoordinate = -1;
-			m_lastYCoordinate = -1;
+			ResetLastCoordinates();
+		}
+	}
+
+	void DrawService::DrawWithLineTool(const MouseButtonEvent& mouseButtonEvent)
+	{
+		if (m_currentToolType != ToolType::Line)
+			return;
+
+		if (m_lastXCoordinate < 0 || m_lastYCoordinate < 0)
+		{
+			m_lastXCoordinate = mouseButtonEvent.X;
+			m_lastYCoordinate = mouseButtonEvent.Y;
+		}
+
+		if (!mouseButtonEvent.IsPressed)
+		{
+			DrawLine(m_lastXCoordinate, m_lastYCoordinate, mouseButtonEvent.X, mouseButtonEvent.Y, 0xFF000000);
+			m_lastXCoordinate = mouseButtonEvent.X;
+			m_lastYCoordinate = mouseButtonEvent.Y;
 		}
 	}
 

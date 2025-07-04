@@ -18,8 +18,8 @@ namespace PixelPad::Presentation
 	public:
 		CanvasController(PixelPad::Core::Canvas& canvas, Application::IDrawService& drawService, PixelPad::Infrastructure::EventBus& eventBus);
 		~CanvasController();
-		void OnToolTypeChange(const PixelPad::Application::ToolTypeChangedEvent& toolTypeChangedEvent);
 		void OnDraw(const PixelPad::Application::MouseButtonEvent& mouseButtonEvent);
+		void OnToolTypeChange(const PixelPad::Application::ToolTypeChangedEvent& toolTypeChangedEvent);
 
 	private:
 		void RegisterEventHandlers();

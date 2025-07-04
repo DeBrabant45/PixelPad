@@ -28,7 +28,9 @@ namespace PixelPad::Application
         void SetToolType(const ToolType& toolType) override;
 
     private:
+		void ResetLastCoordinates();
         void DrawWithPencil(const MouseButtonEvent& mouseButtonEvent);
+		void DrawWithLineTool(const MouseButtonEvent& mouseButtonEvent);
 
 	private:
         PixelPad::Core::Canvas& m_canvas;
