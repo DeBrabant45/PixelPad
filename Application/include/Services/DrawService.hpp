@@ -4,6 +4,10 @@
 #include "Graphics/CanvasSnapshot.hpp"
 #include "IDrawService.hpp"
 #include "Enums/ToolType.hpp"
+#include "Tools/PencilTool.hpp"
+#include "Tools/LineTool.hpp"
+#include "Tools/EraserTool.hpp"
+#include "Tools/ITool.hpp"
 
 #include <memory>
 
@@ -25,18 +29,14 @@ namespace PixelPad::Application
         void SaveCanvasState() override;
         void LoadCanvasState() override;
         void ProcessDrawInput(const MouseButtonEvent& mouseButtonEvent) override;
-        void SetToolType(const ToolType& toolType) override;
-
-    private:
-		void ResetLastCoordinates();
-        void DrawWithPencil(const MouseButtonEvent& mouseButtonEvent);
-		void DrawWithLineTool(const MouseButtonEvent& mouseButtonEvent);
+        void SelectTool(const ToolType& toolType) override;
 
 	private:
         PixelPad::Core::Canvas& m_canvas;
         std::unique_ptr<PixelPad::Core::CanvasSnapshot> m_canvasSnapshot;
-		ToolType m_currentToolType;
-        int m_lastXCoordinate;
-		int m_lastYCoordinate;
+        PixelPad::Core::PencilTool m_pencilTool;
+		PixelPad::Core::LineTool m_lineTool;
+        PixelPad::Core::EraserTool m_eraserTool;
+		PixelPad::Core::ITool* m_currentTool;
 	};
 }

@@ -9,9 +9,10 @@ namespace PixelPad::Application
 	DrawService::DrawService(PixelPad::Core::Canvas& canvas) :
 		m_canvas{ canvas },
 		m_canvasSnapshot{ },
-		m_currentToolType{ ToolType::Pencil },
-		m_lastXCoordinate{ -1 },
-		m_lastYCoordinate{ -1 }
+		m_pencilTool{ canvas },
+		m_lineTool{ canvas },
+		m_eraserTool{ canvas },
+		m_currentTool{ &m_pencilTool }
 	{
 
 	}
@@ -51,81 +52,41 @@ namespace PixelPad::Application
 		return m_canvas.GetPixel(x, y);
 	}
 
-	void DrawService::SetToolType(const ToolType& toolType)
+	void DrawService::SelectTool(const ToolType& toolType)
 	{
-		m_currentToolType = toolType;
-		ResetLastCoordinates();
+		if (m_currentTool)
+		{
+			m_currentTool->Reset();
+		}
 
-	}
-
-	void DrawService::ResetLastCoordinates()
-	{
-		m_lastXCoordinate = -1;
-		m_lastYCoordinate = -1;
-	}
-
-	void DrawService::ProcessDrawInput(const PixelPad::Application::MouseButtonEvent& mouseButtonEvent)
-	{
-		switch (m_currentToolType)
+		switch (toolType)
 		{
 		case PixelPad::Application::ToolType::None:
 			break;
+
 		case PixelPad::Application::ToolType::Pencil:
-			DrawWithPencil(mouseButtonEvent);
+			m_currentTool = &m_pencilTool;
 			break;
+
 		case PixelPad::Application::ToolType::Line:
-			DrawWithLineTool(mouseButtonEvent);
+			m_currentTool = &m_lineTool;
 			break;
+
 		case PixelPad::Application::ToolType::Fill:
 			break;
+
 		case PixelPad::Application::ToolType::Eraser:
+			m_currentTool = &m_eraserTool;
 			break;
+
 		default:
 			break;
 		}
 	}
 
-	void DrawService::DrawWithPencil(const MouseButtonEvent& mouseButtonEvent)
+	void DrawService::ProcessDrawInput(const PixelPad::Application::MouseButtonEvent& mouseButtonEvent)
 	{
-		if (m_currentToolType != ToolType::Pencil)
-			return;
-
-		if (mouseButtonEvent.IsPressed)
-		{
-			if (m_lastXCoordinate >= 0 && m_lastYCoordinate >= 0)
-			{
-				DrawLine(m_lastXCoordinate, m_lastYCoordinate, mouseButtonEvent.X, mouseButtonEvent.Y, 0xFF000000);
-			}
-			else
-			{
-				DrawPixel(mouseButtonEvent.X, mouseButtonEvent.Y, 0xFF000000);
-			}
-			m_lastXCoordinate = mouseButtonEvent.X;
-			m_lastYCoordinate = mouseButtonEvent.Y;
-		}
-		else
-		{
-			ResetLastCoordinates();
-		}
-	}
-
-	void DrawService::DrawWithLineTool(const MouseButtonEvent& mouseButtonEvent)
-	{
-		if (m_currentToolType != ToolType::Line)
-			return;
-
-		if (m_lastXCoordinate < 0 || m_lastYCoordinate < 0)
-		{
-			m_lastXCoordinate = mouseButtonEvent.X;
-			m_lastYCoordinate = mouseButtonEvent.Y;
-		}
-
-		if (!mouseButtonEvent.IsPressed)
-		{
-			DrawLine(m_lastXCoordinate, m_lastYCoordinate, mouseButtonEvent.X, mouseButtonEvent.Y, 0xFF000000);
-			m_lastXCoordinate = mouseButtonEvent.X;
-			m_lastYCoordinate = mouseButtonEvent.Y;
-		}
+		m_currentTool->Draw(mouseButtonEvent.X, mouseButtonEvent.Y, mouseButtonEvent.IsPressed);
 	}
 
 	void DrawService::SaveCanvasState()
