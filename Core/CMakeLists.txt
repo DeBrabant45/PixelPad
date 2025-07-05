@@ -6,6 +6,17 @@ add_library(${PIXEL_PAD_CORE_TARGET_NAME}
 
     src/Graphics/CanvasSnapshot.cpp
     include/Graphics/CanvasSnapshot.hpp
+
+    include/Tools/ITool.hpp
+
+    src/Tools/PencilTool.cpp
+    include/Tools/PencilTool.hpp
+
+    src/Tools/LineTool.cpp
+    include/Tools/LineTool.hpp
+
+    src/Tools/EraserTool.cpp
+    include/Tools/EraserTool.hpp
 )
 
 target_include_directories(${PIXEL_PAD_CORE_TARGET_NAME}
