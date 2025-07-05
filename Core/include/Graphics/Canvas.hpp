@@ -20,9 +20,9 @@ namespace PixelPad::Core
 		std::vector<int> GetPixels() const;
 
 	private:
+		std::vector<int> m_canvas;
 		int m_width{ 0 };
 		int m_height{ 0 };
 		uint32_t m_backgroundColor{ 0xFFFFFFFF };
-		std::vector<int> m_canvas;
 	};
 }

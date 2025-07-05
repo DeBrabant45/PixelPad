@@ -1,4 +1,5 @@
 #include "Tools/EraserTool.hpp"
+#include "Tools/DrawCommand.hpp"
 
 namespace PixelPad::Core
 {
@@ -15,7 +16,7 @@ namespace PixelPad::Core
 
 	}
 
-	void EraserTool::Draw(int x, int y, bool isPressed)
+	void EraserTool::Draw(const DrawCommand& command)
 	{
 
 	}

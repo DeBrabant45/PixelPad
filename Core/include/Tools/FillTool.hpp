@@ -5,17 +5,15 @@
 
 namespace PixelPad::Core
 {
-	class EraserTool : public ITool
+	class FillTool : public ITool 
 	{
 	public:
-		EraserTool(Canvas& canvas);
-		~EraserTool() override = default;
+		FillTool(Canvas& canvas);
+		~FillTool() override = default;
 		void Reset() override;
 		void Draw(const DrawCommand& command) override;
 
 	private:
 		Canvas& m_canvas;
-		int m_lastXCoordinate;
-		int m_lastYCoordinate;
 	};
 }

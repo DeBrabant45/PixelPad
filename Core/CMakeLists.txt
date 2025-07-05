@@ -17,6 +17,11 @@ add_library(${PIXEL_PAD_CORE_TARGET_NAME}
 
     src/Tools/EraserTool.cpp
     include/Tools/EraserTool.hpp
+
+    src/Tools/FillTool.cpp
+    include/Tools/FillTool.hpp
+
+    include/Tools/DrawCommand.hpp
 )
 
 target_include_directories(${PIXEL_PAD_CORE_TARGET_NAME}

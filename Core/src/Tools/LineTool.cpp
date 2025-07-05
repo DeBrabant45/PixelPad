@@ -1,4 +1,5 @@
 #include "Tools/LineTool.hpp"
+#include "Tools/DrawCommand.hpp"
 
 namespace PixelPad::Core
 {
@@ -16,19 +17,22 @@ namespace PixelPad::Core
 		m_lastYCoordinate = -1;
 	}
 
-	void LineTool::Draw(int x, int y, bool isPressed)
+	void LineTool::Draw(const DrawCommand& command)
 	{
-		if (m_lastXCoordinate < 0 || m_lastYCoordinate < 0)
+		// Capture the starting point on first press
+		if (command.IsPressed && m_lastXCoordinate == -1 && m_lastYCoordinate == -1)
 		{
-			m_lastXCoordinate = x;
-			m_lastYCoordinate = y;
+			m_lastXCoordinate = command.X;
+			m_lastYCoordinate = command.Y;
+			return;
 		}
 
-		if (!isPressed)
+		// On release, draw from the stored press point
+		if (!command.IsPressed && m_lastXCoordinate >= 0 && m_lastYCoordinate >= 0)
 		{
-			m_canvas.DrawLine(m_lastXCoordinate, m_lastYCoordinate, x, y, 0xFF000000);
-			m_lastXCoordinate = x;
-			m_lastYCoordinate = y;
+			m_canvas.DrawLine(m_lastXCoordinate, m_lastYCoordinate, command.X, command.Y, command.Color);
+			Reset();
 		}
 	}
+
 }

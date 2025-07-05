@@ -17,8 +17,8 @@ namespace PixelPad::Core
 		void ApplyTo(Canvas& canvas) const;
 
 	private:
+		std::vector<int> m_pixels;
 		int m_width;
 		int m_height;
-		std::vector<int> m_pixels;
 	};
 }

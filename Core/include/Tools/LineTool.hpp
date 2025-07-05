@@ -11,7 +11,7 @@ namespace PixelPad::Core
 		LineTool(Canvas& canvas);
 		~LineTool() override = default;
 		void Reset() override;
-		void Draw(int x, int y, bool isPressed) override;
+		void Draw(const DrawCommand& command) override;
 
 	private:
 		Canvas& m_canvas;

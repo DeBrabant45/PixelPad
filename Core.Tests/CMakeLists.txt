@@ -3,6 +3,11 @@
 add_executable(${PIXEL_PAD_CORE_TESTS_TARGET_NAME}
     Graphics/CanvasTests.cpp
     Graphics/CanvasSnapshotTests.cpp
+
+    Tools/PencilToolTests.cpp
+    Tools/LineToolTests.cpp
+    Tools/EraserToolTests.cpp
+    Tools/FillToolTests.cpp
 )
 
 target_include_directories(${PIXEL_PAD_CORE_TESTS_TARGET_NAME}
