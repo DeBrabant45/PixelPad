@@ -61,13 +61,13 @@ namespace PixelPad::Infrastructure
         switch (button.button)
         {
         case SDL_BUTTON_LEFT:
-            m_eventBus.Publish(PixelPad::Application::MouseButtonEvent{ x, y, isPressed, PixelPad::Application::MouseButton::Left });
+            m_eventBus.Publish(PixelPad::Application::MouseButtonEvent( x, y, isPressed, PixelPad::Application::MouseButton::Left));
             break;
         case SDL_BUTTON_RIGHT:
-            m_eventBus.Publish(PixelPad::Application::MouseButtonEvent{ x, y, isPressed, PixelPad::Application::MouseButton::Right });
+            m_eventBus.Publish(PixelPad::Application::MouseButtonEvent( x, y, isPressed, PixelPad::Application::MouseButton::Right));
             break;
         case SDL_BUTTON_MIDDLE:
-            m_eventBus.Publish(PixelPad::Application::MouseButtonEvent{ x, y, isPressed, PixelPad::Application::MouseButton::Middle });
+            m_eventBus.Publish(PixelPad::Application::MouseButtonEvent( x, y, isPressed, PixelPad::Application::MouseButton::Middle));
             break;
         default:
             break;
@@ -84,15 +84,15 @@ namespace PixelPad::Infrastructure
 
         if (buttons & SDL_BUTTON_LMASK)
         {
-            m_eventBus.Publish(PixelPad::Application::MouseButtonEvent{ static_cast<int>(x), static_cast<int>(y), true, PixelPad::Application::MouseButton::Left });
+            m_eventBus.Publish(PixelPad::Application::MouseButtonEvent(static_cast<int>(x), static_cast<int>(y), true, PixelPad::Application::MouseButton::Left));
         }
         if (buttons & SDL_BUTTON_RMASK)
         {
-            m_eventBus.Publish(PixelPad::Application::MouseButtonEvent{ static_cast<int>(x), static_cast<int>(y), true, PixelPad::Application::MouseButton::Right });
+            m_eventBus.Publish(PixelPad::Application::MouseButtonEvent( static_cast<int>(x), static_cast<int>(y), true, PixelPad::Application::MouseButton::Right));
         }
         if (buttons & SDL_BUTTON_MMASK)
         {
-            m_eventBus.Publish(PixelPad::Application::MouseButtonEvent{ static_cast<int>(x), static_cast<int>(y), true, PixelPad::Application::MouseButton::Middle });
+            m_eventBus.Publish(PixelPad::Application::MouseButtonEvent(static_cast<int>(x), static_cast<int>(y), true, PixelPad::Application::MouseButton::Middle));
         }
     }
 

@@ -8,7 +8,16 @@ namespace PixelPad::Application
     {
         int X;
         int Y;
-        bool IsPressed;
         MouseButton Button;
+        bool IsPressed;
+
+        MouseButtonEvent(int x, int y, bool isPressed, MouseButton button): 
+            X(x), 
+            Y(y), 
+            IsPressed(isPressed), 
+            Button(button)  
+        {
+
+		}
     };
 }
