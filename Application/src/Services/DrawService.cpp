@@ -1,34 +1,65 @@
 #include "Services/DrawService.hpp"
 #include "Graphics/CanvasSnapshot.hpp"
+#include "Events/MouseButtonEvent.hpp"
+#include "Tools/DrawCommand.hpp"
+
 #include <iostream>
 
 namespace PixelPad::Application
 {
 	DrawService::DrawService(PixelPad::Core::Canvas& canvas) :
 		m_canvas{ canvas },
+		m_pencilTool{ canvas },
+		m_lineTool{ canvas },
+		m_eraserTool{ canvas },
+		m_fillTool{ canvas },
+		m_currentTool{ &m_pencilTool },
 		m_canvasSnapshot{ }
 	{
-
+		std::cout << "Size of DrawService: " << sizeof(*this) << std::endl; // 120
 	}
 
-	void DrawService::DrawPixel(int x, int y, int color)
+	void DrawService::SelectTool(const ToolType& toolType)
 	{
-		m_canvas.DrawPixel(x, y, color);
+		if (m_currentTool)
+		{
+			m_currentTool->Reset();
+		}
+
+		switch (toolType)
+		{
+		case PixelPad::Application::ToolType::Pencil:
+			m_currentTool = &m_pencilTool;
+			break;
+
+		case PixelPad::Application::ToolType::Line:
+			m_currentTool = &m_lineTool;
+			break;
+
+		case PixelPad::Application::ToolType::Fill:
+			m_currentTool = &m_fillTool;
+			break;
+
+		case PixelPad::Application::ToolType::Eraser:
+			m_currentTool = &m_eraserTool;
+			break;
+
+		default:
+			break;
+		}
 	}
 
-	void DrawService::DrawLine(int startX, int startY, int endX, int endY, int color)
+	void DrawService::ProcessDrawInput(const PixelPad::Application::MouseButtonEvent& mouseButtonEvent)
 	{
-		m_canvas.DrawLine(startX, startY, endX, endY, color);
-	}
+		PixelPad::Core::DrawCommand command
+		{
+			mouseButtonEvent.X,
+			mouseButtonEvent.Y,
+			0xFF000000, // ToDo: Replace with actual color logic
+			mouseButtonEvent.IsPressed
+		};
 
-	void DrawService::ResizeCanvas(int width, int height)
-	{
-		m_canvas.Resize(width, height);
-	}
-
-	void DrawService::FillCanvas(int color)
-	{
-		m_canvas.Fill(color);
+		m_currentTool->Draw(command);
 	}
 
 	void DrawService::ClearCanvas()
@@ -36,14 +67,14 @@ namespace PixelPad::Application
 		m_canvas.Clear();
 	}
 
+	void DrawService::ResizeCanvas(int width, int height)
+	{
+		m_canvas.Resize(width, height);
+	}
+
 	std::pair<int, int> DrawService::GetCanvasSize() const
 	{
 		return std::make_pair(m_canvas.GetWidth(), m_canvas.GetHeight());
-	}
-
-	int DrawService::GetPixel(int x, int y) const
-	{
-		return m_canvas.GetPixel(x, y);
 	}
 
 	void DrawService::SaveCanvasState()

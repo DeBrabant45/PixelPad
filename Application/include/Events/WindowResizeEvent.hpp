@@ -1,6 +1,6 @@
 #pragma once
 
-namespace PixelPad::Infrastructure
+namespace PixelPad::Application
 {
 	struct WindowResizeEvent 
 	{
