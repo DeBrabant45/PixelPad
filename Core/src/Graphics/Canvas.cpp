@@ -1,4 +1,5 @@
 #include "Graphics/Canvas.hpp"
+
 #include <iostream>
 
 namespace PixelPad::Core
@@ -9,7 +10,7 @@ namespace PixelPad::Core
 		m_backgroundColor{ backgroundColor },
 		m_canvas(width * height, backgroundColor) 
 	{
-
+		std::cout << "Size of Canvas: " << sizeof(*this) << std::endl; // 48
 	}
 
 	void Canvas::Clear()
@@ -77,6 +78,44 @@ namespace PixelPad::Core
 
 				// Move to the next point in the Y direction
 				startY += stepYDirection;
+			}
+		}
+	}
+
+	void Canvas::DrawCircleFilled(int centerX, int centerY, int radius, int color)
+	{
+		const int radiusSquared = radius * radius;
+		for (int offSetY = -radius; offSetY <= radius; ++offSetY)
+		{
+			for (int offSetX = -radius; offSetX <= radius; ++offSetX)
+			{
+				int distanceSquared = offSetX * offSetX + offSetY * offSetY;
+				if (distanceSquared <= radiusSquared)
+				{
+					int pixelX = centerX + offSetX;
+					int pixelY = centerY + offSetY;
+					if (pixelX >= 0 && pixelX < m_width && pixelY >= 0 && pixelY < m_height)
+					{
+						m_canvas[pixelY * m_width + pixelX] = color;
+					}
+				}
+			}
+		}
+	}
+
+	void Canvas::DrawCircleOutline(int centerX, int centerY, int radius, int color)
+	{
+		const float PI = 3.14159265358979323846f;
+		const int segments = 64;
+		for (int i = 0; i < segments; i++)
+		{
+			float angleRadians = 2.0f * PI * i / segments;
+			int pixelX = static_cast<int>(std::round(centerX + radius * std::cos(angleRadians)));
+			int pixelY = static_cast<int>(std::round(centerY + radius * std::sin(angleRadians)));
+
+			if (pixelX >= 0 && pixelX < m_width && pixelY >= 0 && pixelY < m_height)
+			{
+				m_canvas[pixelY * m_width + pixelX] = color;
 			}
 		}
 	}
