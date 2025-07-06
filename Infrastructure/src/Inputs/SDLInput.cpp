@@ -110,6 +110,15 @@ namespace PixelPad::Infrastructure
         case SDLK_2:
             m_eventBus.Publish(PixelPad::Application::ToolTypeChangedEvent{ PixelPad::Application::ToolType::Line });
 			break;
+
+        case SDLK_3:
+            m_eventBus.Publish(PixelPad::Application::ToolTypeChangedEvent{ PixelPad::Application::ToolType::Eraser });
+            break;
+
+        case SDLK_4:
+            m_eventBus.Publish(PixelPad::Application::ToolTypeChangedEvent{ PixelPad::Application::ToolType::Fill });
+            break;
+
         default:
             break;
         }

@@ -9,14 +9,14 @@ namespace PixelPad::Application
 {
 	DrawService::DrawService(PixelPad::Core::Canvas& canvas) :
 		m_canvas{ canvas },
-		m_canvasSnapshot{ },
 		m_pencilTool{ canvas },
 		m_lineTool{ canvas },
 		m_eraserTool{ canvas },
 		m_fillTool{ canvas },
-		m_currentTool{ &m_pencilTool }
+		m_currentTool{ &m_pencilTool },
+		m_canvasSnapshot{ }
 	{
-
+		std::cout << "Size of DrawService: " << sizeof(*this) << std::endl; // 120
 	}
 
 	void DrawService::SelectTool(const ToolType& toolType)

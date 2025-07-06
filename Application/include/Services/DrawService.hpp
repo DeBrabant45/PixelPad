@@ -29,11 +29,11 @@ namespace PixelPad::Application
 
 	private:
         PixelPad::Core::Canvas& m_canvas;
-        std::unique_ptr<PixelPad::Core::CanvasSnapshot> m_canvasSnapshot;
         PixelPad::Core::PencilTool m_pencilTool;
 		PixelPad::Core::LineTool m_lineTool;
         PixelPad::Core::EraserTool m_eraserTool;
 		PixelPad::Core::FillTool m_fillTool;
 		PixelPad::Core::ITool* m_currentTool;
+		std::unique_ptr<PixelPad::Core::CanvasSnapshot> m_canvasSnapshot;
 	};
 }
