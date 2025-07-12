@@ -239,6 +239,125 @@ namespace PixelPad::Tests::Core
         EXPECT_EQ(canvas.GetPixel(1, 1), 42);
     }
 
+    TEST(CanvasTests, FloodFill_ShouldChangePixels_WhenFillColorEqualsTargetColor)
+    {
+        PixelPad::Core::Canvas canvas{ 2, 2, 0 };
+
+        canvas.FloodFill(0, 0, 0, 1); 
+
+        EXPECT_EQ(canvas.GetPixel(0, 0), 1);
+        EXPECT_EQ(canvas.GetPixel(0, 1), 1);
+        EXPECT_EQ(canvas.GetPixel(1, 0), 1);
+        EXPECT_EQ(canvas.GetPixel(1, 1), 1);
+    }
+
+    TEST(CanvasTests, FloodFill_ShouldNotChangePixels_WhenFillColorEqualsTargetColor)
+    {
+        PixelPad::Core::Canvas canvas{ 3, 3, 42 };
+
+        canvas.FloodFill(1, 1, 42, 42);
+
+        for (int y = 0; y < canvas.GetHeight(); ++y)
+        {
+            for (int x = 0; x < canvas.GetWidth(); ++x)
+            {
+                EXPECT_EQ(canvas.GetPixel(x, y), 42);
+            }
+        }
+    }
+
+    TEST(CanvasTests, FloodFill_ShouldFillAtEdgeCoordinates)
+    {
+        PixelPad::Core::Canvas canvas{ 3, 3, 0 };
+        canvas.DrawPixel(0, 0, 1);
+
+        canvas.FloodFill(2, 2, 0, 255);
+
+        std::vector<std::pair<int, int>> unchangedPixels = { {0, 0} };
+        std::vector<std::pair<int, int>> filledPixels =
+        {
+            {1, 0}, {2, 0},
+            {0, 1}, {1, 1}, {2, 1},
+            {0, 2}, {1, 2}, {2, 2}
+        };
+
+        for (const auto& [x, y] : filledPixels)
+            EXPECT_EQ(canvas.GetPixel(x, y), 255);
+
+        for (const auto& [x, y] : unchangedPixels)
+            EXPECT_EQ(canvas.GetPixel(x, y), 1);
+    }
+
+    TEST(CanvasTests, FloodFill_ShouldHandleOutOfBoundsCoordinatesGracefully)
+    {
+        PixelPad::Core::Canvas canvas{ 3, 3, 0 };
+
+        EXPECT_NO_THROW(canvas.FloodFill(-1, -1, 0, 255));
+        EXPECT_NO_THROW(canvas.FloodFill(3, 3, 0, 255));
+        EXPECT_NO_THROW(canvas.FloodFill(100, 100, 0, 255));
+    }
+
+    TEST(CanvasTests, FloodFill_ShouldOnlyFillConnectedPixels)
+    {
+        PixelPad::Core::Canvas canvas{ 4, 4, 0 };
+
+        for (int x = 0; x < 4; ++x)
+            canvas.DrawPixel(x, 1, 1);
+
+        canvas.FloodFill(0, 0, 0, 255);
+
+        std::vector<std::pair<int, int>> filledPixels = {
+            {0, 0}, {1, 0}, {2, 0}, {3, 0}
+        };
+
+        std::vector<std::pair<int, int>> barrierPixels = {
+            {0, 1}, {1, 1}, {2, 1}, {3, 1}
+        };
+
+        std::vector<std::pair<int, int>> bottomPixels = {
+            {0, 2}, {1, 2}, {2, 2}, {3, 2},
+            {0, 3}, {1, 3}, {2, 3}, {3, 3}
+        };
+
+        for (const auto& [x, y] : filledPixels)
+            EXPECT_EQ(canvas.GetPixel(x, y), 255);
+
+        for (const auto& [x, y] : barrierPixels)
+            EXPECT_EQ(canvas.GetPixel(x, y), 1);
+
+        for (const auto& [x, y] : bottomPixels)
+            EXPECT_EQ(canvas.GetPixel(x, y), 0);
+    }
+
+    TEST(CanvasTests, FloodFill_ShouldFillSinglePixelCanvas)
+    {
+        PixelPad::Core::Canvas canvas{ 1, 1, 0 };
+
+        canvas.FloodFill(0, 0, 0, 255);
+
+        EXPECT_EQ(canvas.GetPixel(0, 0), 255);
+    }
+
+    TEST(CanvasTests, FloodFill_ShouldFillEntireCanvasWithoutCrash)
+    {
+        const int width = 800;
+        const int height = 600;
+        const int initialColor = 0;
+        const int fillColor = 255;
+
+        PixelPad::Core::Canvas canvas{ width, height, initialColor };
+
+        ASSERT_NO_THROW(canvas.FloodFill(0, 0, initialColor, fillColor));
+
+        for (int y = 0; y < height; ++y)
+        {
+            for (int x = 0; x < width; ++x)
+            {
+                EXPECT_EQ(canvas.GetPixel(x, y), fillColor);
+            }
+        }
+    }
+
     TEST(CanvasTests, Resize_ShouldPreserveExistingPixels_WhenNewSizeIsLarger)
     {
         PixelPad::Core::Canvas canvas(2, 2, 0);
