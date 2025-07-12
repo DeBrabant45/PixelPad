@@ -14,7 +14,13 @@ namespace PixelPad::Core
 		void Draw(const DrawCommand& command) override;
 
 	private:
+		bool HasPreviousCoordinates() const;
+		void DrawEraserLine(int startX, int startY, int endX, int endY);
+		void DrawEraserCircle(int centerX, int centerY);
+
+	private:
 		Canvas& m_canvas;
+		unsigned int m_eraseColor;
 		int m_lastXCoordinate;
 		int m_lastYCoordinate;
 	};

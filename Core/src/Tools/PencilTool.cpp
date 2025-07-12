@@ -19,22 +19,22 @@ namespace PixelPad::Core
 
 	void PencilTool::Draw(const DrawCommand& command)
 	{
-		if (command.IsPressed)
+		if (!command.IsPressed)
 		{
-			if (m_lastXCoordinate >= 0 && m_lastYCoordinate >= 0)
-			{
-				m_canvas.DrawLine(m_lastXCoordinate, m_lastYCoordinate, command.X, command.Y, command.Color);
-			}
-			else
-			{
-				m_canvas.DrawPixel(command.X, command.Y, command.Color);
-			}
-			m_lastXCoordinate = command.X;
-			m_lastYCoordinate = command.Y;
+			Reset();
+			return;
+		}
+
+		if (m_lastXCoordinate >= 0 && m_lastYCoordinate >= 0)
+		{
+			m_canvas.DrawLine(m_lastXCoordinate, m_lastYCoordinate, command.X, command.Y, command.Color);
 		}
 		else
 		{
-			Reset();
+			m_canvas.DrawPixel(command.X, command.Y, command.Color);
 		}
+
+		m_lastXCoordinate = command.X;
+		m_lastYCoordinate = command.Y;
 	}
 }
