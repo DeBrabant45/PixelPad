@@ -19,6 +19,7 @@ namespace PixelPad::Application
 		std::cout << "Size of DrawService: " << sizeof(*this) << std::endl; // 120
 	}
 
+	// ToDo: Add unit tests
 	void DrawService::SelectTool(const ToolType& toolType)
 	{
 		if (m_currentTool)
@@ -49,8 +50,10 @@ namespace PixelPad::Application
 		}
 	}
 
+	// ToDo: Add unit tests
 	void DrawService::ProcessDrawInput(const PixelPad::Application::MouseButtonEvent& mouseButtonEvent)
 	{
+		// ToDo: Look into adding radius
 		PixelPad::Core::DrawCommand command
 		{
 			mouseButtonEvent.X,
