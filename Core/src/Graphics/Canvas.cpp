@@ -155,55 +155,58 @@ namespace PixelPad::Core
 		std::cout << "Canvas filled with color: " << color << std::endl;
 	}
 
-	// Iterative 4-directional flood fill (Breadth-First Search).
+	// Iterative 4-directional scanline flood fill.
 	// Fills all connected pixels matching the target color starting from (startX, startY).
-	// Only orthogonal neighbors are considered (up, down, left, right).
-	// Uses a queue to avoid recursive stack overflow and efficiently process pixels.
+	// Uses horizontal span scanning and a queue for vertical neighbors.
+	// Avoids recursion and redundant pixel checks.
 	void Canvas::FloodFill(int startX, int startY, int targetColor, int fillColor)
 	{
-		if (!IsInBounds(startX, startY))
-		{
-			std::cout << "FloodFill: Starting coordinates out of bounds." << std::endl;
+		if (targetColor == fillColor || !IsInBounds(startX, startY))
 			return;
-		}
 		
-		int startPointColor = GetPixel(startX, startY);
-		if (startPointColor != targetColor || startPointColor == fillColor)
-		{
+		int startColor = GetPixel(startX, startY);
+		if (startColor != targetColor || startColor == fillColor)
 			return;
-		}
 
 		std::queue<std::pair<int, int>> pixelQueue;
 		pixelQueue.push({ startX, startY });
-
-		const int neighborCount = 4;
-		const int neighbors[neighborCount][2] = { {-1,0}, {1,0}, {0,-1}, {0,1} };
-
-		DrawPixel(startX, startY, fillColor);
 
 		while (!pixelQueue.empty()) 
 		{
 			auto [currentX, currentY] = pixelQueue.front();
 			pixelQueue.pop();
 
-			for (auto i = 0; i < neighborCount; i++)
+			int color = m_canvas[currentY * m_width + currentX];
+			if (color != targetColor)
+				continue;
+
+			int leftX = currentX;
+			while (leftX >= 0 && m_canvas[currentY * m_width + leftX] == targetColor)
 			{
-				int neighborX = currentX + neighbors[i][0];
-				int neighborY = currentY + neighbors[i][1];
+				--leftX;
+			}
+			++leftX;
 
-				if (!IsInBounds(neighborX, neighborY))
+			int rightX = currentX;
+			while (rightX < m_width && m_canvas[currentY * m_width + rightX] == targetColor)
+			{
+				++rightX;
+			}
+			--rightX;
+
+			for (int i = leftX; i <= rightX; ++i)
+			{
+				m_canvas[currentY * m_width + i] = fillColor;
+
+				if (currentY > 0 && m_canvas[(currentY-1) * m_width + i] == targetColor)
 				{
-					continue;
+					pixelQueue.push({ i, currentY - 1 });
 				}
 
-				int neighborColor = GetPixel(neighborX, neighborY);
-				if (neighborColor != targetColor || neighborColor == fillColor)
+				if (currentY < m_height -1 && m_canvas[(currentY + 1) * m_width + 1] == targetColor)
 				{
-					continue;
+					pixelQueue.push({ i, currentY + 1 });
 				}
-
-				DrawPixel(neighborX, neighborY, fillColor);
-				pixelQueue.push({ neighborX, neighborY });
 			}
 		}
 	}
@@ -217,11 +220,6 @@ namespace PixelPad::Core
 		}
 
 		return m_canvas[y * m_width + x];
-	}
-
-	bool Canvas::IsInBounds(int x, int y) const
-	{
-		return (x >= 0 && x < m_width && y >= 0 && y < m_height);
 	}
 
 	std::vector<int> Core::Canvas::GetPixels() const
