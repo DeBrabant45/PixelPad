@@ -23,7 +23,7 @@ namespace PixelPad::Core
 		std::vector<int> GetPixels() const;
 
 	private:
-		bool IsInBounds(int x, int y) const;
+		inline bool IsInBounds(int x, int y) const { return (x >= 0 && x < m_width && y >= 0 && y < m_height); }
 
 	private:
 		std::vector<int> m_canvas;
