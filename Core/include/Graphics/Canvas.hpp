@@ -16,10 +16,14 @@ namespace PixelPad::Core
 		void DrawCircleOutline(int centerX, int centerY, int radius, int color);
 		void Resize(int width, int height);
 		void Fill(int color);
+		void FloodFill(int startX, int startY, int fillColor);
 		int GetWidth() const { return m_width; }
 		int GetHeight() const { return m_height; }
 		int GetPixel(int x, int y) const;
 		std::vector<int> GetPixels() const;
+
+	private:
+		inline bool IsInBounds(int x, int y) const { return (x >= 0 && x < m_width && y >= 0 && y < m_height); }
 
 	private:
 		std::vector<int> m_canvas;

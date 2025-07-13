@@ -1,6 +1,8 @@
 #include "Graphics/Canvas.hpp"
 
 #include <iostream>
+#include <queue>
+#include <utility>
 
 namespace PixelPad::Core
 {
@@ -24,7 +26,7 @@ namespace PixelPad::Core
 
 	void Canvas::DrawPixel(int x, int y, int color)
 	{
-		if (x < 0 || x >= m_width || y < 0 || y >= m_height)
+		if (!IsInBounds(x, y))
 		{
 			std::cerr << "Warning: Attempted to draw pixel out of bounds at (" << x << ", " << y << ")\n";
 			return;
@@ -153,9 +155,65 @@ namespace PixelPad::Core
 		std::cout << "Canvas filled with color: " << color << std::endl;
 	}
 
+	// Iterative 4-directional scanline flood fill.
+	// Fills all connected pixels matching the target color starting from (startX, startY).
+	// Uses horizontal span scanning and a queue for vertical neighbors.
+	// Avoids recursion and redundant pixel checks.
+	void Canvas::FloodFill(int startX, int startY, int fillColor)
+	{
+		if (!IsInBounds(startX, startY))
+			return;
+		
+		int targetColor = GetPixel(startX, startY);
+		if (targetColor == fillColor)
+			return;
+
+		std::queue<std::pair<int, int>> pixelQueue;
+		pixelQueue.push({ startX, startY });
+
+		while (!pixelQueue.empty()) 
+		{
+			auto [currentX, currentY] = pixelQueue.front();
+			pixelQueue.pop();
+
+			int color = m_canvas[currentY * m_width + currentX];
+			if (color != targetColor)
+				continue;
+
+			int leftX = currentX;
+			while (leftX >= 0 && m_canvas[currentY * m_width + leftX] == targetColor)
+			{
+				--leftX;
+			}
+			++leftX;
+
+			int rightX = currentX;
+			while (rightX < m_width && m_canvas[currentY * m_width + rightX] == targetColor)
+			{
+				++rightX;
+			}
+			--rightX;
+
+			for (int i = leftX; i <= rightX; ++i)
+			{
+				m_canvas[currentY * m_width + i] = fillColor;
+
+				if (currentY > 0 && m_canvas[(currentY-1) * m_width + i] == targetColor)
+				{
+					pixelQueue.push({ i, currentY - 1 });
+				}
+
+				if (currentY < m_height -1 && m_canvas[(currentY + 1) * m_width + 1] == targetColor)
+				{
+					pixelQueue.push({ i, currentY + 1 });
+				}
+			}
+		}
+	}
+
 	int Canvas::GetPixel(int x, int y) const
 	{
-		if (x < 0 || x >= m_width || y < 0 || y >= m_height)
+		if (!IsInBounds(x, y))
 		{
 			std::cerr << "GetPixel: Coordinates out of bounds." << std::endl;
 			return -1;

@@ -16,6 +16,9 @@ namespace PixelPad::Core
 
 	void FillTool::Draw(const DrawCommand& command)
 	{
+		if (!command.IsPressed)
+			return;
 
+		m_canvas.FloodFill(command.X, command.Y, command.Color);
 	}
 }
