@@ -159,13 +159,13 @@ namespace PixelPad::Core
 	// Fills all connected pixels matching the target color starting from (startX, startY).
 	// Uses horizontal span scanning and a queue for vertical neighbors.
 	// Avoids recursion and redundant pixel checks.
-	void Canvas::FloodFill(int startX, int startY, int targetColor, int fillColor)
+	void Canvas::FloodFill(int startX, int startY, int fillColor)
 	{
-		if (targetColor == fillColor || !IsInBounds(startX, startY))
+		if (!IsInBounds(startX, startY))
 			return;
 		
-		int startColor = GetPixel(startX, startY);
-		if (startColor != targetColor || startColor == fillColor)
+		int targetColor = GetPixel(startX, startY);
+		if (targetColor == fillColor)
 			return;
 
 		std::queue<std::pair<int, int>> pixelQueue;

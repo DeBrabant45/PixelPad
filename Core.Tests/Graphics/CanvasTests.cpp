@@ -243,7 +243,7 @@ namespace PixelPad::Tests::Core
     {
         PixelPad::Core::Canvas canvas{ 2, 2, 0 };
 
-        canvas.FloodFill(0, 0, 0, 1); 
+        canvas.FloodFill(0, 0, 1); 
 
         EXPECT_EQ(canvas.GetPixel(0, 0), 1);
         EXPECT_EQ(canvas.GetPixel(0, 1), 1);
@@ -255,7 +255,7 @@ namespace PixelPad::Tests::Core
     {
         PixelPad::Core::Canvas canvas{ 3, 3, 42 };
 
-        canvas.FloodFill(1, 1, 42, 42);
+        canvas.FloodFill(1, 1, 42);
 
         for (int y = 0; y < canvas.GetHeight(); ++y)
         {
@@ -271,7 +271,7 @@ namespace PixelPad::Tests::Core
         PixelPad::Core::Canvas canvas{ 3, 3, 0 };
         canvas.DrawPixel(0, 0, 1);
 
-        canvas.FloodFill(2, 2, 0, 255);
+        canvas.FloodFill(2, 2, 255);
 
         std::vector<std::pair<int, int>> unchangedPixels = { {0, 0} };
         std::vector<std::pair<int, int>> filledPixels =
@@ -292,9 +292,9 @@ namespace PixelPad::Tests::Core
     {
         PixelPad::Core::Canvas canvas{ 3, 3, 0 };
 
-        EXPECT_NO_THROW(canvas.FloodFill(-1, -1, 0, 255));
-        EXPECT_NO_THROW(canvas.FloodFill(3, 3, 0, 255));
-        EXPECT_NO_THROW(canvas.FloodFill(100, 100, 0, 255));
+        EXPECT_NO_THROW(canvas.FloodFill(-1, -1, 255));
+        EXPECT_NO_THROW(canvas.FloodFill(3, 3, 255));
+        EXPECT_NO_THROW(canvas.FloodFill(100, 100, 255));
     }
 
     TEST(CanvasTests, FloodFill_ShouldOnlyFillConnectedPixels)
@@ -304,7 +304,7 @@ namespace PixelPad::Tests::Core
         for (int x = 0; x < 4; ++x)
             canvas.DrawPixel(x, 1, 1);
 
-        canvas.FloodFill(0, 0, 0, 255);
+        canvas.FloodFill(0, 0, 255);
 
         std::vector<std::pair<int, int>> filledPixels = {
             {0, 0}, {1, 0}, {2, 0}, {3, 0}
@@ -333,7 +333,7 @@ namespace PixelPad::Tests::Core
     {
         PixelPad::Core::Canvas canvas{ 1, 1, 0 };
 
-        canvas.FloodFill(0, 0, 0, 255);
+        canvas.FloodFill(0, 0, 255);
 
         EXPECT_EQ(canvas.GetPixel(0, 0), 255);
     }
@@ -347,7 +347,7 @@ namespace PixelPad::Tests::Core
 
         PixelPad::Core::Canvas canvas{ width, height, initialColor };
 
-        ASSERT_NO_THROW(canvas.FloodFill(0, 0, initialColor, fillColor));
+        ASSERT_NO_THROW(canvas.FloodFill(0, 0, fillColor));
 
         for (int y = 0; y < height; ++y)
         {

@@ -16,7 +16,7 @@ namespace PixelPad::Core
 		void DrawCircleOutline(int centerX, int centerY, int radius, int color);
 		void Resize(int width, int height);
 		void Fill(int color);
-		void FloodFill(int startX, int startY, int targetColor, int fillColor);
+		void FloodFill(int startX, int startY, int fillColor);
 		int GetWidth() const { return m_width; }
 		int GetHeight() const { return m_height; }
 		int GetPixel(int x, int y) const;
