@@ -1,10 +1,10 @@
 # Application Layer
 
 add_library(${PIXEL_PAD_APPLICATION_TARGET_NAME}
-    src/Services/DrawService.cpp
-    include/Services/DrawService.hpp
+    src/Graphics/DrawService.cpp
+    include/Graphics/DrawService.hpp
 
-    include/Services/IDrawService.hpp
+    include/Graphics/IDrawService.hpp
 
     include/Enums/ToolType.hpp
     include/Enums/MouseButton.hpp
@@ -13,6 +13,12 @@ add_library(${PIXEL_PAD_APPLICATION_TARGET_NAME}
     include/Events/WindowCloseEvent.hpp
     include/Events/WindowResizeEvent.hpp
     include/Events/ToolTypeChangedEvent.hpp
+
+    include/Renderers/IRenderer.hpp
+
+    include/Inputs/IInput.hpp
+
+    include/Windows/IWindow.hpp
 )
 
 target_include_directories(${PIXEL_PAD_APPLICATION_TARGET_NAME}

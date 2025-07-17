@@ -1,8 +1,7 @@
 #pragma once
 
 #include "Graphics/Canvas.hpp"
-#include "Services/DrawService.hpp"
-#include "Services/IDrawService.hpp"
+#include "Graphics/IDrawService.hpp"
 #include "Buses/EventBus.hpp"
 
 namespace PixelPad::Application

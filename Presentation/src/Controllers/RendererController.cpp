@@ -4,7 +4,7 @@
 namespace PixelPad::Presentation
 {
 	RendererController::RendererController(
-		PixelPad::Infrastructure::IRenderer& renderer, 
+		PixelPad::Application::IRenderer& renderer, 
 		PixelPad::Core::Canvas& canvas) : 
 		m_renderer(renderer),
 		m_canvas(canvas)

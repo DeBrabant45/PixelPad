@@ -10,7 +10,7 @@ struct SDL_KeyboardEvent;
 
 namespace PixelPad::Infrastructure
 {
-	class SDLInput : public IInput
+	class SDLInput : public PixelPad::Application::IInput
 	{
 	public:
 		SDLInput(EventBus& eventBus);

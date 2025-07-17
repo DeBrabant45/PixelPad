@@ -5,7 +5,7 @@
 #include "Renderers/SDLRenderer.hpp"
 #include "Inputs/SDLInput.hpp"
 #include "Graphics/Canvas.hpp"
-#include "Services/DrawService.hpp"
+#include "Graphics/DrawService.hpp"
 #include "Controllers/CanvasController.hpp"
 #include "Controllers/WindowController.hpp"
 #include "Controllers/RendererController.hpp"

@@ -3,6 +3,9 @@
 #include "Renderers/IRenderer.hpp"
 #include "Windows/IWindow.hpp"
 
+#include <cstdint>
+#include <vector>
+
 struct SDL_Renderer;
 struct SDL_Window;
 struct SDL_Texture;
@@ -14,10 +17,10 @@ namespace PixelPad::Core
 
 namespace PixelPad::Infrastructure
 {
-	class SDLRenderer : public IRenderer
+	class SDLRenderer : public PixelPad::Application::IRenderer
 	{
 	public:
-		SDLRenderer(IWindow& window);
+		SDLRenderer(PixelPad::Application::IWindow& window);
 		~SDLRenderer() override;
 		void CreateRenderer();
 		void Shutdown() override;
@@ -30,7 +33,7 @@ namespace PixelPad::Infrastructure
 		bool UpdateTextures(const std::vector<int>& pixels, int width, int height);
 
 	private:
-		IWindow& m_window;
+		PixelPad::Application::IWindow& m_window;
 		SDL_Renderer* m_sdlRenderer{ nullptr };
 		SDL_Texture* m_canvasTexture{ nullptr };
 		int m_canvasWidth{ 0 };

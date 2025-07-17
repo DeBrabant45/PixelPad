@@ -1,7 +1,7 @@
 #pragma once
 #include "Graphics/Canvas.hpp"
 
-namespace PixelPad::Infrastructure
+namespace PixelPad::Application
 {
 	class IRenderer;
 }	
@@ -11,7 +11,7 @@ namespace PixelPad::Presentation
 	class RendererController
 	{
 	public:
-		RendererController(PixelPad::Infrastructure::IRenderer& renderer, PixelPad::Core::Canvas& canvas);
+		RendererController(PixelPad::Application::IRenderer& renderer, PixelPad::Core::Canvas& canvas);
 		~RendererController();
 		void Render();
 
@@ -20,7 +20,7 @@ namespace PixelPad::Presentation
 		void UnregisterEventHandlers();
 
 	private:
-		PixelPad::Infrastructure::IRenderer& m_renderer;
+		PixelPad::Application::IRenderer& m_renderer;
 		PixelPad::Core::Canvas& m_canvas;
 	};
 }

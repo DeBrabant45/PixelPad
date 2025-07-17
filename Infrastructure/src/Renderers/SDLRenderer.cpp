@@ -7,7 +7,7 @@
 
 namespace PixelPad::Infrastructure
 {
-    SDLRenderer::SDLRenderer(IWindow& window) :
+    SDLRenderer::SDLRenderer(PixelPad::Application::IWindow& window) :
         m_window(window),
 		m_sdlRenderer(nullptr),
 		m_canvasTexture(nullptr),

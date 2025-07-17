@@ -1,14 +1,11 @@
 #pragma once
 
-#include <cstdint>
-#include <vector>
-
 namespace PixelPad::Core
 {
 	class Canvas;
 }
 
-namespace PixelPad::Infrastructure
+namespace PixelPad::Application
 {
     class IRenderer
     {

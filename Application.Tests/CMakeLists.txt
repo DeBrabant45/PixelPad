@@ -1,7 +1,7 @@
 # Application.Tests Layer
 
 add_executable(${PIXEL_PAD_APPLICATION_TESTS_TARGET_NAME}
-    src/Services/DrawServiceTests.cpp
+    src/Graphics/DrawServiceTests.cpp
 )
 
 target_include_directories(${PIXEL_PAD_APPLICATION_TESTS_TARGET_NAME}

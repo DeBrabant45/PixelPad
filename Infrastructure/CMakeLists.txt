@@ -1,17 +1,11 @@
 # Infrastructure Layer
 
 add_library(${PIXEL_PAD_INFRASTRUCTURE_TARGET_NAME}
-    include/Renderers/IRenderer.hpp
-
     src/Renderers/SDLRenderer.cpp
     include/Renderers/SDLRenderer.hpp
 
-    include/Windows/IWindow.hpp
-
     src/Windows/SDLWindow.cpp
     include/Windows/SDLWindow.hpp
-
-    include/Inputs/IInput.hpp
 
     src/Inputs/SDLInput.cpp
     include/Inputs/SDLInput.hpp

@@ -6,7 +6,7 @@ struct SDL_Window;
 
 namespace PixelPad::Infrastructure
 {
-	class SDLWindow : public IWindow
+	class SDLWindow : public PixelPad::Application::IWindow
 	{
 	public:
 		SDLWindow(int width, int height, const char* title);
