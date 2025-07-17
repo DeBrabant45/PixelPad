@@ -6,7 +6,7 @@
 
 namespace PixelPad::Presentation
 {
-	WindowController::WindowController(PixelPad::Infrastructure::IWindow& window, PixelPad::Infrastructure::EventBus& m_eventBus) :
+	WindowController::WindowController(PixelPad::Application::IWindow& window, PixelPad::Infrastructure::EventBus& m_eventBus) :
 		m_window(window),
 		m_eventBus(m_eventBus),
 		m_windowCloseEventToken(),

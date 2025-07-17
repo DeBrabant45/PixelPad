@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "Services/DrawService.hpp"
+#include "Graphics/DrawService.hpp"
 #include "Graphics/canvas.hpp"
 
 namespace PixelPad::Tests::Application

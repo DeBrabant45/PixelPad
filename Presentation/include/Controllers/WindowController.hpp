@@ -2,7 +2,7 @@
 
 #include "Buses/EventBus.hpp"
 
-namespace PixelPad::Infrastructure
+namespace PixelPad::Application
 {
 	class IWindow;
 }
@@ -12,7 +12,7 @@ namespace PixelPad::Presentation
 	class WindowController
 	{
 	public:
-		WindowController(PixelPad::Infrastructure::IWindow& window, PixelPad::Infrastructure::EventBus& m_eventBus);
+		WindowController(PixelPad::Application::IWindow& window, PixelPad::Infrastructure::EventBus& m_eventBus);
 		~WindowController();
 		void Resize(int newWidth, int newHeight);
 		void Close();
@@ -24,7 +24,7 @@ namespace PixelPad::Presentation
 
 	private:
 		PixelPad::Infrastructure::EventBus& m_eventBus;
-		PixelPad::Infrastructure::IWindow& m_window;
+		PixelPad::Application::IWindow& m_window;
 		PixelPad::Infrastructure::EventBus::SubscriptionToken m_windowCloseEventToken;
 		PixelPad::Infrastructure::EventBus::SubscriptionToken m_windowResizeEventToken;
 	};
