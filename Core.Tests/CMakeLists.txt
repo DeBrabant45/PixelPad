@@ -8,6 +8,7 @@ add_executable(${PIXEL_PAD_CORE_TESTS_TARGET_NAME}
     Tools/LineToolTests.cpp
     Tools/EraserToolTests.cpp
     Tools/FillToolTests.cpp
+    Tools/RectangleToolTests.cpp
 )
 
 target_include_directories(${PIXEL_PAD_CORE_TESTS_TARGET_NAME}
