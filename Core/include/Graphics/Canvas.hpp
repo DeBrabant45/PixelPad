@@ -14,6 +14,7 @@ namespace PixelPad::Core
 		void DrawLine(int startX, int startY, int endX, int endY, int color);
 		void DrawCircleFilled(int centerX, int centerY, int radius, int color);
 		void DrawCircleOutline(int centerX, int centerY, int radius, int color);
+		void DrawRectangle(int startX, int startY, int endX, int endY, int color);
 		void Resize(int width, int height);
 		void Fill(int color);
 		void FloodFill(int startX, int startY, int fillColor);

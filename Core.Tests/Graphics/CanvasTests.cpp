@@ -202,6 +202,84 @@ namespace PixelPad::Tests::Core
         EXPECT_EQ(canvas.GetPixel(2, 2), 0);
     }
 
+    TEST(CanvasTests, DrawRectangle_ShouldFillBorder_WhenWithinRadius)
+    {
+       PixelPad::Core::Canvas canvas(10, 10, 0);
+        canvas.DrawRectangle(2, 2, 7, 7, 42);
+
+        for (int x = 2; x <= 7; ++x)
+        {
+            EXPECT_EQ(canvas.GetPixel(x, 2), 42);
+            EXPECT_EQ(canvas.GetPixel(x, 7), 42);
+        }
+
+        for (int y = 2; y <= 7; ++y)
+        {
+            EXPECT_EQ(canvas.GetPixel(2, y), 42);
+            EXPECT_EQ(canvas.GetPixel(7, y), 42);
+        }
+
+        for (int y = 3; y < 7; ++y)
+        {
+            for (int x = 3; x < 7; ++x)
+            {
+                EXPECT_EQ(canvas.GetPixel(x, y), 0);
+            }
+        }
+    }
+
+    TEST(CanvasTests, DrawRectangle_ShouldFillBorderOnLargeCanvas_WhenWithinBounds)
+    {
+        PixelPad::Core::Canvas canvas(1000, 1000, 0);
+        canvas.DrawRectangle(100, 100, 900, 900, 99);
+
+        for (int x = 100; x <= 900; ++x)
+        {
+            EXPECT_EQ(canvas.GetPixel(x, 100), 99);
+            EXPECT_EQ(canvas.GetPixel(x, 900), 99);
+        }
+
+        for (int y = 100; y <= 900; ++y)
+        {
+            EXPECT_EQ(canvas.GetPixel(100, y), 99);
+            EXPECT_EQ(canvas.GetPixel(900, y), 99);
+        }
+
+        for (int y = 101; y < 900; ++y)
+        {
+            for (int x = 101; x < 900; ++x)
+            {
+                EXPECT_EQ(canvas.GetPixel(x, y), 0);
+            }
+        }
+    }
+
+    TEST(CanvasTests, DrawRectangle_ShouldDrawSinglePixel_WhenStartEqualsEnd)
+    {
+        PixelPad::Core::Canvas canvas(10, 10, 0);
+
+        canvas.DrawRectangle(4, 4, 4, 4, 99);
+
+        EXPECT_EQ(canvas.GetPixel(4, 4), 99);
+    }
+
+    TEST(CanvasTests, DrawRectangle_ShouldNotCrash_WhenOutOfBounds)
+    {
+        PixelPad::Core::Canvas canvas(10, 10, 0);
+
+        EXPECT_NO_THROW(canvas.DrawRectangle(-5, -5, 15, 15, 1));
+    }
+
+    TEST(CanvasTests, DrawRectangle_ShouldHandleReversedCoordinates)
+    {
+        PixelPad::Core::Canvas canvas(10, 10, 0);
+
+        canvas.DrawRectangle(7, 7, 2, 2, 77);
+
+        EXPECT_EQ(canvas.GetPixel(2, 2), 77);
+        EXPECT_EQ(canvas.GetPixel(7, 7), 77);
+    }
+
     TEST(CanvasTests, GetPixel_ShouldReturnCorrectValue_WhenPixelWasSet)
     {
         PixelPad::Core::Canvas canvas(5, 5, 0);

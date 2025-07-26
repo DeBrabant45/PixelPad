@@ -122,6 +122,55 @@ namespace PixelPad::Core
 		}
 	}
 
+	void Canvas::DrawRectangle(int startX, int startY, int endX, int endY, int color)
+	{
+		int topLeftX = std::min(startX, endX);
+		int topLeftY = std::min(startY, endY);
+		int width = std::abs(endX - startX) + 1;
+		int height = std::abs(endY - startY) + 1;
+		if (width <= 0 || height <= 0)
+			return;
+
+		int bottomRightX = topLeftX + width - 1;
+		int bottomRightY = topLeftY + height - 1;
+
+		// Top Horizontal Line
+		for (int pixelX = topLeftX; pixelX <= bottomRightX; ++pixelX)
+		{
+			if (!IsInBounds(pixelX, topLeftY))
+				continue;
+
+			m_canvas[topLeftY * m_width + pixelX] = color;
+		}
+
+		// Bottom horizontal line
+		for (int pixelX = topLeftX; pixelX <= bottomRightX; ++pixelX)
+		{
+			if (!IsInBounds(pixelX, bottomRightY))
+				continue;
+
+			m_canvas[bottomRightY * m_width + pixelX] = color;
+		}
+
+		// Left vertical line
+		for (int pixelY = topLeftY; pixelY <= bottomRightY; ++pixelY)
+		{
+			if (!IsInBounds(topLeftX, pixelY))
+				continue;
+
+			m_canvas[pixelY * m_width + topLeftX] = color;
+		}
+
+		// Right vertical line
+		for (int pixelY = topLeftY; pixelY <= bottomRightY; ++pixelY)
+		{
+			if (!IsInBounds(bottomRightX, pixelY))
+				continue;
+
+			m_canvas[pixelY * m_width + bottomRightX] = color;
+		}
+	}
+
 	void Canvas::Resize(int width, int height)
 	{
 		if (m_width == width && m_height == height)

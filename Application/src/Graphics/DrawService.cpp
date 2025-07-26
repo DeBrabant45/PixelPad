@@ -13,6 +13,7 @@ namespace PixelPad::Application
 		m_lineTool{ canvas },
 		m_eraserTool{ canvas },
 		m_fillTool{ canvas },
+		m_rectangleTool{ canvas },
 		m_currentTool{ &m_pencilTool },
 		m_canvasSnapshot{ }
 	{
@@ -43,6 +44,10 @@ namespace PixelPad::Application
 
 		case PixelPad::Application::ToolType::Eraser:
 			m_currentTool = &m_eraserTool;
+			break;
+
+		case PixelPad::Application::ToolType::Rectangle:
+			m_currentTool = &m_rectangleTool;
 			break;
 
 		default:

@@ -21,6 +21,9 @@ add_library(${PIXEL_PAD_CORE_TARGET_NAME}
     src/Tools/FillTool.cpp
     include/Tools/FillTool.hpp
 
+    src/Tools/RectangleTool.cpp
+    include/Tools/RectangleTool.hpp
+
     include/Tools/DrawCommand.hpp
 )
 

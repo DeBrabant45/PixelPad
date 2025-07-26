@@ -119,6 +119,10 @@ namespace PixelPad::Infrastructure
             m_eventBus.Publish(PixelPad::Application::ToolTypeChangedEvent{ PixelPad::Application::ToolType::Fill });
             break;
 
+		case SDLK_5:
+            m_eventBus.Publish(PixelPad::Application::ToolTypeChangedEvent{ PixelPad::Application::ToolType::Rectangle });
+			break;
+
         default:
             break;
         }
