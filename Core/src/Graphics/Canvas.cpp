@@ -171,6 +171,26 @@ namespace PixelPad::Core
 		}
 	}
 
+	void Canvas::DrawEllipse(int centerX, int centerY, int radiusX, int radiusY, int color)
+	{
+		if (radiusX <= 0 || radiusY <= 0)
+			return;
+
+		const float PI = 3.14159265358979323846f;
+		const int segments = 64;
+		for (int i = 0; i < segments; i++)
+		{
+			float angleRadians = 2.0f * PI * i / segments;
+			int pixelX = static_cast<int>(std::round(centerX + radiusX * std::cos(angleRadians)));
+			int pixelY = static_cast<int>(std::round(centerY + radiusY * std::sin(angleRadians)));
+
+			if (pixelX >= 0 && pixelX < m_width && pixelY >= 0 && pixelY < m_height)
+			{
+				m_canvas[pixelY * m_width + pixelX] = color;
+			}
+		}
+	}
+
 	void Canvas::Resize(int width, int height)
 	{
 		if (m_width == width && m_height == height)

@@ -254,7 +254,7 @@ namespace PixelPad::Tests::Core
         }
     }
 
-    TEST(CanvasTests, DrawRectangle_ShouldDrawSinglePixel_WhenStartEqualsEnd)
+    TEST(CanvasTests, DrawRectangle_ShouldFillSinglePixel_WhenStartEqualsEnd)
     {
         PixelPad::Core::Canvas canvas(10, 10, 0);
 
@@ -278,6 +278,188 @@ namespace PixelPad::Tests::Core
 
         EXPECT_EQ(canvas.GetPixel(2, 2), 77);
         EXPECT_EQ(canvas.GetPixel(7, 7), 77);
+    }
+
+    TEST(CanvasTests, DrawEllipse_ShouldFillOutlineOfPerfectCircle_WhenGivenEqualWidthAndHeight)
+    {
+        PixelPad::Core::Canvas canvas(11, 11, 0);
+
+        canvas.DrawEllipse(5, 5, 3, 3, 155);
+
+        EXPECT_EQ(canvas.GetPixel(5, 2), 155); 
+        EXPECT_EQ(canvas.GetPixel(5, 8), 155); 
+        EXPECT_EQ(canvas.GetPixel(2, 5), 155); 
+        EXPECT_EQ(canvas.GetPixel(8, 5), 155);
+    }
+
+    TEST(CanvasTests, DrawEllipse_ShouldFillOutlineOfEllipse_WhenRadiusXDiffersFromRadiusY)
+    {
+		const int centerX = 8;
+		const int centerY = 8;
+		const int radiusX = 4;
+		const int radiusY = 6;
+		const int color = 155;
+        PixelPad::Core::Canvas canvas(20, 20, 0);
+
+        canvas.DrawEllipse(centerX, centerY, radiusX, radiusY, color);
+
+		EXPECT_EQ(canvas.GetPixel((centerX - radiusX), centerY), color); // Left Edge
+		EXPECT_EQ(canvas.GetPixel((centerX + radiusX), centerY), color); // Right Edge
+		EXPECT_EQ(canvas.GetPixel(centerX, (centerY - radiusY)), color); // Top Edge
+		EXPECT_EQ(canvas.GetPixel(centerX, (centerY + radiusY)), color); // Bottom Edge
+    }
+
+    TEST(CanvasTests, DrawEllipse_ShouldFillCorrectOutline_WhenCenterIsAtCanvasEdge)
+    {
+		const int centerX = 7;
+		const int centerY = 7;
+		const int radiusX = 2;
+		const int radiusY = 2;
+		const int color = 155;
+        PixelPad::Core::Canvas canvas(8, 8, 0);
+
+        canvas.DrawEllipse(centerX, centerY, radiusX, radiusY, color);
+
+		EXPECT_EQ(canvas.GetPixel((centerX - radiusX), centerY), color); // Left Edge
+		EXPECT_EQ(canvas.GetPixel((centerX + radiusX), centerY), -1); // Right Edge
+		EXPECT_EQ(canvas.GetPixel(centerX, (centerY - radiusY)), color); // Top Edge
+		EXPECT_EQ(canvas.GetPixel(centerX, (centerY + radiusY)), -1); // Bottom Edge
+    }
+
+    TEST(CanvasTests, DrawEllipse_ShouldFillNothing_WhenRadiusXOrRadiusYIsZero)
+    {
+		const int centerX = 4;
+		const int centerY = 3;
+		const int radiusX = 0;
+		const int radiusY = 0;
+		const int color = 155;
+        PixelPad::Core::Canvas canvas(8, 8, 0);
+
+        canvas.DrawEllipse(centerX, centerY, radiusX, radiusY, color);
+
+		EXPECT_EQ(canvas.GetPixel((centerX - radiusX), centerY), 0); // Left Edge
+		EXPECT_EQ(canvas.GetPixel((centerX + radiusX), centerY), 0); // Right Edge
+		EXPECT_EQ(canvas.GetPixel(centerX, (centerY - radiusY)), 0); // Top Edge
+		EXPECT_EQ(canvas.GetPixel(centerX, (centerY + radiusY)), 0); // Bottom Edge
+    }
+
+    TEST(CanvasTests, DrawEllipse_ShouldFillNothing_WhenRadiusXAndRadiusYAreNegative)
+    {
+		const int centerX = 5;
+		const int centerY = 5;
+		const int radiusX = -4;
+		const int radiusY = -5;
+		const int color = 155;
+        PixelPad::Core::Canvas canvas(8, 8, 0);
+
+        canvas.DrawEllipse(centerX, centerY, radiusX, radiusY, color);
+
+		EXPECT_EQ(canvas.GetPixel((centerX - radiusX), centerY), -1); // Left Edge
+		EXPECT_EQ(canvas.GetPixel((centerX + radiusX), centerY), 0); // Right Edge
+		EXPECT_EQ(canvas.GetPixel(centerX, (centerY - radiusY)), -1); // Top Edge
+		EXPECT_EQ(canvas.GetPixel(centerX, (centerY + radiusY)), 0); // Bottom Edge
+    }
+
+    TEST(CanvasTests, DrawEllipse_ShouldClipCorrectly_WhenEllipsePartiallyOutsideCanvas)
+    {
+		const int centerX = 6;
+		const int centerY = 5;
+		const int radiusX = 3;
+		const int radiusY = 4;
+		const int color = 155;
+        PixelPad::Core::Canvas canvas(8, 8, 0);
+
+        canvas.DrawEllipse(centerX, centerY, radiusX, radiusY, color);
+
+		EXPECT_EQ(canvas.GetPixel((centerX - radiusX), centerY), color); // Left Edge
+		EXPECT_EQ(canvas.GetPixel((centerX + radiusX), centerY), -1); // Right Edge
+		EXPECT_EQ(canvas.GetPixel(centerX, (centerY - radiusY)), color); // Top Edge
+		EXPECT_EQ(canvas.GetPixel(centerX, (centerY + radiusY)), -1); // Bottom Edge
+    }
+
+    TEST(CanvasTests, DrawEllipse_ShouldNotFillOutsideCanvas_WhenEllipseExceedsCanvasBounds)
+    {
+		const int centerX = 5;
+		const int centerY = 5;
+		const int radiusX = 20;
+		const int radiusY = 20;
+		const int color = 155;
+        PixelPad::Core::Canvas canvas(8, 8, 0);
+
+        canvas.DrawEllipse(centerX, centerY, radiusX, radiusY, color);
+
+		EXPECT_EQ(canvas.GetPixel(5, 5), 0);
+		EXPECT_EQ(canvas.GetPixel((centerX - radiusX), centerY), -1); // Left Edge
+		EXPECT_EQ(canvas.GetPixel((centerX + radiusX), centerY), -1); // Right Edge
+		EXPECT_EQ(canvas.GetPixel(centerX, (centerY - radiusY)), -1); // Top Edge
+		EXPECT_EQ(canvas.GetPixel(centerX, (centerY + radiusY)), -1); // Bottom Edge
+
+        for (int y = 0; y < 8; y++)
+        {
+            for (int x = 0; x < 8; x++)
+            {
+                EXPECT_EQ(canvas.GetPixel(x, y), 0);
+            }
+        }
+    }
+
+    TEST(CanvasTests, DrawEllipse_ShouldHandleSmallEllipses_WhenRadiusIsOne)
+    {
+		const int centerX = 5;
+		const int centerY = 5;
+		const int radiusX = 1;
+		const int radiusY = 1;
+		const int color = 155;
+        PixelPad::Core::Canvas canvas(8, 8, 0);
+
+        canvas.DrawEllipse(centerX, centerY, radiusX, radiusY, color);
+
+		EXPECT_EQ(canvas.GetPixel((centerX - radiusX), centerY), color); // Left Edge
+		EXPECT_EQ(canvas.GetPixel((centerX + radiusX), centerY), color); // Right Edge
+		EXPECT_EQ(canvas.GetPixel(centerX, (centerY - radiusY)), color); // Top Edge
+		EXPECT_EQ(canvas.GetPixel(centerX, (centerY + radiusY)), color); // Bottom Edge
+    }
+
+    TEST(CanvasTests, DrawEllipse_ShouldIgnoreDrawCalls_WhenCenterIsOutsideCanvas)
+    {
+		const int centerX = 12;
+		const int centerY = 12;
+		const int radiusX = 2;
+		const int radiusY = 3;
+		const int color = 155;
+        PixelPad::Core::Canvas canvas(8, 8, 0);
+
+        canvas.DrawEllipse(centerX, centerY, radiusX, radiusY, color);
+
+		EXPECT_EQ(canvas.GetPixel((centerX - radiusX), centerY), -1); // Left Edge
+		EXPECT_EQ(canvas.GetPixel((centerX + radiusX), centerY), -1); // Right Edge
+		EXPECT_EQ(canvas.GetPixel(centerX, (centerY - radiusY)), -1); // Top Edge
+		EXPECT_EQ(canvas.GetPixel(centerX, (centerY + radiusY)), -1); // Bottom Edge
+
+        for (int y = 0; y < 8; y++)
+        {
+            for (int x = 0; x < 8; x++)
+            {
+                EXPECT_EQ(canvas.GetPixel(x, y), 0);
+            }
+        }
+    }
+
+    TEST(CanvasTests, DrawEllipse_ShouldCompleteQuickly_ForLargeRadiusValues)
+    {
+		const int centerX = 500;
+		const int centerY = 440;
+		const int radiusX = 200;
+		const int radiusY = 150;
+		const int color = 155;
+        PixelPad::Core::Canvas canvas(800, 600, 0);
+
+        canvas.DrawEllipse(centerX, centerY, radiusX, radiusY, color);
+
+		EXPECT_EQ(canvas.GetPixel((centerX - radiusX), centerY), color); // Left Edge
+		EXPECT_EQ(canvas.GetPixel((centerX + radiusX), centerY), color); // Right Edge
+		EXPECT_EQ(canvas.GetPixel(centerX, (centerY - radiusY)), color); // Top Edge
+		EXPECT_EQ(canvas.GetPixel(centerX, (centerY + radiusY)), color); // Bottom Edge
     }
 
     TEST(CanvasTests, GetPixel_ShouldReturnCorrectValue_WhenPixelWasSet)
