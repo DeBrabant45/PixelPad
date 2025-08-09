@@ -24,17 +24,6 @@ namespace PixelPad::Core
 		std::cout << "Canvas cleared." << std::endl;
 	}
 
-	void Canvas::DrawPixel(int x, int y, int color)
-	{
-		if (!IsInBounds(x, y))
-		{
-			std::cerr << "Warning: Attempted to draw pixel out of bounds at (" << x << ", " << y << ")\n";
-			return;
-		}
-
-		m_canvas[y * m_width + x] = color;
-	}
-
 	//Bresenham's Line Algorithm
 	void Canvas::DrawLine(int startX, int startY, int endX, int endY, int color)
 	{
@@ -96,10 +85,8 @@ namespace PixelPad::Core
 				{
 					int pixelX = centerX + offSetX;
 					int pixelY = centerY + offSetY;
-					if (pixelX >= 0 && pixelX < m_width && pixelY >= 0 && pixelY < m_height)
-					{
-						m_canvas[pixelY * m_width + pixelX] = color;
-					}
+
+					DrawPixel(pixelX, pixelY, color);
 				}
 			}
 		}
@@ -115,10 +102,7 @@ namespace PixelPad::Core
 			int pixelX = static_cast<int>(std::round(centerX + radius * std::cos(angleRadians)));
 			int pixelY = static_cast<int>(std::round(centerY + radius * std::sin(angleRadians)));
 
-			if (pixelX >= 0 && pixelX < m_width && pixelY >= 0 && pixelY < m_height)
-			{
-				m_canvas[pixelY * m_width + pixelX] = color;
-			}
+			DrawPixel(pixelX, pixelY, color);
 		}
 	}
 
@@ -137,57 +121,88 @@ namespace PixelPad::Core
 		// Top Horizontal Line
 		for (int pixelX = topLeftX; pixelX <= bottomRightX; ++pixelX)
 		{
-			if (!IsInBounds(pixelX, topLeftY))
-				continue;
-
-			m_canvas[topLeftY * m_width + pixelX] = color;
+			DrawPixel(pixelX, topLeftY, color);
 		}
 
 		// Bottom horizontal line
 		for (int pixelX = topLeftX; pixelX <= bottomRightX; ++pixelX)
 		{
-			if (!IsInBounds(pixelX, bottomRightY))
-				continue;
-
-			m_canvas[bottomRightY * m_width + pixelX] = color;
+			DrawPixel(pixelX, bottomRightY, color);
 		}
 
 		// Left vertical line
 		for (int pixelY = topLeftY; pixelY <= bottomRightY; ++pixelY)
 		{
-			if (!IsInBounds(topLeftX, pixelY))
-				continue;
-
-			m_canvas[pixelY * m_width + topLeftX] = color;
+			DrawPixel(topLeftX, pixelY, color);
 		}
 
 		// Right vertical line
 		for (int pixelY = topLeftY; pixelY <= bottomRightY; ++pixelY)
 		{
-			if (!IsInBounds(bottomRightX, pixelY))
-				continue;
-
-			m_canvas[pixelY * m_width + bottomRightX] = color;
+			DrawPixel(bottomRightX, pixelY, color);
 		}
 	}
 
+	//Bresenham's Ellipse Algorithm
 	void Canvas::DrawEllipse(int centerX, int centerY, int radiusX, int radiusY, int color)
 	{
 		if (radiusX <= 0 || radiusY <= 0)
 			return;
 
-		const float PI = 3.14159265358979323846f;
-		const int segments = 64;
-		for (int i = 0; i < segments; i++)
-		{
-			float angleRadians = 2.0f * PI * i / segments;
-			int pixelX = static_cast<int>(std::round(centerX + radiusX * std::cos(angleRadians)));
-			int pixelY = static_cast<int>(std::round(centerY + radiusY * std::sin(angleRadians)));
+		int horizontalOffset = 0;
+		int verticalOffset = radiusY;
 
-			if (pixelX >= 0 && pixelX < m_width && pixelY >= 0 && pixelY < m_height)
+		int radiusXSquared = radiusX * radiusX;
+		int radiusYSquared = radiusY * radiusY;
+		int regionOneDecisionMaker = radiusYSquared - (radiusXSquared * radiusY) + (radiusXSquared / 4);
+
+		DrawPixel(centerX, centerY + radiusY, color);
+		DrawPixel(centerX, centerY - radiusY, color);
+		DrawPixel(centerX - radiusX, centerY, color);
+		DrawPixel(centerX + radiusX, centerY, color);
+
+		while (2 * radiusYSquared * horizontalOffset < 2 * radiusXSquared * verticalOffset)
+		{
+			if (regionOneDecisionMaker < 0)
 			{
-				m_canvas[pixelY * m_width + pixelX] = color;
+				horizontalOffset++;
+				regionOneDecisionMaker += 2 * radiusYSquared * horizontalOffset + radiusYSquared;
 			}
+			else
+			{
+				horizontalOffset++;
+				verticalOffset--;
+				regionOneDecisionMaker += 2 * radiusYSquared * horizontalOffset - 2 * radiusXSquared * verticalOffset + radiusYSquared;
+			}
+
+			DrawPixel(centerX + horizontalOffset, centerY + verticalOffset, color);
+			DrawPixel(centerX - horizontalOffset, centerY + verticalOffset, color);
+			DrawPixel(centerX + horizontalOffset, centerY - verticalOffset, color);
+			DrawPixel(centerX - horizontalOffset, centerY - verticalOffset, color);
+		}
+
+		int regionTwoDecisionMaker = radiusYSquared * (horizontalOffset + 0.5F) * (horizontalOffset + 0.5F) 
+			+ radiusXSquared * (verticalOffset - 1) * (verticalOffset - 1)
+			- radiusXSquared * radiusYSquared;
+
+		while (verticalOffset > 0)
+		{
+			if (regionTwoDecisionMaker > 0)
+			{
+				verticalOffset--;
+				regionTwoDecisionMaker -= 2 * radiusXSquared * verticalOffset - radiusXSquared;
+			}
+			else
+			{
+				verticalOffset--;
+				horizontalOffset++;
+				regionTwoDecisionMaker += 2 * radiusYSquared * horizontalOffset - 2 * radiusXSquared * verticalOffset + radiusXSquared;
+			}
+
+			DrawPixel(centerX + horizontalOffset, centerY + verticalOffset, color);
+			DrawPixel(centerX - horizontalOffset, centerY + verticalOffset, color);
+			DrawPixel(centerX + horizontalOffset, centerY - verticalOffset, color);
+			DrawPixel(centerX - horizontalOffset, centerY - verticalOffset, color);
 		}
 	}
 
@@ -283,10 +298,7 @@ namespace PixelPad::Core
 	int Canvas::GetPixel(int x, int y) const
 	{
 		if (!IsInBounds(x, y))
-		{
-			std::cerr << "GetPixel: Coordinates out of bounds." << std::endl;
 			return -1;
-		}
 
 		return m_canvas[y * m_width + x];
 	}

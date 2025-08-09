@@ -10,7 +10,7 @@ namespace PixelPad::Core
 		Canvas(int width, int height, uint32_t backgroundColor);
 		~Canvas() = default;
 		void Clear();
-		void DrawPixel(int x, int y, int color);
+		inline void DrawPixel(int x, int y, int color);
 		void DrawLine(int startX, int startY, int endX, int endY, int color);
 		void DrawCircleFilled(int centerX, int centerY, int radius, int color);
 		void DrawCircleOutline(int centerX, int centerY, int radius, int color);
@@ -33,4 +33,12 @@ namespace PixelPad::Core
 		int m_height{ 0 };
 		uint32_t m_backgroundColor{ 0xFFFFFFFF };
 	};
+
+	inline void Canvas::DrawPixel(int x, int y, int color)
+	{
+		if (!IsInBounds(x, y))
+			return;
+
+		m_canvas[y * m_width + x] = color;
+	}
 }
