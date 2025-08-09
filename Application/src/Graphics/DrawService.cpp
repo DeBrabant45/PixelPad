@@ -14,6 +14,7 @@ namespace PixelPad::Application
 		m_eraserTool{ canvas },
 		m_fillTool{ canvas },
 		m_rectangleTool{ canvas },
+		m_ellipseTool{ canvas },
 		m_currentTool{ &m_pencilTool },
 		m_canvasSnapshot{ }
 	{
@@ -48,6 +49,10 @@ namespace PixelPad::Application
 
 		case PixelPad::Application::ToolType::Rectangle:
 			m_currentTool = &m_rectangleTool;
+			break;
+
+		case PixelPad::Application::ToolType::Ellipse:
+			m_currentTool = &m_ellipseTool;
 			break;
 
 		default:
