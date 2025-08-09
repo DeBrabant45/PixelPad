@@ -24,6 +24,9 @@ add_library(${PIXEL_PAD_CORE_TARGET_NAME}
     src/Tools/RectangleTool.cpp
     include/Tools/RectangleTool.hpp
 
+    src/Tools/EllipseTool.cpp
+    include/Tools/EllipseTool.hpp
+
     include/Tools/DrawCommand.hpp
 )
 
