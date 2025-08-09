@@ -10,5 +10,6 @@ namespace PixelPad::Application
 		Fill = 3,
 		Eraser = 4,
 		Rectangle = 5,
+		Ellipse = 6,
 	};
 }

@@ -9,6 +9,7 @@
 #include "Tools/EraserTool.hpp"
 #include "Tools/FillTool.hpp"
 #include "Tools/RectangleTool.hpp"
+#include "Tools/EllipseTool.hpp"
 #include "Tools/ITool.hpp"
 
 #include <memory>
@@ -35,6 +36,7 @@ namespace PixelPad::Application
         PixelPad::Core::EraserTool m_eraserTool;
 		PixelPad::Core::FillTool m_fillTool;
 		PixelPad::Core::RectangleTool m_rectangleTool;
+		PixelPad::Core::EllipseTool m_ellipseTool;
 		PixelPad::Core::ITool* m_currentTool;
 		std::unique_ptr<PixelPad::Core::CanvasSnapshot> m_canvasSnapshot;
 	};

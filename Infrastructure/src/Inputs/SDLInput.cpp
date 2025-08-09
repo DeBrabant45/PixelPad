@@ -123,6 +123,10 @@ namespace PixelPad::Infrastructure
             m_eventBus.Publish(PixelPad::Application::ToolTypeChangedEvent{ PixelPad::Application::ToolType::Rectangle });
 			break;
 
+        case SDLK_6:
+            m_eventBus.Publish(PixelPad::Application::ToolTypeChangedEvent{ PixelPad::Application::ToolType::Ellipse });
+            break;
+
         default:
             break;
         }
