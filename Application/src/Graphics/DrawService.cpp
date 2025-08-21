@@ -2,23 +2,19 @@
 #include "Graphics/CanvasSnapshot.hpp"
 #include "Events/MouseButtonEvent.hpp"
 #include "Tools/DrawCommand.hpp"
+#include "Enums/ToolType.hpp"
 
 #include <iostream>
 
 namespace PixelPad::Application
 {
-	DrawService::DrawService(PixelPad::Core::Canvas& canvas) :
+	DrawService::DrawService(PixelPad::Core::Canvas& canvas, PixelPad::Application::IToolbox& toolbox) :
 		m_canvas{ canvas },
-		m_pencilTool{ canvas },
-		m_lineTool{ canvas },
-		m_eraserTool{ canvas },
-		m_fillTool{ canvas },
-		m_rectangleTool{ canvas },
-		m_ellipseTool{ canvas },
-		m_currentTool{ &m_pencilTool },
+		m_toolbox{ toolbox },
+		m_currentTool{ &m_toolbox.GetTool(ToolType::Pencil) },
 		m_canvasSnapshot{ }
 	{
-		std::cout << "Size of DrawService: " << sizeof(*this) << std::endl; // 120
+		std::cout << "Size of DrawService: " << sizeof(*this) << std::endl; // 40
 	}
 
 	// ToDo: Add unit tests
@@ -29,35 +25,7 @@ namespace PixelPad::Application
 			m_currentTool->Reset();
 		}
 
-		switch (toolType)
-		{
-		case PixelPad::Application::ToolType::Pencil:
-			m_currentTool = &m_pencilTool;
-			break;
-
-		case PixelPad::Application::ToolType::Line:
-			m_currentTool = &m_lineTool;
-			break;
-
-		case PixelPad::Application::ToolType::Fill:
-			m_currentTool = &m_fillTool;
-			break;
-
-		case PixelPad::Application::ToolType::Eraser:
-			m_currentTool = &m_eraserTool;
-			break;
-
-		case PixelPad::Application::ToolType::Rectangle:
-			m_currentTool = &m_rectangleTool;
-			break;
-
-		case PixelPad::Application::ToolType::Ellipse:
-			m_currentTool = &m_ellipseTool;
-			break;
-
-		default:
-			break;
-		}
+		m_currentTool = &m_toolbox.GetTool(toolType);
 	}
 
 	// ToDo: Add unit tests

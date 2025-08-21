@@ -1,13 +1,15 @@
 #include <gtest/gtest.h>
 #include "Graphics/DrawService.hpp"
 #include "Graphics/canvas.hpp"
+#include "Tools/Toolbox.hpp"
 
 namespace PixelPad::Tests::Application
 {
     TEST(DrawServiceTests, Constructor_DoesNotThrowAndCanvasIsCorrectSize)
     {
         PixelPad::Core::Canvas canvas{8, 6, 0};
-        PixelPad::Application::DrawService drawService{ canvas };
+        PixelPad::Application::Toolbox toolbox{ canvas };
+        PixelPad::Application::DrawService drawService{ canvas, toolbox };
 
         EXPECT_EQ(canvas.GetWidth(), 8);
         EXPECT_EQ(canvas.GetHeight(), 6);
@@ -18,7 +20,8 @@ namespace PixelPad::Tests::Application
         int expectedWidth = 10;
         int expectedHeight = 10;
         PixelPad::Core::Canvas canvas{ 5, 5, 0 };
-        PixelPad::Application::DrawService drawService{ canvas };
+        PixelPad::Application::Toolbox toolbox{ canvas };
+        PixelPad::Application::DrawService drawService{ canvas, toolbox };
 
         drawService.ResizeCanvas(expectedWidth, expectedHeight);
 
@@ -29,7 +32,8 @@ namespace PixelPad::Tests::Application
     TEST(DrawServiceTests, ResizeCanvas_ShrinksCanvas_ClearsOrPreservesData)
     {
         PixelPad::Core::Canvas canvas{ 10, 10, 0 };
-        PixelPad::Application::DrawService drawService{ canvas };
+        PixelPad::Application::Toolbox toolbox{ canvas };
+        PixelPad::Application::DrawService drawService{ canvas, toolbox };
 
         drawService.ResizeCanvas(5, 5);
         
@@ -42,7 +46,8 @@ namespace PixelPad::Tests::Application
         int expectedHeight = 5;
         int expectedPixelColor = 0;
         PixelPad::Core::Canvas canvas{ expectedWidth, expectedHeight, 0 };
-        PixelPad::Application::DrawService drawService{ canvas };
+        PixelPad::Application::Toolbox toolbox{ canvas };
+        PixelPad::Application::DrawService drawService{ canvas, toolbox };
 
         canvas.Fill(155);
         drawService.ResizeCanvas(7, 7);
@@ -53,7 +58,8 @@ namespace PixelPad::Tests::Application
     TEST(DrawServiceTests, ResizeCanvas_ZeroSize_HandlesGracefully)
     {
         PixelPad::Core::Canvas canvas{ 5, 5, 0 };
-		PixelPad::Application::DrawService drawService{ canvas };
+        PixelPad::Application::Toolbox toolbox{ canvas };
+        PixelPad::Application::DrawService drawService{ canvas, toolbox };
 
 		EXPECT_NO_THROW(drawService.ResizeCanvas(0, 0));
 		EXPECT_EQ(canvas.GetWidth(), 0);
@@ -63,7 +69,8 @@ namespace PixelPad::Tests::Application
     TEST(DrawServiceTests, ResizeCanvas_NegativeValues_DoesNotThrow)
     {
 		PixelPad::Core::Canvas canvas{ 5, 5, 0 };
-		PixelPad::Application::DrawService drawService{ canvas };
+        PixelPad::Application::Toolbox toolbox{ canvas };
+        PixelPad::Application::DrawService drawService{ canvas, toolbox };
 
 		EXPECT_NO_THROW(drawService.ResizeCanvas(-5, -5));
     }
@@ -72,7 +79,8 @@ namespace PixelPad::Tests::Application
     {
 		int expectedPixelColor = 0;
 		PixelPad::Core::Canvas canvas{ 5, 5, 0 };
-		PixelPad::Application::DrawService drawService{ canvas };
+        PixelPad::Application::Toolbox toolbox{ canvas };
+        PixelPad::Application::DrawService drawService{ canvas, toolbox };
 
 		canvas.Fill(100);
 		drawService.ClearCanvas();
@@ -86,7 +94,8 @@ namespace PixelPad::Tests::Application
     TEST(DrawServiceTests, ClearCanvas_EmptyCanvas_DoesNotThrow)
     {
 		PixelPad::Core::Canvas canvas{ 0, 0, 0 };
-		PixelPad::Application::DrawService drawService{ canvas };
+        PixelPad::Application::Toolbox toolbox{ canvas };
+        PixelPad::Application::DrawService drawService{ canvas, toolbox };
 
 		EXPECT_NO_THROW(drawService.ClearCanvas());
     }
@@ -95,7 +104,8 @@ namespace PixelPad::Tests::Application
     {
         int expectedPixelColor = 0;
 		PixelPad::Core::Canvas canvas{ 5, 5, 0 };
-		PixelPad::Application::DrawService drawService{ canvas };
+        PixelPad::Application::Toolbox toolbox{ canvas };
+        PixelPad::Application::DrawService drawService{ canvas, toolbox };
 
         drawService.ResizeCanvas(3, 3);
 		drawService.ClearCanvas();
@@ -109,7 +119,8 @@ namespace PixelPad::Tests::Application
 		int expectedWidth = 5;
 		int expectedHeight = 5;
 		PixelPad::Core::Canvas canvas{ expectedWidth, expectedHeight, 0 };
-		PixelPad::Application::DrawService drawService{ canvas };
+        PixelPad::Application::Toolbox toolbox{ canvas };
+        PixelPad::Application::DrawService drawService{ canvas, toolbox };
 
 		auto [width, height] = drawService.GetCanvasSize();
 
@@ -122,7 +133,8 @@ namespace PixelPad::Tests::Application
 		int expectedAdjustedWidth = 10;
 		int expectedAdjustedHeight = 10;
 		PixelPad::Core::Canvas canvas{ 5, 5, 0 };
-		PixelPad::Application::DrawService drawService{ canvas };
+        PixelPad::Application::Toolbox toolbox{ canvas };
+        PixelPad::Application::DrawService drawService{ canvas, toolbox };
 
 		drawService.ResizeCanvas(expectedAdjustedWidth, expectedAdjustedHeight);
 		auto [width, height] = drawService.GetCanvasSize();
@@ -136,7 +148,8 @@ namespace PixelPad::Tests::Application
 		int expectedWidth = 0;
 		int expectedHeight = 0;
 		PixelPad::Core::Canvas canvas{ expectedWidth, expectedHeight, 0 };
-		PixelPad::Application::DrawService drawService{ canvas };
+        PixelPad::Application::Toolbox toolbox{ canvas };
+        PixelPad::Application::DrawService drawService{ canvas, toolbox };
 
 		auto [width, height] = drawService.GetCanvasSize();
 
@@ -147,7 +160,8 @@ namespace PixelPad::Tests::Application
     TEST(DrawServiceTests, SaveCanvasState_ShouldSaveCanvasState_WhenCalled)
     {
         PixelPad::Core::Canvas canvas{ 5, 5, 0 };
-        PixelPad::Application::DrawService drawService{ canvas };
+        PixelPad::Application::Toolbox toolbox{ canvas };
+        PixelPad::Application::DrawService drawService{ canvas, toolbox };
         canvas.DrawPixel(2, 2, 123);
 
         drawService.SaveCanvasState();
@@ -158,7 +172,8 @@ namespace PixelPad::Tests::Application
     TEST(DrawServiceTests, LoadCanvasState_ShouldRestoreCanvasState_WhenCalled)
     {
         PixelPad::Core::Canvas canvas{ 5, 5, 0 };
-        PixelPad::Application::DrawService drawService{ canvas };
+        PixelPad::Application::Toolbox toolbox{ canvas };
+        PixelPad::Application::DrawService drawService{ canvas, toolbox };
         canvas.DrawPixel(2, 2, 123);
         drawService.SaveCanvasState();
 
@@ -171,7 +186,8 @@ namespace PixelPad::Tests::Application
     TEST(DrawServiceTests, LoadCanvasState_ShouldDoNothing_WhenNoSnapshotHasBeenSaved)
     {
         PixelPad::Core::Canvas canvas{ 5, 5, 0 };
-        PixelPad::Application::DrawService drawService{ canvas };
+        PixelPad::Application::Toolbox toolbox{ canvas };
+        PixelPad::Application::DrawService drawService{ canvas, toolbox };
 
         drawService.LoadCanvasState();
 
