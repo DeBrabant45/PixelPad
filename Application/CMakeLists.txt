@@ -19,6 +19,11 @@ add_library(${PIXEL_PAD_APPLICATION_TARGET_NAME}
     include/Inputs/IInput.hpp
 
     include/Windows/IWindow.hpp
+
+    include/Tools/IToolbox.hpp
+
+    src/Tools/Toolbox.cpp
+    include/Tools/Toolbox.hpp
 )
 
 target_include_directories(${PIXEL_PAD_APPLICATION_TARGET_NAME}

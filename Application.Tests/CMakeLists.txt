@@ -2,6 +2,8 @@
 
 add_executable(${PIXEL_PAD_APPLICATION_TESTS_TARGET_NAME}
     src/Graphics/DrawServiceTests.cpp
+
+    src/Tools/ToolboxTests.cpp
 )
 
 target_include_directories(${PIXEL_PAD_APPLICATION_TESTS_TARGET_NAME}
