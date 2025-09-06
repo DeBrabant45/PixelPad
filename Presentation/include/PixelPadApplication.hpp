@@ -6,9 +6,12 @@
 #include "Inputs/SDLInput.hpp"
 #include "Graphics/Canvas.hpp"
 #include "Graphics/DrawService.hpp"
+#include "Graphics/UIRoot.hpp"
+#include "Graphics/SDLTextureManager.hpp"
 #include "Controllers/CanvasController.hpp"
 #include "Controllers/WindowController.hpp"
 #include "Controllers/RendererController.hpp"
+#include "Controllers/UIController.hpp"
 #include "Tools/Toolbox.hpp"
 
 namespace PixelPad::Presentation
@@ -28,11 +31,14 @@ namespace PixelPad::Presentation
 		PixelPad::Infrastructure::SDLWindow m_window;
 		PixelPad::Infrastructure::SDLRenderer m_renderer;
 		PixelPad::Infrastructure::SDLInput m_input;
+		PixelPad::Infrastructure::SDLTextureManager m_textureManager;
+		PixelPad::Infrastructure::UIRoot m_uiRoot;
 		PixelPad::Core::Canvas m_canvas;
 		PixelPad::Application::Toolbox m_toolbox;
 		PixelPad::Application::DrawService m_drawService;
 		PixelPad::Presentation::CanvasController m_canvasController;
 		PixelPad::Presentation::WindowController m_windowController;
 		PixelPad::Presentation::RendererController m_rendererController;
+		PixelPad::Presentation::UIController m_uiController;
 	};
 }

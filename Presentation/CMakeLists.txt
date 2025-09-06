@@ -10,6 +10,9 @@ add_executable(${PIXEL_PAD_PRESENTATION_TARGET_NAME}
     src/Controllers/RendererController.cpp
     include/Controllers/RendererController.hpp
 
+    src/Controllers/UIController.cpp
+    include/Controllers/UIController.hpp
+
     src/PixelPadApplication.cpp
     include/PixelPadApplication.hpp
 

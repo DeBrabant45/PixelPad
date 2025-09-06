@@ -4,6 +4,7 @@
 namespace PixelPad::Application
 {
 	class IRenderer;
+	class IUIRoot;
 }	
 
 namespace PixelPad::Presentation
@@ -11,7 +12,7 @@ namespace PixelPad::Presentation
 	class RendererController
 	{
 	public:
-		RendererController(PixelPad::Application::IRenderer& renderer, PixelPad::Core::Canvas& canvas);
+		RendererController(PixelPad::Application::IRenderer& renderer, PixelPad::Core::Canvas& canvas, PixelPad::Application::IUIRoot& uiRoot);
 		~RendererController();
 		void Render();
 
@@ -20,6 +21,7 @@ namespace PixelPad::Presentation
 		void UnregisterEventHandlers();
 
 	private:
+		PixelPad::Application::IUIRoot& m_uiRoot;
 		PixelPad::Application::IRenderer& m_renderer;
 		PixelPad::Core::Canvas& m_canvas;
 	};
