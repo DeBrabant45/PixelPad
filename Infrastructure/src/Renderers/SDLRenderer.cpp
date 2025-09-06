@@ -1,6 +1,8 @@
 #include "Renderers/SDLRenderer.hpp"
 #include "Windows/IWindow.hpp"
 #include "Graphics/Canvas.hpp"
+#include "Graphics/ITexture.hpp"
+#include "Graphics/SDLTexture.hpp"
 
 #include <iostream>
 #include <SDL3/SDL.h>
@@ -62,9 +64,30 @@ namespace PixelPad::Infrastructure
             return;
         }
 
-        // Clear with black color
-        SDL_SetRenderDrawColor(m_sdlRenderer, 0, 0, 0, 255);
+        // Clear with Windows 98 panel gray
+        SDL_SetRenderDrawColor(m_sdlRenderer, 192, 192, 192, 255);
         SDL_RenderClear(m_sdlRenderer);
+
+        //const int TOP_PANEL_HEIGHT = 25;   // Menu bar
+        //const int LEFT_PANEL_WIDTH = 80;   // Tools
+        //const int BOTTOM_PANEL_HEIGHT = 50;   // Color picker
+        //const int CANVAS_WIDTH = m_window.GetWidth() - LEFT_PANEL_WIDTH;
+        //const int CANVAS_HEIGHT = m_window.GetHeight() - TOP_PANEL_HEIGHT - BOTTOM_PANEL_HEIGHT;
+
+        //// Draw left tool panel (slightly darker gray for contrast)
+        //SDL_FRect leftPanel{ 0, TOP_PANEL_HEIGHT, LEFT_PANEL_WIDTH, CANVAS_HEIGHT };
+        //SDL_SetRenderDrawColor(m_sdlRenderer, 160, 160, 160, 255);
+        //SDL_RenderFillRect(m_sdlRenderer, &leftPanel);
+
+        //// Draw bottom color picker panel
+        //SDL_FRect bottomPanel{ LEFT_PANEL_WIDTH, m_window.GetHeight() - BOTTOM_PANEL_HEIGHT, CANVAS_WIDTH, BOTTOM_PANEL_HEIGHT };
+        //SDL_SetRenderDrawColor(m_sdlRenderer, 160, 160, 160, 255);
+        //SDL_RenderFillRect(m_sdlRenderer, &bottomPanel);
+
+        //// Draw canvas area (white)
+        //SDL_FRect canvas{ LEFT_PANEL_WIDTH, TOP_PANEL_HEIGHT, CANVAS_WIDTH, CANVAS_HEIGHT };
+        //SDL_SetRenderDrawColor(m_sdlRenderer, 255, 255, 255, 255);
+        //SDL_RenderFillRect(m_sdlRenderer, &canvas);
     }
 
     void SDLRenderer::Render(const PixelPad::Core::Canvas& canvas)
@@ -82,6 +105,28 @@ namespace PixelPad::Infrastructure
 
         SDL_FRect dstRect = { 0, 0, static_cast<float>(width), static_cast<float>(height) };
         SDL_RenderTexture(m_sdlRenderer, m_canvasTexture, nullptr, &dstRect);
+    }
+
+    void SDLRenderer::DrawTexture(PixelPad::Application::ITexture* texture, int x, int y, int width, int height)
+    {
+        if (!texture)
+            return;
+
+        auto* sdlTex = dynamic_cast<SDLTexture*>(texture);
+        if (!sdlTex)
+            return;
+
+        SDL_Texture* nativeTex = sdlTex->GetSDLTexture();
+        if (!nativeTex)
+            return;
+
+        SDL_FRect dstRect{ static_cast<float>(x), static_cast<float>(y),
+                           static_cast<float>(width), static_cast<float>(height) };
+
+        if (SDL_RenderTexture(m_sdlRenderer, nativeTex, nullptr, &dstRect) == 0)
+        {
+            std::cerr << "Failed to render texture: " << SDL_GetError() << std::endl;
+        }
     }
 
     void SDLRenderer::CreateCanvasTexture(int width, int height)
@@ -143,5 +188,27 @@ namespace PixelPad::Infrastructure
         }
 
         SDL_RenderPresent(m_sdlRenderer);
+    }
+
+    SDL_Texture* SDLRenderer::CreateSDLTexture(const std::string& filePath)
+    {
+        SDL_Texture* sdlTexture = nullptr;
+        SDL_Surface* surface = SDL_LoadBMP(filePath.c_str());
+        if (!surface)
+        {
+            std::cerr << "Failed to load texture: " << SDL_GetError() << "\n";
+            return nullptr;
+        }
+
+        sdlTexture = SDL_CreateTextureFromSurface(m_sdlRenderer, surface);
+        SDL_DestroySurface(surface);
+
+        if (!sdlTexture)
+        {
+            std::cerr << "Failed to create SDL texture: " << SDL_GetError() << "\n";
+            return nullptr;
+        }
+
+        return sdlTexture;
     }
 }
