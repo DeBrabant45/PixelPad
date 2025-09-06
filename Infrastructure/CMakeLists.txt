@@ -12,6 +12,21 @@ add_library(${PIXEL_PAD_INFRASTRUCTURE_TARGET_NAME}
 
     src/Buses/EventBus.cpp
     include/Buses/EventBus.hpp
+
+    src/Graphics/SDLTexture.cpp
+    include/Graphics/SDLTexture.hpp
+
+    src/Graphics/UIButton.cpp
+    include/Graphics/UIButton.hpp
+
+    src/Graphics/UIRoot.cpp
+    include/Graphics/UIRoot.hpp
+
+    src/Graphics/UIToolsPanel.cpp
+    include/Graphics/UIToolsPanel.hpp
+
+    src/Graphics/SDLTextureManager.cpp
+    include/Graphics/SDLTextureManager.hpp
 )
 
 find_package(SDL3 CONFIG REQUIRED)
