@@ -1,8 +1,23 @@
 {
   "name": "pixelpad",
   "version-string": "0.1.0",
+  "builtin-baseline": "0d5cae153065957df7f382de7c1549ccc88027e5",
   "dependencies": [
-    "sdl3",
-    "gtest"
+    {
+      "name": "sdl3",
+      "version>=": "3.2.10"
+    },
+    {
+      "name": "gtest",
+      "version>=": "1.15.0"
+    }
+    //{
+    //  "name": "imgui",
+    //  "version>=": "1.89.7",
+    //  "features": [
+    //    "sdl3-binding",
+    //    "opengl3-binding"
+    //  ]
+    //}
   ]
 }
