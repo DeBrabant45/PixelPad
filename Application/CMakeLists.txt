@@ -5,6 +5,12 @@ add_library(${PIXEL_PAD_APPLICATION_TARGET_NAME}
     include/Graphics/DrawService.hpp
 
     include/Graphics/IDrawService.hpp
+    include/Graphics/IRenderable.hpp
+    include/Graphics/ITexture.hpp
+    include/Graphics/IUIButton.hpp
+    include/Graphics/IUIPanel.hpp
+    include/Graphics/IUIRoot.hpp
+    include/Graphics/ITextureManager.hpp
 
     include/Enums/ToolType.hpp
     include/Enums/MouseButton.hpp
