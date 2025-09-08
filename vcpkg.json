@@ -11,13 +11,5 @@
       "name": "gtest",
       "version>=": "1.15.0"
     }
-    //{
-    //  "name": "imgui",
-    //  "version>=": "1.89.7",
-    //  "features": [
-    //    "sdl3-binding",
-    //    "opengl3-binding"
-    //  ]
-    //}
   ]
 }

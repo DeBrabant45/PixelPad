@@ -22,5 +22,6 @@ namespace PixelPad::Presentation
 	private:
 		PixelPad::Application::IUIRoot& m_uiRoot;
 		PixelPad::Infrastructure::EventBus& m_eventBus;
+		PixelPad::Infrastructure::EventBus::SubscriptionToken m_buttonClickedEventToken;
 	};
 }

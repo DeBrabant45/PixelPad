@@ -50,5 +50,6 @@ namespace PixelPad::Presentation
 	void Presentation::CanvasController::UnregisterEventHandlers()
 	{
 		m_eventBus.Unsubscribe<PixelPad::Application::MouseButtonEvent>(m_mouseEventToken);
+		m_eventBus.Unsubscribe<PixelPad::Application::ToolTypeChangedEvent>(m_toolTypeChangeEventToken);
 	}
 }

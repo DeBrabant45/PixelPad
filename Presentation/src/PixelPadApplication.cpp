@@ -11,7 +11,7 @@ namespace PixelPad::Presentation
         m_renderer(m_window),
         m_input(m_eventBus),
         m_textureManager(m_renderer),
-        m_uiRoot(m_textureManager),
+        m_uiRoot(m_textureManager, m_eventBus),
         m_canvas(720, 525, 0xFFFFFFFF),
         m_toolbox(m_canvas),
         m_drawService(m_canvas, m_toolbox),
