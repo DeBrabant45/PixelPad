@@ -19,6 +19,7 @@ add_library(${PIXEL_PAD_APPLICATION_TARGET_NAME}
     include/Events/WindowCloseEvent.hpp
     include/Events/WindowResizeEvent.hpp
     include/Events/ToolTypeChangedEvent.hpp
+    include/Events/UIButtonClickedEvent.hpp
 
     include/Renderers/IRenderer.hpp
 

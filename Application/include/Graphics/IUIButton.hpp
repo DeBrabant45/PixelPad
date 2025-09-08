@@ -2,7 +2,7 @@
 
 #include "Graphics/IRenderable.hpp"
 
-#include <functional>
+#include <string>
 
 namespace PixelPad::Application
 {
@@ -14,12 +14,16 @@ namespace PixelPad::Application
 		int height;
 	};
 
+	struct ClickResult
+	{
+		std::string ButtonId;
+	};
+
 	class IUIButton : public IRenderable
 	{
 	public:
 		virtual ~IUIButton() = default;
-		virtual void OnClick(const std::function<void()>& callback) = 0;
-		virtual void HandleClick(int clickX, int clickY) = 0;
+		virtual void OnClick(int clickX, int clickY) = 0;
 		virtual Transform GetTransform() const = 0;
 	};
 }

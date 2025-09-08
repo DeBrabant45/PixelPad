@@ -8,6 +8,5 @@ namespace PixelPad::Application
 	{
 	public:
 		virtual ~IUIPanel() = default;
-		virtual void HandleClick(int clickX, int clickY) = 0;
 	};
 }
