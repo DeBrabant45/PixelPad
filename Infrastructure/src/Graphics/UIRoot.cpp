@@ -4,9 +4,9 @@
 
 namespace PixelPad::Infrastructure
 {
-	UIRoot::UIRoot(PixelPad::Application::ITextureManager& textureManager)
+	UIRoot::UIRoot(PixelPad::Application::ITextureManager& textureManager, PixelPad::Infrastructure::EventBus& eventBus)
 	{
-		m_panels[0] = std::make_unique<UIToolsPanel>(textureManager);
+		m_panels[0] = std::make_unique<UIToolsPanel>(textureManager, eventBus);
 	}
 
 	void UIRoot::Render(PixelPad::Application::IRenderer& renderer)
@@ -16,17 +16,6 @@ namespace PixelPad::Infrastructure
 			if (m_panels[i])
 			{
 				m_panels[i]->Render(renderer);
-			}
-		}
-	}
-
-	void UIRoot::HandleClick(int x, int y)
-	{
-		for (size_t i = 0; i < m_panels.size(); i++)
-		{
-			if (m_panels[i])
-			{
-				m_panels[i]->HandleClick(x, y);
 			}
 		}
 	}

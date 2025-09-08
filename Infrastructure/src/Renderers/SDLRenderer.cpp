@@ -64,30 +64,8 @@ namespace PixelPad::Infrastructure
             return;
         }
 
-        // Clear with Windows 98 panel gray
         SDL_SetRenderDrawColor(m_sdlRenderer, 192, 192, 192, 255);
         SDL_RenderClear(m_sdlRenderer);
-
-        //const int TOP_PANEL_HEIGHT = 25;   // Menu bar
-        //const int LEFT_PANEL_WIDTH = 80;   // Tools
-        //const int BOTTOM_PANEL_HEIGHT = 50;   // Color picker
-        //const int CANVAS_WIDTH = m_window.GetWidth() - LEFT_PANEL_WIDTH;
-        //const int CANVAS_HEIGHT = m_window.GetHeight() - TOP_PANEL_HEIGHT - BOTTOM_PANEL_HEIGHT;
-
-        //// Draw left tool panel (slightly darker gray for contrast)
-        //SDL_FRect leftPanel{ 0, TOP_PANEL_HEIGHT, LEFT_PANEL_WIDTH, CANVAS_HEIGHT };
-        //SDL_SetRenderDrawColor(m_sdlRenderer, 160, 160, 160, 255);
-        //SDL_RenderFillRect(m_sdlRenderer, &leftPanel);
-
-        //// Draw bottom color picker panel
-        //SDL_FRect bottomPanel{ LEFT_PANEL_WIDTH, m_window.GetHeight() - BOTTOM_PANEL_HEIGHT, CANVAS_WIDTH, BOTTOM_PANEL_HEIGHT };
-        //SDL_SetRenderDrawColor(m_sdlRenderer, 160, 160, 160, 255);
-        //SDL_RenderFillRect(m_sdlRenderer, &bottomPanel);
-
-        //// Draw canvas area (white)
-        //SDL_FRect canvas{ LEFT_PANEL_WIDTH, TOP_PANEL_HEIGHT, CANVAS_WIDTH, CANVAS_HEIGHT };
-        //SDL_SetRenderDrawColor(m_sdlRenderer, 255, 255, 255, 255);
-        //SDL_RenderFillRect(m_sdlRenderer, &canvas);
     }
 
     void SDLRenderer::Render(const PixelPad::Core::Canvas& canvas)
