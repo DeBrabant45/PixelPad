@@ -48,6 +48,6 @@ namespace PixelPad::Presentation
 
 	void UIController::UnregisterEventHandlers()
 	{
-
+		m_eventBus.Unsubscribe<PixelPad::Application::UIButtonClickedEvent>(m_buttonClickedEventToken);
 	}
 }
