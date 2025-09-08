@@ -8,34 +8,41 @@ namespace PixelPad::Infrastructure
 	UIToolsPanel::UIToolsPanel(PixelPad::Application::ITextureManager& textureManager, PixelPad::Infrastructure::EventBus& eventBus) :
 		m_textureManager(textureManager)
 	{
-		auto texture = m_textureManager.LoadTexture("C:/Assets/sample.bmp");
-		auto pencilButton = new PixelPad::Infrastructure::UIButton("PencilTool", 400, 400, 40, 40, texture, eventBus);
+		CreateToolButtons(eventBus);
+	}
 
-		m_buttons.emplace_back(std::move(pencilButton));
+	void UIToolsPanel::CreateToolButtons(PixelPad::Infrastructure::EventBus& eventBus)
+	{
+		std::vector<std::pair<std::string, std::string>> buttonNames =
+		{
+			{"PencilTool", "C:/Assets/sample.bmp"},
+			{"EraserTool", "C:/Assets/sample.bmp"},
+			{"FillTool", "C:/Assets/sample.bmp"},
+			{"LineTool", "C:/Assets/sample.bmp"},
+			{"RectangleTool", "C:/Assets/sample.bmp"},
+			{"EllipseTool", "C:/Assets/sample.bmp"},
+		};
 
-		//int panelX = 720;
-		//int panelY = 0;
-		//int buttonSize = 32;
-		//int spacing = 6;
-		//int padding = 10;
-		//int numberOfButtons = 8;
+		int startX = 720;
+		int startY = 10;
+		int size = 32;
+		int spacing = 6;
 
-		//for (int i = 0; i < numberOfButtons; i++)
-		//{
-		//	int column = i % 2;
-		//	int row = i / 2;
-
-		//	auto button = std::make_unique<PixelPad::Infrastructure::UIButton>(
-		//		"Just a Test",
-		//		panelX + padding + column * (buttonSize + spacing),
-		//		panelY + padding + row * (buttonSize + spacing),
-		//		buttonSize,
-		//		buttonSize,
-		//		texture
-		//	);
-
-		//	m_buttons.emplace_back(std::move(button));
-		//}
+		for (int i = 0; i < buttonNames.size(); i++)
+		{
+			int row = i / 2;
+			int col = i % 2;
+			auto texture = m_textureManager.LoadTexture(buttonNames[i].second);
+			m_buttons.emplace_back(std::make_unique<PixelPad::Infrastructure::UIButton>(
+				buttonNames[i].first,
+				startX + col * (size + spacing),
+				startY + row * (size + spacing),
+				size,
+				size,
+				texture,
+				eventBus
+			));
+		}
 	}
 
 	void UIToolsPanel::Render(PixelPad::Application::IRenderer& renderer)

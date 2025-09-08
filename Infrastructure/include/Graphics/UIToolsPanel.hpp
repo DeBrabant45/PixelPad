@@ -22,6 +22,9 @@ namespace PixelPad::Infrastructure
 		void Render(PixelPad::Application::IRenderer& renderer) override;
 
 	private:
+		void CreateToolButtons(PixelPad::Infrastructure::EventBus& eventBus);
+
+	private:
 		PixelPad::Application::ITextureManager& m_textureManager;
 		std::vector<std::unique_ptr<PixelPad::Infrastructure::UIButton>> m_buttons;
 	};
