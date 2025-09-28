@@ -16,7 +16,7 @@ namespace PixelPad::Application
 		DrawService(PixelPad::Core::Canvas & canvas, PixelPad::Application::IToolbox& toolbox);
 		~DrawService() = default;
 		void SelectTool(const ToolType& toolType) override;
-        void ProcessDrawInput(const MouseButtonEvent& mouseButtonEvent) override;
+        void ProcessDrawInput(const MouseButtonEvent& mouseButtonEvent, CanvasViewport& canvasViewport) override;
 		void ClearCanvas() override;
 		void ResizeCanvas(int width, int height) override;
 		std::pair<int, int> GetCanvasSize() const override;

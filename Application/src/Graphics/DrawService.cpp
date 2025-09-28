@@ -1,5 +1,6 @@
 #include "Graphics/DrawService.hpp"
 #include "Graphics/CanvasSnapshot.hpp"
+#include "Graphics/CanvasViewport.hpp"
 #include "Events/MouseButtonEvent.hpp"
 #include "Tools/DrawCommand.hpp"
 #include "Enums/ToolType.hpp"
@@ -29,14 +30,16 @@ namespace PixelPad::Application
 	}
 
 	// ToDo: Add unit tests
-	void DrawService::ProcessDrawInput(const PixelPad::Application::MouseButtonEvent& mouseButtonEvent)
+	void DrawService::ProcessDrawInput(const PixelPad::Application::MouseButtonEvent& mouseButtonEvent, CanvasViewport& canvasViewport)
 	{
+		auto [localX, localY] = canvasViewport.ToLocal(mouseButtonEvent.X, mouseButtonEvent.Y);
+
 		// ToDo: Look into adding radius
 		PixelPad::Core::DrawCommand command
 		{
-			mouseButtonEvent.X,
-			mouseButtonEvent.Y,
-			0xFF000000, // ToDo: Replace with actual color logic
+			localX,
+			localY,
+			0xFF000000,
 			mouseButtonEvent.IsPressed
 		};
 
