@@ -12,12 +12,13 @@ namespace PixelPad::Presentation
         m_input(m_eventBus),
         m_textureManager(m_renderer),
         m_uiRoot(m_textureManager, m_eventBus),
-        m_canvas(720, 525, 0xFFFFFFFF),
+        m_canvas(720, 499, 0xFFFFFFFF),
         m_toolbox(m_canvas),
         m_drawService(m_canvas, m_toolbox),
-        m_canvasController(m_canvas, m_drawService, m_eventBus),
+        m_canvasViewport(m_canvas.GetWidth(), m_canvas.GetHeight(), 70, 30),
+        m_canvasController(m_canvas, m_drawService, m_eventBus, m_canvasViewport),
         m_windowController(m_window, m_eventBus),
-        m_rendererController(m_renderer, m_canvas, m_uiRoot),
+        m_rendererController(m_renderer, m_canvas, m_uiRoot, m_canvasViewport),
         m_uiController(m_uiRoot, m_eventBus)
     {
         std::cout << "Size of PixelPadApplication: " << sizeof(*this) << " bytes" << std::endl; // 392

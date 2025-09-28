@@ -1,5 +1,6 @@
 #pragma once
 #include "Graphics/Canvas.hpp"
+#include "Graphics/CanvasViewport.hpp"
 
 namespace PixelPad::Application
 {
@@ -12,7 +13,11 @@ namespace PixelPad::Presentation
 	class RendererController
 	{
 	public:
-		RendererController(PixelPad::Application::IRenderer& renderer, PixelPad::Core::Canvas& canvas, PixelPad::Application::IUIRoot& uiRoot);
+		RendererController(
+			PixelPad::Application::IRenderer& renderer, 
+			PixelPad::Core::Canvas& canvas, 
+			PixelPad::Application::IUIRoot& uiRoot,
+			PixelPad::Application::CanvasViewport& canvasViewport);
 		~RendererController();
 		void Render();
 
@@ -24,5 +29,6 @@ namespace PixelPad::Presentation
 		PixelPad::Application::IUIRoot& m_uiRoot;
 		PixelPad::Application::IRenderer& m_renderer;
 		PixelPad::Core::Canvas& m_canvas;
+		PixelPad::Application::CanvasViewport& m_canvasViewport;
 	};
 }

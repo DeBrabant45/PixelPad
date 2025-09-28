@@ -8,6 +8,7 @@
 #include "Graphics/DrawService.hpp"
 #include "Graphics/UIRoot.hpp"
 #include "Graphics/SDLTextureManager.hpp"
+#include "Graphics/CanvasViewport.hpp"
 #include "Controllers/CanvasController.hpp"
 #include "Controllers/WindowController.hpp"
 #include "Controllers/RendererController.hpp"
@@ -36,6 +37,7 @@ namespace PixelPad::Presentation
 		PixelPad::Core::Canvas m_canvas;
 		PixelPad::Application::Toolbox m_toolbox;
 		PixelPad::Application::DrawService m_drawService;
+		PixelPad::Application::CanvasViewport m_canvasViewport;
 		PixelPad::Presentation::CanvasController m_canvasController;
 		PixelPad::Presentation::WindowController m_windowController;
 		PixelPad::Presentation::RendererController m_rendererController;
