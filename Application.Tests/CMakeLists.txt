@@ -2,7 +2,7 @@
 
 add_executable(${PIXEL_PAD_APPLICATION_TESTS_TARGET_NAME}
     src/Graphics/DrawServiceTests.cpp
-
+    src/Graphics/CanvasViewportTests.cpp
     src/Tools/ToolboxTests.cpp
 )
 
