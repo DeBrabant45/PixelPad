@@ -2,11 +2,12 @@
 
 namespace PixelPad::Application
 {
-	Sprite::Sprite(int width, int height, int xCoordinate, int yCoordinate, std::shared_ptr<ITexture> texture) :
+	Sprite::Sprite(int width, int height, int xCoordinate, int yCoordinate, int zOrder, std::shared_ptr<ITexture> texture) :
 		m_width(width),
 		m_height(height),
 		m_xCoordinate(xCoordinate),
 		m_yCoordinate(yCoordinate),
+		m_zOrder(zOrder),
 		m_texture(texture)
 	{
 
@@ -30,6 +31,11 @@ namespace PixelPad::Application
 	int Sprite::GetYCoordinate() const
 	{
 		return m_yCoordinate;
+	}
+
+	int Sprite::GetZOrder() const
+	{
+		return m_zOrder;
 	}
 
 	std::shared_ptr<ITexture> Sprite::GetTexture()
