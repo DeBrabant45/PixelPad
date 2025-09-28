@@ -13,6 +13,9 @@ add_library(${PIXEL_PAD_APPLICATION_TARGET_NAME}
     include/Graphics/ITextureManager.hpp
     include/Graphics/CanvasViewport.hpp
     src/Graphics/CanvasViewport.cpp
+    include/Graphics/ISprite.hpp
+    include/Graphics/Sprite.hpp
+    src/Graphics/Sprite.cpp
 
     include/Enums/ToolType.hpp
     include/Enums/MouseButton.hpp
