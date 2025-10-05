@@ -13,7 +13,7 @@ namespace PixelPad::Application
 		virtual int GetHeight() const = 0;
 		virtual int GetXCoordinate() const = 0;
 		virtual int GetYCoordinate() const = 0;
-		virtual int GetZOrder() const = 0;
+		virtual int GetZCoordinate() const = 0;
 		virtual std::shared_ptr<ITexture> GetTexture() = 0;
 	};
 }

@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include "Graphics/Sprite.hpp"
 #include "Graphics/ITexture.hpp"
+#include "Geometries/Transform.hpp"
 
 #include <memory>
 
@@ -17,7 +18,7 @@ namespace PixelPad::Tests::Application
         auto expectedWidth = 30;
         auto texture = std::make_shared<TestTexture>();
 
-        auto sut = PixelPad::Application::Sprite(expectedWidth, 10, 0, 0, 1, texture);
+        auto sut = PixelPad::Application::Sprite(PixelPad::Core::Transform(0, 0, 0, expectedWidth, 10), texture);
 
         EXPECT_EQ(sut.GetWidth(), expectedWidth);
     }
@@ -27,7 +28,7 @@ namespace PixelPad::Tests::Application
         auto expectedHeight = 50;
         auto texture = std::make_shared<TestTexture>();
 
-        auto sut = PixelPad::Application::Sprite(10, expectedHeight, 0, 0, 1, texture);
+        auto sut = PixelPad::Application::Sprite(PixelPad::Core::Transform(0, 0, 0, 10, expectedHeight), texture);
 
         EXPECT_EQ(sut.GetHeight(), expectedHeight);
     }
@@ -37,7 +38,7 @@ namespace PixelPad::Tests::Application
         auto expectedXCoordinate = 60;
         auto texture = std::make_shared<TestTexture>();
 
-        auto sut = PixelPad::Application::Sprite(10, 10, expectedXCoordinate, 0, 1, texture);
+        auto sut = PixelPad::Application::Sprite(PixelPad::Core::Transform(expectedXCoordinate, 0, 1, 10, 10), texture);
 
         EXPECT_EQ(sut.GetXCoordinate(), expectedXCoordinate);
     }
@@ -47,26 +48,26 @@ namespace PixelPad::Tests::Application
         auto expectedYCoordinate = 70;
         auto texture = std::make_shared<TestTexture>();
 
-        auto sut = PixelPad::Application::Sprite(10, 10, 4, expectedYCoordinate, 1, texture);
+        auto sut = PixelPad::Application::Sprite(PixelPad::Core::Transform(10, expectedYCoordinate, 1, 10, 10), texture);
 
         EXPECT_EQ(sut.GetYCoordinate(), expectedYCoordinate);
     }
 
-    TEST(SpriteTests, GetZOrder_ShouldReturnBackPassedInValue_WhenCalled)
+    TEST(SpriteTests, GetZCoordinate_ShouldReturnBackPassedInValue_WhenCalled)
     {
-        auto expectedZOrder = 10;
+        auto expectedZCoordinate = 10;
         auto texture = std::make_shared<TestTexture>();
 
-        auto sut = PixelPad::Application::Sprite(10, 10, 4, 20, expectedZOrder, texture);
+        auto sut = PixelPad::Application::Sprite(PixelPad::Core::Transform(10, 10, expectedZCoordinate, 10, 10), texture);
 
-        EXPECT_EQ(sut.GetZOrder(), expectedZOrder);
+        EXPECT_EQ(sut.GetZCoordinate(), expectedZCoordinate);
     }
 
     TEST(SpriteTests, GetTexture_ShouldReturnBackPassedInValue_WhenCalled)
     {
         auto expectedTexture = std::make_shared<TestTexture>();
 
-        auto sut = PixelPad::Application::Sprite(10, 10, 4, 80, 1, expectedTexture);
+        auto sut = PixelPad::Application::Sprite(PixelPad::Core::Transform(4, 80, 10, 10), expectedTexture);
         auto texture = sut.GetTexture();
 
         EXPECT_EQ(texture, expectedTexture);

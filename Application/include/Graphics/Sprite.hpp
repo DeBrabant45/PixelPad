@@ -1,26 +1,25 @@
 #pragma once
 
 #include "Graphics/ISprite.hpp"
+#include "Geometries/Transform.hpp"
 
 namespace PixelPad::Application
 {
 	class Sprite : public ISprite
 	{
 	public:
-		Sprite(int width, int height, int xCoordinate, int yCoordinate, int zOrder, std::shared_ptr<ITexture> texture);
+		Sprite(const PixelPad::Core::Transform& transform, std::shared_ptr<ITexture> texture);
 		int GetWidth() const override;
 		int GetHeight() const override;
 		int GetXCoordinate() const override;
 		int GetYCoordinate() const override;
-		int GetZOrder() const override;
+		int GetZCoordinate() const override;
 		std::shared_ptr<ITexture> GetTexture() override;
 
+	protected:
+		std::shared_ptr<ITexture> Texture;
+
 	private:
-		std::shared_ptr<ITexture> m_texture;
-		int m_width;
-		int m_height;
-		int m_xCoordinate;
-		int m_yCoordinate;
-		int m_zOrder;
+		PixelPad::Core::Transform m_transform;
 	};
 }
