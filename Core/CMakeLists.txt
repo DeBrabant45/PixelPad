@@ -28,6 +28,8 @@ add_library(${PIXEL_PAD_CORE_TARGET_NAME}
     include/Tools/EllipseTool.hpp
 
     include/Tools/DrawCommand.hpp
+
+    include/Geometries/Transform.hpp
 )
 
 target_include_directories(${PIXEL_PAD_CORE_TARGET_NAME}
