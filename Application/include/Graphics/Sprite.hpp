@@ -5,7 +5,7 @@
 
 namespace PixelPad::Application
 {
-	class Sprite : public ISprite
+	class Sprite : public virtual ISprite
 	{
 	public:
 		Sprite(const PixelPad::Core::Transform& transform, std::shared_ptr<ITexture> texture);

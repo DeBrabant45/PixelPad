@@ -5,6 +5,7 @@ add_executable(${PIXEL_PAD_APPLICATION_TESTS_TARGET_NAME}
     src/Graphics/CanvasViewportTests.cpp
     src/Graphics/SpriteTests.cpp
     src/Graphics/ButtonSpriteTests.cpp
+    src/Graphics/Factories/SpriteFactoryTests.cpp
     src/Tools/ToolboxTests.cpp
 )
 

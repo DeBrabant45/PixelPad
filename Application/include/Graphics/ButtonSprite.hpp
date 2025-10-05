@@ -1,18 +1,12 @@
 #pragma once
 
 #include "Graphics/Sprite.hpp"
-#include "ITexture.hpp"
+#include "Graphics/IButtonSprite.hpp"
+#include "Graphics/ITexture.hpp"
 #include <vector>
 
 namespace PixelPad::Application
 {
-	enum class ButtonState
-	{
-		UnClicked = 0,
-		Clicked = 1,
-		Hover = 2
-	};
-
 	struct ButtonSpriteTexture
 	{
 		std::shared_ptr<ITexture> UnClicked;
@@ -20,11 +14,11 @@ namespace PixelPad::Application
 		std::shared_ptr<ITexture> Hover;
 	};
 
-	class ButtonSprite : public Sprite
+	class ButtonSprite : public Sprite, public IButtonSprite
 	{
 	public:
 		ButtonSprite(const PixelPad::Core::Transform& transform, const ButtonSpriteTexture buttonSpriteTexture);
-		void SetState(ButtonState state);
+		void SetState(ButtonState state) override;
 
 	private:
 		ButtonSpriteTexture m_textures;
