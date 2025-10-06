@@ -1,19 +1,12 @@
 #pragma once
 
 #include "Graphics/IRenderable.hpp"
+#include "Geometries/Transform.hpp"
 
 #include <string>
 
 namespace PixelPad::Application
 {
-	struct Transform
-	{
-		int x;
-		int y;
-		int width;
-		int height;
-	};
-
 	struct ClickResult
 	{
 		std::string ButtonId;
@@ -24,6 +17,6 @@ namespace PixelPad::Application
 	public:
 		virtual ~IUIButton() = default;
 		virtual void OnClick(int clickX, int clickY) = 0;
-		virtual Transform GetTransform() const = 0;
+		virtual PixelPad::Core::Transform GetTransform() const = 0;
 	};
 }
