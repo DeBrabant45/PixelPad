@@ -9,6 +9,7 @@
 #include "Graphics/UIRoot.hpp"
 #include "Graphics/SDLTextureManager.hpp"
 #include "Graphics/CanvasViewport.hpp"
+#include "Graphics/Factories/SpriteFactory.hpp"
 #include "Controllers/CanvasController.hpp"
 #include "Controllers/WindowController.hpp"
 #include "Controllers/RendererController.hpp"
@@ -33,6 +34,7 @@ namespace PixelPad::Presentation
 		PixelPad::Infrastructure::SDLRenderer m_renderer;
 		PixelPad::Infrastructure::SDLInput m_input;
 		PixelPad::Infrastructure::SDLTextureManager m_textureManager;
+		PixelPad::Application::SpriteFactory m_spriteFactory;
 		PixelPad::Infrastructure::UIRoot m_uiRoot;
 		PixelPad::Core::Canvas m_canvas;
 		PixelPad::Application::Toolbox m_toolbox;

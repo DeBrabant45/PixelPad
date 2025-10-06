@@ -2,7 +2,7 @@
 
 #include "Graphics/IUIPanel.hpp"
 #include "Graphics/UIButton.hpp"
-#include "Graphics/ITextureManager.hpp"
+#include "Graphics/Factories/ISpriteFactory.hpp"
 #include "Buses/EventBus.hpp"
 
 #include <array>
@@ -18,14 +18,14 @@ namespace PixelPad::Infrastructure
 	class UIToolsPanel : public PixelPad::Application::IUIPanel
 	{
 	public:
-		UIToolsPanel(PixelPad::Application::ITextureManager& textureManager, PixelPad::Infrastructure::EventBus& eventBus);
+		UIToolsPanel(PixelPad::Application::ISpriteFactory& spriteFactory, PixelPad::Infrastructure::EventBus& eventBus);
 		void Render(PixelPad::Application::IRenderer& renderer) override;
 
 	private:
 		void CreateToolButtons(PixelPad::Infrastructure::EventBus& eventBus);
 
 	private:
-		PixelPad::Application::ITextureManager& m_textureManager;
+		PixelPad::Application::ISpriteFactory& m_spriteFactory;
 		std::vector<std::unique_ptr<PixelPad::Infrastructure::UIButton>> m_buttons;
 	};
 }

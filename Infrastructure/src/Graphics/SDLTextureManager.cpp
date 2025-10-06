@@ -1,6 +1,7 @@
 #include "Graphics/SDLTextureManager.hpp"
 #include "Graphics/SDLTexture.hpp"
 #include <iostream>
+#include <filesystem>
 
 namespace PixelPad::Infrastructure
 {

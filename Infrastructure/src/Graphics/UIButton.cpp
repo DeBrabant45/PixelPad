@@ -10,15 +10,12 @@ namespace PixelPad::Infrastructure
 {
 	PixelPad::Infrastructure::UIButton::UIButton(
 		std::string name, 
-		int x, 
-		int y, 
-		int w, 
-		int h, 
-		std::shared_ptr<PixelPad::Application::ITexture> texture,
+		PixelPad::Core::Transform& transform,
+		std::unique_ptr<PixelPad::Application::IButtonSprite> sprite,
 		PixelPad::Infrastructure::EventBus& eventBus) :
 		m_name(name),
-		m_transform{ x, y, w, h },
-		m_texture(texture),
+		m_transform(transform),
+		m_sprite(std::move(sprite)),
 		m_eventBus(eventBus)
 	{
 		RegisterEventHandlers();
@@ -35,11 +32,11 @@ namespace PixelPad::Infrastructure
 				OnClick(evt.X, evt.Y);
 			});
 	}
-
+	 
 	void UIButton::OnClick(int clickX, int clickY)
 	{
-		if (clickX >= m_transform.x && clickX <= m_transform.x + m_transform.width &&
-			clickY >= m_transform.y && clickY <= m_transform.y + m_transform.height)
+		if (clickX >= m_transform.X && clickX <= m_transform.X + m_transform.Width &&
+			clickY >= m_transform.Y && clickY <= m_transform.Y + m_transform.Height)
 		{
 			m_eventBus.Publish(PixelPad::Application::UIButtonClickedEvent{ m_name });
 		}
@@ -57,19 +54,19 @@ namespace PixelPad::Infrastructure
 
 	void UIButton::Render(PixelPad::Application::IRenderer& renderer)
 	{
-		if (!m_texture)
+		if (!m_sprite->GetTexture().get())
 			return;
 
 		renderer.DrawTexture(
-			m_texture.get(),
-			m_transform.x,
-			m_transform.y,
-			m_transform.width,
-			m_transform.height
+			m_sprite->GetTexture().get(),
+			m_transform.X,
+			m_transform.Y,
+			m_transform.Width,
+			m_transform.Height
 		);
 	}
 
-	PixelPad::Application::Transform UIButton::GetTransform() const
+	PixelPad::Core::Transform UIButton::GetTransform() const
 	{
 		return m_transform;
 	}

@@ -1,16 +1,26 @@
 #include "Graphics/UIRoot.hpp"
 #include "Graphics/UIToolsPanel.hpp"
 #include "Graphics/ITextureManager.hpp"
+#include "Graphics/ITexture.hpp"
+#include "Graphics/ISprite.hpp"
+#include "Graphics/SDLTexture.hpp"
+#include "Renderers/IRenderer.hpp"
+#include "Graphics/Factories/ISpritefactory.hpp"
+#include "Geometries/Transform.hpp"
 
 namespace PixelPad::Infrastructure
 {
-	UIRoot::UIRoot(PixelPad::Application::ITextureManager& textureManager, PixelPad::Infrastructure::EventBus& eventBus)
+	UIRoot::UIRoot(PixelPad::Application::ISpriteFactory& spriteFactory, PixelPad::Infrastructure::EventBus& eventBus) :
+		m_backgroundSprite(nullptr)
 	{
-		m_panels[0] = std::make_unique<UIToolsPanel>(textureManager, eventBus);
+		auto transform = PixelPad::Core::Transform(0, 0, 0, 800, 600);
+		m_backgroundSprite = spriteFactory.CreateSprite("C:/_projects/PixelPad/build/Assets/retro-frame.bmp", transform);
+		m_panels[0] = std::make_unique<UIToolsPanel>(spriteFactory, eventBus);
 	}
 
 	void UIRoot::Render(PixelPad::Application::IRenderer& renderer)
 	{
+		renderer.DrawTexture(m_backgroundSprite->GetTexture().get(), 0, 0, 800, 600);
 		for (size_t i = 0; i < m_panels.size(); i++)
 		{
 			if (m_panels[i])

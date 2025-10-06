@@ -3,6 +3,7 @@
 #include "Graphics/Canvas.hpp"
 #include "Graphics/ITexture.hpp"
 #include "Graphics/SDLTexture.hpp"
+#include "Graphics/CanvasViewport.hpp"
 
 #include <iostream>
 #include <SDL3/SDL.h>
@@ -68,20 +69,26 @@ namespace PixelPad::Infrastructure
         SDL_RenderClear(m_sdlRenderer);
     }
 
-    void SDLRenderer::Render(const PixelPad::Core::Canvas& canvas)
+    void SDLRenderer::Render(const PixelPad::Core::Canvas& canvas, PixelPad::Application::CanvasViewport& canvasViewport)
     {
         int width = canvas.GetWidth();
         int height = canvas.GetHeight();
         const std::vector<int>& pixels = canvas.GetPixels();
 
         CreateCanvasTexture(width, height);
-        if (!m_canvasTexture) 
+        if (!m_canvasTexture)
             return;
 
-        if (!UpdateTextures(pixels, width, height)) 
+        if (!UpdateTextures(pixels, width, height))
             return;
 
-        SDL_FRect dstRect = { 0, 0, static_cast<float>(width), static_cast<float>(height) };
+        SDL_FRect dstRect = {
+            static_cast<float>(canvasViewport.GetXOffset()),
+            static_cast<float>(canvasViewport.GetYOffset()),
+            static_cast<float>(width),
+            static_cast<float>(height)
+        };
+
         SDL_RenderTexture(m_sdlRenderer, m_canvasTexture, nullptr, &dstRect);
     }
 
