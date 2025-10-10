@@ -15,6 +15,7 @@
 #include "Controllers/RendererController.hpp"
 #include "Controllers/UIController.hpp"
 #include "Tools/Toolbox.hpp"
+#include "Paths/AssetPathProvider.hpp"
 
 namespace PixelPad::Presentation
 {
@@ -33,6 +34,7 @@ namespace PixelPad::Presentation
 		PixelPad::Infrastructure::SDLWindow m_window;
 		PixelPad::Infrastructure::SDLRenderer m_renderer;
 		PixelPad::Infrastructure::SDLInput m_input;
+		PixelPad::Infrastructure::AssetPathProvider m_assetPathProvider;
 		PixelPad::Infrastructure::SDLTextureManager m_textureManager;
 		PixelPad::Application::SpriteFactory m_spriteFactory;
 		PixelPad::Infrastructure::UIRoot m_uiRoot;
