@@ -27,6 +27,10 @@ add_library(${PIXEL_PAD_INFRASTRUCTURE_TARGET_NAME}
 
     src/Graphics/SDLTextureManager.cpp
     include/Graphics/SDLTextureManager.hpp
+
+    include/Paths/IPathProvider.hpp
+    include/Paths/AssetPathProvider.hpp
+    src/Paths/AssetPathProvider.cpp
 )
 
 find_package(SDL3 CONFIG REQUIRED)
