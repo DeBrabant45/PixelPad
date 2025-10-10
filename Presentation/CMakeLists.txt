@@ -29,3 +29,10 @@ target_link_libraries(${PIXEL_PAD_PRESENTATION_TARGET_NAME}
         ${PIXEL_PAD_APPLICATION_TARGET_NAME}
         ${PIXEL_PAD_INFRASTRUCTURE_TARGET_NAME}
 )
+
+add_custom_command(TARGET ${PIXEL_PAD_PRESENTATION_TARGET_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_SOURCE_DIR}/Assets
+        $<TARGET_FILE_DIR:${PIXEL_PAD_PRESENTATION_TARGET_NAME}>/Assets
+    COMMENT "Copying Assets folder to output directory"
+)
