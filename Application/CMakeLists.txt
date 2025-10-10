@@ -5,6 +5,27 @@ add_library(${PIXEL_PAD_APPLICATION_TARGET_NAME}
     include/Graphics/DrawService.hpp
 
     include/Graphics/IDrawService.hpp
+    include/Graphics/IRenderable.hpp
+    include/Graphics/ITexture.hpp
+    include/Graphics/IUIButton.hpp
+    include/Graphics/IUIPanel.hpp
+    include/Graphics/IUIRoot.hpp
+    include/Graphics/ITextureManager.hpp
+
+    include/Graphics/CanvasViewport.hpp
+    src/Graphics/CanvasViewport.cpp
+
+    include/Graphics/ISprite.hpp
+    include/Graphics/Sprite.hpp
+    src/Graphics/Sprite.cpp
+
+    include/Graphics/IButtonSprite.hpp
+    include/Graphics/ButtonSprite.hpp
+    src/Graphics/ButtonSprite.cpp
+
+    include/Graphics/Factories/ISpriteFactory.hpp
+    include/Graphics/Factories/SpriteFactory.hpp
+    src/Graphics/Factories/SpriteFactory.cpp
 
     include/Enums/ToolType.hpp
     include/Enums/MouseButton.hpp
@@ -13,6 +34,7 @@ add_library(${PIXEL_PAD_APPLICATION_TARGET_NAME}
     include/Events/WindowCloseEvent.hpp
     include/Events/WindowResizeEvent.hpp
     include/Events/ToolTypeChangedEvent.hpp
+    include/Events/UIButtonClickedEvent.hpp
 
     include/Renderers/IRenderer.hpp
 

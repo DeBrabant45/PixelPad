@@ -3,6 +3,7 @@
 #include "Graphics/Canvas.hpp"
 #include "Graphics/IDrawService.hpp"
 #include "Buses/EventBus.hpp"
+#include "Graphics/CanvasViewport.hpp"
 
 namespace PixelPad::Application
 {
@@ -15,7 +16,11 @@ namespace PixelPad::Presentation
 	class CanvasController
 	{
 	public:
-		CanvasController(PixelPad::Core::Canvas& canvas, Application::IDrawService& drawService, PixelPad::Infrastructure::EventBus& eventBus);
+		CanvasController(
+			PixelPad::Core::Canvas& canvas, 
+			Application::IDrawService& drawService, 
+			PixelPad::Infrastructure::EventBus& eventBus, 
+			Application::CanvasViewport& canvasViewport);
 		~CanvasController();
 		void OnDraw(const PixelPad::Application::MouseButtonEvent& mouseButtonEvent);
 		void OnToolTypeChange(const PixelPad::Application::ToolTypeChangedEvent& toolTypeChangedEvent);
@@ -28,6 +33,7 @@ namespace PixelPad::Presentation
 		Core::Canvas& m_canvas;
 		Application::IDrawService& m_drawService;
 		PixelPad::Infrastructure::EventBus& m_eventBus;
+		PixelPad::Application::CanvasViewport& m_canvasViewport;
 		PixelPad::Infrastructure::EventBus::SubscriptionToken m_mouseEventToken;
 		PixelPad::Infrastructure::EventBus::SubscriptionToken m_toolTypeChangeEventToken;
 	};

@@ -6,15 +6,15 @@
 
 namespace PixelPad::Infrastructure
 {
-	SDLWindow::SDLWindow(int width, int height, const char* title) :
+	SDLWindow::SDLWindow(int width, int height, const char* title, bool resizable) :
 		m_width(width),
 		m_height(height),
 		m_isOpen(true)
 	{
-		CreateSDLWindow(width, height, title);
+		CreateSDLWindow(width, height, title, resizable);
 	}
 
-	void SDLWindow::CreateSDLWindow(int width, int height, const char* title)
+	void SDLWindow::CreateSDLWindow(int width, int height, const char* title, bool resizable)
 	{
 		if (!SDL_Init(SDL_INIT_VIDEO))
 		{
@@ -27,8 +27,7 @@ namespace PixelPad::Infrastructure
 			title, 
 			width, 
 			height, 
-			SDL_WINDOW_OPENGL | 
-			SDL_WINDOW_RESIZABLE);
+			SDL_WINDOW_OPENGL);
 
 		if (!m_window)
 		{
@@ -37,7 +36,7 @@ namespace PixelPad::Infrastructure
 			return;
 		}
 
-		if (!SDL_SetWindowResizable(m_window, true))
+		if (SDL_SetWindowResizable(m_window, resizable) != resizable)
 		{
 			std::cerr << "SDL Window Resizable failed: " << SDL_GetError() << std::endl;
 			return;

@@ -5,6 +5,7 @@
 
 #include <cstdint>
 #include <vector>
+#include <string>
 
 struct SDL_Renderer;
 struct SDL_Window;
@@ -13,6 +14,12 @@ struct SDL_Texture;
 namespace PixelPad::Core
 {
 	class Canvas;
+}
+
+namespace PixelPad::Application
+{
+	class CanvasViewport;
+	class ISprite;
 }
 
 namespace PixelPad::Infrastructure
@@ -25,8 +32,11 @@ namespace PixelPad::Infrastructure
 		void CreateRenderer();
 		void Shutdown() override;
 		void ClearScreen() override;
-		void Render(const PixelPad::Core::Canvas& canvas) override;
+		void Render(const PixelPad::Core::Canvas& canvas, PixelPad::Application::CanvasViewport& canvasViewport) override;
+		void Render(PixelPad::Application::ISprite* sprite) override;
 		void Present() override;
+		SDL_Texture* CreateSDLTexture(const std::string& filePath);
+		SDL_Texture* CreateDefaultTexture(int width, int height);
 
 	private:
 		void CreateCanvasTexture(int width, int height);

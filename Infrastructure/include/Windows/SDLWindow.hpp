@@ -9,7 +9,7 @@ namespace PixelPad::Infrastructure
 	class SDLWindow : public PixelPad::Application::IWindow
 	{
 	public:
-		SDLWindow(int width, int height, const char* title);
+		SDLWindow(int width, int height, const char* title, bool resizable);
 		~SDLWindow() override;
 		void Shutdown() override;
 		int GetWidth() const override;
@@ -20,7 +20,7 @@ namespace PixelPad::Infrastructure
 		void* GetNativeWindow() const override;
 
 	private:
-		void CreateSDLWindow(int width, int height, const char* title);
+		void CreateSDLWindow(int width, int height, const char* title, bool resizable);
 
 	private:
 		SDL_Window* m_window{ nullptr };

@@ -17,5 +17,6 @@ namespace PixelPad::Core
 		Canvas& m_canvas;
 		int m_lastXCoordinate;
 		int m_lastYCoordinate;
+		bool m_isDrawing;
 	};
 }

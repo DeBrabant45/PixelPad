@@ -1,6 +1,10 @@
 #include "Renderers/SDLRenderer.hpp"
 #include "Windows/IWindow.hpp"
 #include "Graphics/Canvas.hpp"
+#include "Graphics/ITexture.hpp"
+#include "Graphics/SDLTexture.hpp"
+#include "Graphics/CanvasViewport.hpp"
+#include "Graphics/ISprite.hpp"
 
 #include <iostream>
 #include <SDL3/SDL.h>
@@ -62,26 +66,54 @@ namespace PixelPad::Infrastructure
             return;
         }
 
-        // Clear with black color
-        SDL_SetRenderDrawColor(m_sdlRenderer, 0, 0, 0, 255);
+        SDL_SetRenderDrawColor(m_sdlRenderer, 192, 192, 192, 255);
         SDL_RenderClear(m_sdlRenderer);
     }
 
-    void SDLRenderer::Render(const PixelPad::Core::Canvas& canvas)
+    void SDLRenderer::Render(const PixelPad::Core::Canvas& canvas, PixelPad::Application::CanvasViewport& canvasViewport)
     {
         int width = canvas.GetWidth();
         int height = canvas.GetHeight();
         const std::vector<int>& pixels = canvas.GetPixels();
 
         CreateCanvasTexture(width, height);
-        if (!m_canvasTexture) 
+        if (!m_canvasTexture)
             return;
 
-        if (!UpdateTextures(pixels, width, height)) 
+        if (!UpdateTextures(pixels, width, height))
             return;
 
-        SDL_FRect dstRect = { 0, 0, static_cast<float>(width), static_cast<float>(height) };
+        SDL_FRect dstRect = {
+            static_cast<float>(canvasViewport.GetXOffset()),
+            static_cast<float>(canvasViewport.GetYOffset()),
+            static_cast<float>(width),
+            static_cast<float>(height)
+        };
+
         SDL_RenderTexture(m_sdlRenderer, m_canvasTexture, nullptr, &dstRect);
+    }
+
+    void SDLRenderer::Render(PixelPad::Application::ISprite* sprite)
+    {
+        auto* texture = static_cast<const SDLTexture*>(sprite->GetTexture().get());
+        if (!texture)
+            return;
+
+        SDL_Texture* nativeTex = texture->GetSDLTexture();
+        if (!nativeTex)
+            return;
+
+        SDL_FRect dstRect{
+            static_cast<float>(sprite->GetXCoordinate()),
+            static_cast<float>(sprite->GetYCoordinate()),
+            static_cast<float>(sprite->GetWidth()),
+            static_cast<float>(sprite->GetHeight())
+        };
+
+        if (SDL_RenderTexture(m_sdlRenderer, nativeTex, nullptr, &dstRect) == 0)
+        {
+            std::cerr << "Failed to render texture: " << SDL_GetError() << std::endl;
+        }
     }
 
     void SDLRenderer::CreateCanvasTexture(int width, int height)
@@ -143,5 +175,52 @@ namespace PixelPad::Infrastructure
         }
 
         SDL_RenderPresent(m_sdlRenderer);
+    }
+
+    SDL_Texture* SDLRenderer::CreateSDLTexture(const std::string& filePath)
+    {
+        SDL_Texture* sdlTexture = nullptr;
+        SDL_Surface* surface = SDL_LoadBMP(filePath.c_str());
+        if (!surface)
+        {
+            std::cerr << "Failed to load texture: " << SDL_GetError() << "\n";
+            return nullptr;
+        }
+
+        sdlTexture = SDL_CreateTextureFromSurface(m_sdlRenderer, surface);
+        SDL_DestroySurface(surface);
+
+        if (!sdlTexture)
+        {
+            std::cerr << "Failed to create SDL texture: " << SDL_GetError() << "\n";
+            return nullptr;
+        }
+
+        return sdlTexture;
+    }
+
+    SDL_Texture* SDLRenderer::CreateDefaultTexture(int width, int height)
+    {
+        SDL_Texture* texture = SDL_CreateTexture(
+            m_sdlRenderer,
+            SDL_PIXELFORMAT_RGBA8888,
+            SDL_TEXTUREACCESS_TARGET,
+            width, height
+        );
+
+        if (!texture) {
+            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Failed to create default texture: %s", SDL_GetError());
+            return nullptr;
+        }
+
+        SDL_Texture* oldTarget = SDL_GetRenderTarget(m_sdlRenderer);
+        SDL_SetRenderTarget(m_sdlRenderer, texture);
+
+        SDL_SetRenderDrawColor(m_sdlRenderer, 255, 0, 255, 255);
+        SDL_RenderClear(m_sdlRenderer);
+
+        SDL_SetRenderTarget(m_sdlRenderer, oldTarget);
+
+        return texture;
     }
 }

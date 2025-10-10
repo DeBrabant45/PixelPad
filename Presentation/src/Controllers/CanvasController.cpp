@@ -7,10 +7,12 @@ namespace PixelPad::Presentation
 	CanvasController::CanvasController(
 		PixelPad::Core::Canvas& canvas,
 		Application::IDrawService& drawService,
-		PixelPad::Infrastructure::EventBus& eventBus) :
+		PixelPad::Infrastructure::EventBus& eventBus,
+		PixelPad::Application::CanvasViewport& canvasViewport) :
 		m_canvas(canvas),
 		m_drawService(drawService),
 		m_eventBus(eventBus),
+		m_canvasViewport(canvasViewport),
 		m_mouseEventToken(),
 		m_toolTypeChangeEventToken()
 	{
@@ -34,7 +36,7 @@ namespace PixelPad::Presentation
 
 	void CanvasController::OnDraw(const PixelPad::Application::MouseButtonEvent& mouseButtonEvent)
 	{
-		m_drawService.ProcessDrawInput(mouseButtonEvent);
+		m_drawService.ProcessDrawInput(mouseButtonEvent, m_canvasViewport);
 	}
 
 	void CanvasController::OnToolTypeChange(const PixelPad::Application::ToolTypeChangedEvent& toolTypeChangedEvent)
@@ -50,5 +52,6 @@ namespace PixelPad::Presentation
 	void Presentation::CanvasController::UnregisterEventHandlers()
 	{
 		m_eventBus.Unsubscribe<PixelPad::Application::MouseButtonEvent>(m_mouseEventToken);
+		m_eventBus.Unsubscribe<PixelPad::Application::ToolTypeChangedEvent>(m_toolTypeChangeEventToken);
 	}
 }

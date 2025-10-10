@@ -7,7 +7,8 @@ namespace PixelPad::Core
 		m_canvas(canvas),
 		m_eraseColor(0xFFFFFFFF),
 		m_lastXCoordinate(-1),
-		m_lastYCoordinate(-1)
+		m_lastYCoordinate(-1),
+		m_isDrawing(false)
 	{
 
 	}
@@ -16,6 +17,7 @@ namespace PixelPad::Core
 	{
 		m_lastXCoordinate = -1;
 		m_lastYCoordinate = -1;
+		m_isDrawing = false;
 	}
 
 	void EraserTool::Draw(const DrawCommand& command)
@@ -26,22 +28,18 @@ namespace PixelPad::Core
 			return;
 		}
 
-		if (HasPreviousCoordinates())
+		if (m_isDrawing)
 		{
 			DrawEraserLine(m_lastXCoordinate, m_lastYCoordinate, command.X, command.Y);
 		}
 		else
 		{
 			DrawEraserCircle(command.X, command.Y);
+			m_isDrawing = true;
 		}
 
 		m_lastXCoordinate = command.X;
 		m_lastYCoordinate = command.Y;
-	}
-
-	bool EraserTool::HasPreviousCoordinates() const
-	{
-		return m_lastXCoordinate >= 0 && m_lastYCoordinate >= 0;
 	}
 
 	void EraserTool::DrawEraserLine(int startX, int startY, int endX, int endY)

@@ -2,6 +2,7 @@
 
 add_executable(${PIXEL_PAD_INFRASTRUCTURE_TESTS_TARGET_NAME}
     src/Buses/EventBusTests.cpp
+    src/Paths/AssetPathProviderTests.cpp
 )
 
 target_include_directories(${PIXEL_PAD_INFRASTRUCTURE_TESTS_TARGET_NAME}

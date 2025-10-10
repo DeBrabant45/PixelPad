@@ -6,7 +6,8 @@ namespace PixelPad::Core
 	EllipseTool::EllipseTool(Canvas& canvas) :
 		m_canvas(canvas), 
 		m_startXCoordinate(-1), 
-		m_startYCoordinate(-1)
+		m_startYCoordinate(-1),
+		m_isDrawing(false)
 	{
 
 	}
@@ -15,18 +16,20 @@ namespace PixelPad::Core
 	{
 		m_startXCoordinate = -1;
 		m_startYCoordinate = -1;
+		m_isDrawing = false;
 	}
 
 	void EllipseTool::Draw(const DrawCommand& command)
 	{
-		if (command.IsPressed && m_startXCoordinate == -1 && m_startYCoordinate == -1)
+		if (command.IsPressed && !m_isDrawing)
 		{
 			m_startXCoordinate = command.X;
 			m_startYCoordinate = command.Y;
+			m_isDrawing = true;
 			return;
 		}
 
-		if (!command.IsPressed && m_startXCoordinate >= 0 && m_startYCoordinate >= 0)
+		if (!command.IsPressed && m_isDrawing)
 		{
 			auto centerX = (m_startXCoordinate + command.X) / 2;
 			auto centerY = (m_startYCoordinate + command.Y) / 2;
