@@ -36,6 +36,7 @@ namespace PixelPad::Infrastructure
 		void Render(PixelPad::Application::ISprite* sprite) override;
 		void Present() override;
 		SDL_Texture* CreateSDLTexture(const std::string& filePath);
+		SDL_Texture* CreateDefaultTexture(int width, int height);
 
 	private:
 		void CreateCanvasTexture(int width, int height);
