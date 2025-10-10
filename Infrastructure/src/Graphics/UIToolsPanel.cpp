@@ -14,17 +14,17 @@ namespace PixelPad::Infrastructure
     void UIToolsPanel::CreateToolButtons(PixelPad::Infrastructure::EventBus& eventBus)
     {
         std::vector<std::pair<std::string, std::string>> buttonNames = {
-            {"PencilTool", "../Assets/pencil.bmp"},
-            {"EraserTool", "C:/Assets/sample.bmp"},
-            {"FillTool", "C:/Assets/sample.bmp"},
-            {"LineTool", "C:/Assets/sample.bmp"},
-            {"RectangleTool", "C:/Assets/sample.bmp"},
-            {"EllipseTool", "C:/Assets/sample.bmp"},
+            {"PencilTool", "pencil.bmp"},
+            {"EraserTool", "eraser.bmp"},
+            {"FillTool", "paint-bucket.bmp"},
+            {"LineTool", "line-tool.bmp"},
+            {"RectangleTool", "rectangle-tool.bmp"},
+            {"EllipseTool", "ellipse-tool.bmp"},
         };
 
-        int startX = 0;
+        int startX = 4;
         int startY = 40;
-        int size = 32;
+        int size = 28;
         int spacing = 6;
 
         for (int i = 0; i < buttonNames.size(); i++)

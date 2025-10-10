@@ -14,7 +14,7 @@ namespace PixelPad::Infrastructure
 		m_backgroundSprite(nullptr)
 	{
 		auto transform = PixelPad::Core::Transform(0, 0, 0, 800, 600);
-		m_backgroundSprite = spriteFactory.CreateSprite("C:/_projects/PixelPad/build/Assets/retro-frame.bmp", transform);
+		m_backgroundSprite = spriteFactory.CreateSprite("retro-frame.bmp", transform);
 		m_panels[0] = std::make_unique<UIToolsPanel>(spriteFactory, eventBus);
 	}
 

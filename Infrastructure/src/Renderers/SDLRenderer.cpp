@@ -198,4 +198,29 @@ namespace PixelPad::Infrastructure
 
         return sdlTexture;
     }
+
+    SDL_Texture* SDLRenderer::CreateDefaultTexture(int width, int height)
+    {
+        SDL_Texture* texture = SDL_CreateTexture(
+            m_sdlRenderer,
+            SDL_PIXELFORMAT_RGBA8888,
+            SDL_TEXTUREACCESS_TARGET,
+            width, height
+        );
+
+        if (!texture) {
+            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Failed to create default texture: %s", SDL_GetError());
+            return nullptr;
+        }
+
+        SDL_Texture* oldTarget = SDL_GetRenderTarget(m_sdlRenderer);
+        SDL_SetRenderTarget(m_sdlRenderer, texture);
+
+        SDL_SetRenderDrawColor(m_sdlRenderer, 255, 0, 255, 255);
+        SDL_RenderClear(m_sdlRenderer);
+
+        SDL_SetRenderTarget(m_sdlRenderer, oldTarget);
+
+        return texture;
+    }
 }
