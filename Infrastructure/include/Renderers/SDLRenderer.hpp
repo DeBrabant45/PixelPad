@@ -19,6 +19,7 @@ namespace PixelPad::Core
 namespace PixelPad::Application
 {
 	class CanvasViewport;
+	class ISprite;
 }
 
 namespace PixelPad::Infrastructure
@@ -32,7 +33,7 @@ namespace PixelPad::Infrastructure
 		void Shutdown() override;
 		void ClearScreen() override;
 		void Render(const PixelPad::Core::Canvas& canvas, PixelPad::Application::CanvasViewport& canvasViewport) override;
-		void DrawTexture(PixelPad::Application::ITexture* texture, int x, int y, int width, int height) override;
+		void Render(PixelPad::Application::ISprite* sprite) override;
 		void Present() override;
 		SDL_Texture* CreateSDLTexture(const std::string& filePath);
 

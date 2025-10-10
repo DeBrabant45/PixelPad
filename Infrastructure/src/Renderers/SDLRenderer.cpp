@@ -4,6 +4,7 @@
 #include "Graphics/ITexture.hpp"
 #include "Graphics/SDLTexture.hpp"
 #include "Graphics/CanvasViewport.hpp"
+#include "Graphics/ISprite.hpp"
 
 #include <iostream>
 #include <SDL3/SDL.h>
@@ -92,21 +93,22 @@ namespace PixelPad::Infrastructure
         SDL_RenderTexture(m_sdlRenderer, m_canvasTexture, nullptr, &dstRect);
     }
 
-    void SDLRenderer::DrawTexture(PixelPad::Application::ITexture* texture, int x, int y, int width, int height)
+    void SDLRenderer::Render(PixelPad::Application::ISprite* sprite)
     {
+        auto* texture = static_cast<const SDLTexture*>(sprite->GetTexture().get());
         if (!texture)
             return;
 
-        auto* sdlTex = dynamic_cast<SDLTexture*>(texture);
-        if (!sdlTex)
-            return;
-
-        SDL_Texture* nativeTex = sdlTex->GetSDLTexture();
+        SDL_Texture* nativeTex = texture->GetSDLTexture();
         if (!nativeTex)
             return;
 
-        SDL_FRect dstRect{ static_cast<float>(x), static_cast<float>(y),
-                           static_cast<float>(width), static_cast<float>(height) };
+        SDL_FRect dstRect{
+            static_cast<float>(sprite->GetXCoordinate()),
+            static_cast<float>(sprite->GetYCoordinate()),
+            static_cast<float>(sprite->GetWidth()),
+            static_cast<float>(sprite->GetHeight())
+        };
 
         if (SDL_RenderTexture(m_sdlRenderer, nativeTex, nullptr, &dstRect) == 0)
         {

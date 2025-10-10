@@ -27,7 +27,6 @@ namespace PixelPad::Infrastructure
 		~UIButton() override;
 		void Render(PixelPad::Application::IRenderer& renderer) override;
 		void OnClick(int clickX, int clickY) override;
-		PixelPad::Core::Transform GetTransform() const override;
 
 	private:
 		void RegisterEventHandlers();

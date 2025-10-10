@@ -20,7 +20,7 @@ namespace PixelPad::Infrastructure
 
 	void UIRoot::Render(PixelPad::Application::IRenderer& renderer)
 	{
-		renderer.DrawTexture(m_backgroundSprite->GetTexture().get(), 0, 0, 800, 600);
+		renderer.Render(m_backgroundSprite.get());
 		for (size_t i = 0; i < m_panels.size(); i++)
 		{
 			if (m_panels[i])

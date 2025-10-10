@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Graphics/IRenderable.hpp"
-#include "Geometries/Transform.hpp"
 
 #include <string>
 
@@ -17,6 +16,5 @@ namespace PixelPad::Application
 	public:
 		virtual ~IUIButton() = default;
 		virtual void OnClick(int clickX, int clickY) = 0;
-		virtual PixelPad::Core::Transform GetTransform() const = 0;
 	};
 }

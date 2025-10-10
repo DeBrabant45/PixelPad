@@ -57,17 +57,6 @@ namespace PixelPad::Infrastructure
 		if (!m_sprite->GetTexture().get())
 			return;
 
-		renderer.DrawTexture(
-			m_sprite->GetTexture().get(),
-			m_transform.X,
-			m_transform.Y,
-			m_transform.Width,
-			m_transform.Height
-		);
-	}
-
-	PixelPad::Core::Transform UIButton::GetTransform() const
-	{
-		return m_transform;
+		renderer.Render(m_sprite.get());
 	}
 }
