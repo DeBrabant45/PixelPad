@@ -25,8 +25,8 @@ jobs:
         run: cmake --preset default
 
       - name: Build project
-        run: cmake --build --preset default --config Release
+        run: cmake --build --preset default
 
       - name: Run tests
         working-directory: build
-        run: ctest --output-on-failure --config Release
+        run: ctest --output-on-failure
