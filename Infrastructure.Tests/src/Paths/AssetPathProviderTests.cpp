@@ -16,7 +16,7 @@ namespace PixelPad::Tests::Infrastructure
         PixelPad::Infrastructure::AssetPathProvider sut;
         auto result = sut.GetAssetsPath();
 
-        EXPECT_EQ(result, tempDir / "Assets");
+        EXPECT_EQ(fs::canonical(result), fs::canonical(tempDir / "Assets"));
 
         fs::current_path(oldCwd);
         fs::remove_all(tempDir);
@@ -34,7 +34,7 @@ namespace PixelPad::Tests::Infrastructure
         PixelPad::Infrastructure::AssetPathProvider sut;
         auto result = sut.GetAssetsPath();
 
-        EXPECT_EQ(result, tempDir / "Assets");
+        EXPECT_EQ(fs::canonical(result), fs::canonical(tempDir / "Assets"));
 
         fs::current_path(oldCwd);
         fs::remove_all(tempDir);
