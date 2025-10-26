@@ -1,0 +1,32 @@
+name: Build and Test (Windows)
+
+on:
+  pull_request:
+  push:
+    branches: 
+     - main
+
+jobs:
+  build-and-test:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up MSVC developer environment
+        uses: ilammy/msvc-dev-cmd@v1
+
+      - name: Run setup script (clones + bootstraps vcpkg + create build folder)
+        shell: cmd
+        run: setup.bat
+
+      - name: Configure project with CMake (using default preset)
+        run: cmake --preset default
+
+      - name: Build project
+        run: cmake --build --preset default
+
+      - name: Run tests
+        working-directory: build
+        run: ctest -C Debug --output-on-failure
