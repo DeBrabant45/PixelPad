@@ -27,7 +27,6 @@ add_library(${PIXEL_PAD_APPLICATION_TARGET_NAME}
     include/Graphics/Factories/SpriteFactory.hpp
     src/Graphics/Factories/SpriteFactory.cpp
 
-    include/Enums/ToolType.hpp
     include/Enums/MouseButton.hpp
 
     include/Events/MouseButtonEvent.hpp

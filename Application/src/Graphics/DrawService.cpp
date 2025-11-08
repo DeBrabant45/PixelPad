@@ -3,7 +3,7 @@
 #include "Graphics/CanvasViewport.hpp"
 #include "Events/MouseButtonEvent.hpp"
 #include "Tools/DrawCommand.hpp"
-#include "Enums/ToolType.hpp"
+#include "Tools/ToolType.hpp"
 
 #include <iostream>
 
@@ -12,14 +12,14 @@ namespace PixelPad::Application
 	DrawService::DrawService(PixelPad::Core::Canvas& canvas, PixelPad::Application::IToolbox& toolbox) :
 		m_canvas{ canvas },
 		m_toolbox{ toolbox },
-		m_currentTool{ &m_toolbox.GetTool(ToolType::Pencil) },
+		m_currentTool{ &m_toolbox.GetTool(PixelPad::Core::ToolType::Pencil) },
 		m_canvasSnapshot{ }
 	{
 		std::cout << "Size of DrawService: " << sizeof(*this) << std::endl; // 40
 	}
 
 	// ToDo: Add unit tests
-	void DrawService::SelectTool(const ToolType& toolType)
+	void DrawService::SetTool(const PixelPad::Core::ToolType& toolType)
 	{
 		if (m_currentTool)
 		{

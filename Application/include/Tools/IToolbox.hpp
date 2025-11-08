@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Enums/ToolType.hpp"
+#include "Tools/ToolType.hpp"
 
 namespace PixelPad::Core
 {
@@ -13,6 +13,6 @@ namespace PixelPad::Application
 	{
 	public:
 		virtual ~IToolbox() = default;
-		virtual PixelPad::Core::ITool& GetTool(ToolType toolType) = 0;
+		virtual PixelPad::Core::ITool& GetTool(PixelPad::Core::ToolType toolType) = 0;
 	};
 }

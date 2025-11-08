@@ -2,6 +2,7 @@
 
 #include <utility>
 
+namespace PixelPad::Core
 namespace PixelPad::Application
 {
     struct MouseButtonEvent;
@@ -11,7 +12,7 @@ namespace PixelPad::Application
     class IDrawService
     {
     public:
-        virtual void SelectTool(const ToolType& toolType) = 0;
+        virtual void SetTool(const PixelPad::Core::ToolType& toolType) = 0;
         virtual void ProcessDrawInput(const MouseButtonEvent& mouseButtonEvent, CanvasViewport& canvasViewport) = 0;
         virtual void ClearCanvas() = 0;
         virtual void ResizeCanvas(int width, int height) = 0;

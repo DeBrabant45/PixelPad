@@ -41,7 +41,7 @@ namespace PixelPad::Presentation
 
 	void CanvasController::OnToolTypeChange(const PixelPad::Application::ToolTypeChangedEvent& toolTypeChangedEvent)
 	{
-		m_drawService.SelectTool(toolTypeChangedEvent.NewTool);
+		m_drawService.SetTool(toolTypeChangedEvent.NewTool);
 	}
 
 	Presentation::CanvasController::~CanvasController()

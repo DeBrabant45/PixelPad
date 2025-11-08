@@ -3,7 +3,6 @@
 #include "Events/WindowCloseEvent.hpp"
 #include "Events/MouseButtonEvent.hpp"
 #include "Events/WindowResizeEvent.hpp"
-#include "Events/ToolTypeChangedEvent.hpp"
 #include "Enums/MouseButton.hpp"
 
 #include <SDL3/SDL.h>
@@ -26,7 +25,6 @@ namespace PixelPad::Infrastructure
             ProcessMouseButtonEvent(event.type, event.button); 
             ProcessMouseMotionEvent(event.type, event.motion);
             ProcessWindowResizeEvent(event.type, event.window);
-            ProcessKeyboardEvent(event.type, event.key);
         }
     }
 
@@ -93,42 +91,6 @@ namespace PixelPad::Infrastructure
         if (buttons & SDL_BUTTON_MMASK)
         {
             m_eventBus.Publish(PixelPad::Application::MouseButtonEvent(static_cast<int>(x), static_cast<int>(y), true, PixelPad::Application::MouseButton::Middle));
-        }
-    }
-
-    void SDLInput::ProcessKeyboardEvent(unsigned int type, const SDL_KeyboardEvent& keyEvent)
-    {
-        if (type != SDL_EVENT_KEY_DOWN)
-            return;
-
-        switch (keyEvent.key)   
-        {
-        case SDLK_1:
-            m_eventBus.Publish(PixelPad::Application::ToolTypeChangedEvent{ PixelPad::Application::ToolType::Pencil });
-			break;
-
-        case SDLK_2:
-            m_eventBus.Publish(PixelPad::Application::ToolTypeChangedEvent{ PixelPad::Application::ToolType::Line });
-			break;
-
-        case SDLK_3:
-            m_eventBus.Publish(PixelPad::Application::ToolTypeChangedEvent{ PixelPad::Application::ToolType::Eraser });
-            break;
-
-        case SDLK_4:
-            m_eventBus.Publish(PixelPad::Application::ToolTypeChangedEvent{ PixelPad::Application::ToolType::Fill });
-            break;
-
-		case SDLK_5:
-            m_eventBus.Publish(PixelPad::Application::ToolTypeChangedEvent{ PixelPad::Application::ToolType::Rectangle });
-			break;
-
-        case SDLK_6:
-            m_eventBus.Publish(PixelPad::Application::ToolTypeChangedEvent{ PixelPad::Application::ToolType::Ellipse });
-            break;
-
-        default:
-            break;
         }
     }
 }

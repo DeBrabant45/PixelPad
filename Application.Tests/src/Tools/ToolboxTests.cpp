@@ -16,9 +16,9 @@ namespace PixelPad::Tests::Application
         PixelPad::Core::Canvas canvas{ 8, 6, 0 };
         PixelPad::Application::Toolbox toolbox{ canvas };
 
-        auto& pencilTool = toolbox.GetTool(PixelPad::Application::ToolType::Pencil);
-        auto& lineTool = toolbox.GetTool(PixelPad::Application::ToolType::Line);
-        auto& fillTool = toolbox.GetTool(PixelPad::Application::ToolType::Fill);
+        auto& pencilTool = toolbox.GetTool(PixelPad::Core::ToolType::Pencil);
+        auto& lineTool = toolbox.GetTool(PixelPad::Core::ToolType::Line);
+        auto& fillTool = toolbox.GetTool(PixelPad::Core::ToolType::Fill);
 
         EXPECT_NE(&pencilTool, nullptr);
         EXPECT_NE(&lineTool, nullptr);
@@ -31,7 +31,7 @@ namespace PixelPad::Tests::Application
         PixelPad::Application::Toolbox toolbox{ canvas };
 
         EXPECT_THROW(
-            toolbox.GetTool(static_cast<PixelPad::Application::ToolType>(999)),
+            toolbox.GetTool(static_cast<PixelPad::Core::ToolType>(999)),
             std::runtime_error
         );
     }
@@ -41,8 +41,8 @@ namespace PixelPad::Tests::Application
         PixelPad::Core::Canvas canvas{ 8, 6, 0 };
         PixelPad::Application::Toolbox toolbox{ canvas };
 
-        auto& pencilTool = toolbox.GetTool(PixelPad::Application::ToolType::Pencil);
-        auto& lineTool = toolbox.GetTool(PixelPad::Application::ToolType::Line);
+        auto& pencilTool = toolbox.GetTool(PixelPad::Core::ToolType::Pencil);
+        auto& lineTool = toolbox.GetTool(PixelPad::Core::ToolType::Line);
 
         EXPECT_NE(&pencilTool, &lineTool);
     }
