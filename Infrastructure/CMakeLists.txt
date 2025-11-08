@@ -16,7 +16,6 @@ add_library(${PIXEL_PAD_INFRASTRUCTURE_TARGET_NAME}
     src/Graphics/SDLTexture.cpp
     include/Graphics/SDLTexture.hpp
 
-    src/Graphics/UIButton.cpp
     include/Graphics/UIButton.hpp
 
     src/Graphics/UIRoot.cpp
