@@ -5,6 +5,7 @@
 #include "Graphics/SDLTexture.hpp"
 #include "Graphics/CanvasViewport.hpp"
 #include "Graphics/ISprite.hpp"
+#include "Graphics/Color.hpp"
 
 #include <iostream>
 #include <SDL3/SDL.h>
@@ -199,7 +200,7 @@ namespace PixelPad::Infrastructure
         return sdlTexture;
     }
 
-    SDL_Texture* SDLRenderer::CreateDefaultTexture(int width, int height)
+    SDL_Texture* SDLRenderer::CreateSDLTexture(int width, int height, const PixelPad::Core::Color& color)
     {
         SDL_Texture* texture = SDL_CreateTexture(
             m_sdlRenderer,
@@ -216,7 +217,7 @@ namespace PixelPad::Infrastructure
         SDL_Texture* oldTarget = SDL_GetRenderTarget(m_sdlRenderer);
         SDL_SetRenderTarget(m_sdlRenderer, texture);
 
-        SDL_SetRenderDrawColor(m_sdlRenderer, 255, 0, 255, 255);
+        SDL_SetRenderDrawColor(m_sdlRenderer, color.R, color.G, color.B, color.A);
         SDL_RenderClear(m_sdlRenderer);
 
         SDL_SetRenderTarget(m_sdlRenderer, oldTarget);
