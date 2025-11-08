@@ -6,10 +6,10 @@ namespace PixelPad::Core
 	{
 		int X;
 		int Y;
-		unsigned int Color;
+		uint32_t Color;
 		bool IsPressed;
 
-		DrawCommand(int x, int y, unsigned int color, bool isPressed) : 
+		DrawCommand(int x, int y, uint32_t color, bool isPressed) :
 			X(x), 
 			Y(y), 
 			Color(color), 

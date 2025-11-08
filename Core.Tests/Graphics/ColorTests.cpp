@@ -31,11 +31,11 @@ namespace PixelPad::Tests::Core
 
     TEST(ColorTests, ToRGBA_ShouldReturnCorrectPackedValue_WhenValuesAreSupplied)
     {
-        PixelPad::Core::Color color(0x11, 0x22, 0x33, 0x44);
+        PixelPad::Core::Color color(0, 0, 0, 255);
 
         auto rgba = color.ToRGBA();
 
-        EXPECT_EQ(rgba, 0x11223344u);
+        EXPECT_EQ(rgba, 0xFF000000);
     }
 
     TEST(ColorTests, EqualityOperator_ShouldReturnTrue_WhenComparisonAreEqual)

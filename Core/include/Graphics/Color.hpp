@@ -18,10 +18,10 @@ namespace PixelPad::Core
 
 		constexpr uint32_t ToRGBA() const noexcept
 		{
-			return (static_cast<uint32_t>(R) << 24) |
-				(static_cast<uint32_t>(G) << 16) |
-				(static_cast<uint32_t>(B) << 8) |
-				(static_cast<uint32_t>(A));
+			return (static_cast<uint32_t>(A) << 24) |
+				(static_cast<uint32_t>(R) << 16) |
+				(static_cast<uint32_t>(G) << 8) |
+				static_cast<uint32_t>(B);
 		}
 
 		constexpr bool operator==(const Color& other) const noexcept = default;
