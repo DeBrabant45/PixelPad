@@ -5,6 +5,7 @@
 #include "Geometries/Transform.hpp"
 #include "Graphics/ISprite.hpp"
 #include "Graphics/IButtonSprite.hpp"
+#include "Graphics/Color.hpp"
 
 namespace PixelPad::Tests::Application
 {
@@ -17,6 +18,11 @@ namespace PixelPad::Tests::Application
     struct TestTextureManager : public PixelPad::Application::ITextureManager
     {
         std::shared_ptr<PixelPad::Application::ITexture> LoadTexture(const std::string& path) override
+        {
+            return std::make_shared<TestTexture>();
+        }
+
+        std::shared_ptr<PixelPad::Application::ITexture> LoadTexture(PixelPad::Core::Color color) override
         {
             return std::make_shared<TestTexture>();
         }
