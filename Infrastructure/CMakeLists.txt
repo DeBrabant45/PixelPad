@@ -24,6 +24,9 @@ add_library(${PIXEL_PAD_INFRASTRUCTURE_TARGET_NAME}
     src/Graphics/UIToolsPanel.cpp
     include/Graphics/UIToolsPanel.hpp
 
+    src/Graphics/UIColorPickerPanel.cpp
+    include/Graphics/UIColorPickerPanel.hpp
+
     src/Graphics/SDLTextureManager.cpp
     include/Graphics/SDLTextureManager.hpp
 

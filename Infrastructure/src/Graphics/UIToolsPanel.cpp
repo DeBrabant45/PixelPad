@@ -1,5 +1,4 @@
 #include "Graphics/UIToolsPanel.hpp"
-#include <Events/ToolTypeChangedEvent.hpp>
 #include <Graphics/IUIRoot.hpp>
 #include "Graphics/IUIButton.hpp"
 
@@ -13,13 +12,13 @@ namespace PixelPad::Infrastructure
 
     void UIToolsPanel::CreateToolButtons(PixelPad::Infrastructure::EventBus& eventBus)
     {
-        std::vector<std::pair<std::string, std::string>> buttonNames = {
-            {"PencilTool", "pencil.bmp"},
-            {"EraserTool", "eraser.bmp"},
-            {"FillTool", "paint-bucket.bmp"},
-            {"LineTool", "line-tool.bmp"},
-            {"RectangleTool", "rectangle-tool.bmp"},
-            {"EllipseTool", "ellipse-tool.bmp"},
+        std::vector<std::pair<PixelPad::Core::ToolType, std::string>> buttonNames = {
+            {PixelPad::Core::ToolType::Pencil, "pencil.bmp"},
+            {PixelPad::Core::ToolType::Eraser, "eraser.bmp"},
+            {PixelPad::Core::ToolType::Fill, "paint-bucket.bmp"},
+            {PixelPad::Core::ToolType::Line, "line-tool.bmp"},
+            {PixelPad::Core::ToolType::Rectangle, "rectangle-tool.bmp"},
+            {PixelPad::Core::ToolType::Ellipse, "ellipse-tool.bmp"},
         };
 
         int startX = 4;
@@ -47,11 +46,11 @@ namespace PixelPad::Infrastructure
                 transform
             );
 
-            m_buttons.emplace_back(std::make_unique<PixelPad::Infrastructure::UIButton>(
-                buttonNames[i].first,
+            m_buttons.emplace_back(std::make_unique<PixelPad::Infrastructure::UIButton<PixelPad::Core::ToolType>>(
                 transform,
                 std::move(sprite),
-                eventBus
+                eventBus,
+                buttonNames[i].first
             ));
         }
     }
