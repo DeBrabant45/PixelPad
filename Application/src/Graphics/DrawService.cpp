@@ -13,7 +13,8 @@ namespace PixelPad::Application
 		m_canvas{ canvas },
 		m_toolbox{ toolbox },
 		m_currentTool{ &m_toolbox.GetTool(PixelPad::Core::ToolType::Pencil) },
-		m_canvasSnapshot{ }
+		m_canvasSnapshot{ },
+		m_currentColor(0xFF000000)
 	{
 		std::cout << "Size of DrawService: " << sizeof(*this) << std::endl; // 40
 	}
@@ -30,16 +31,21 @@ namespace PixelPad::Application
 	}
 
 	// ToDo: Add unit tests
+	void DrawService::SetColor(const PixelPad::Core::Color& color)
+	{
+		m_currentColor = color.ToRGBA();
+	}
+
+	// ToDo: Add unit tests
 	void DrawService::ProcessDrawInput(const PixelPad::Application::MouseButtonEvent& mouseButtonEvent, CanvasViewport& canvasViewport)
 	{
 		auto [localX, localY] = canvasViewport.ToLocal(mouseButtonEvent.X, mouseButtonEvent.Y);
 
-		// ToDo: Look into adding radius
 		PixelPad::Core::DrawCommand command
 		{
 			localX,
 			localY,
-			0xFF000000,
+			m_currentColor,
 			mouseButtonEvent.IsPressed
 		};
 
