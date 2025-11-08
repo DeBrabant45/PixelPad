@@ -7,5 +7,10 @@ namespace PixelPad::Application
 	struct ToolTypeChangedEvent
 	{
 		PixelPad::Core::ToolType NewTool;
+
+		ToolTypeChangedEvent(PixelPad::Core::ToolType tool)
+		{
+			NewTool = tool;
+		}
 	};
 }
