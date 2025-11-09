@@ -7,6 +7,7 @@
 #include "Renderers/IRenderer.hpp"
 #include "Graphics/Factories/ISpritefactory.hpp"
 #include "Geometries/Transform.hpp"
+#include "Graphics/UIColorPickerPanel.hpp"
 
 namespace PixelPad::Infrastructure
 {
@@ -16,6 +17,7 @@ namespace PixelPad::Infrastructure
 		auto transform = PixelPad::Core::Transform(0, 0, 0, 800, 600);
 		m_backgroundSprite = spriteFactory.CreateSprite("retro-frame.bmp", transform);
 		m_panels[0] = std::make_unique<UIToolsPanel>(spriteFactory, eventBus);
+		m_panels[1] = std::make_unique<UIColorPickerPanel>(spriteFactory, eventBus);
 	}
 
 	void UIRoot::Render(PixelPad::Application::IRenderer& renderer)

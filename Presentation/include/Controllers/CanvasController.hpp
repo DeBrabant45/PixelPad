@@ -9,6 +9,7 @@ namespace PixelPad::Application
 {
 	struct MouseButtonEvent;
 	struct ToolTypeChangedEvent;
+	struct ColorChangedEvent;
 }
 
 namespace PixelPad::Presentation
@@ -23,11 +24,12 @@ namespace PixelPad::Presentation
 			Application::CanvasViewport& canvasViewport);
 		~CanvasController();
 		void OnDraw(const PixelPad::Application::MouseButtonEvent& mouseButtonEvent);
-		void OnToolTypeChange(const PixelPad::Application::ToolTypeChangedEvent& toolTypeChangedEvent);
 
 	private:
 		void RegisterEventHandlers();
 		void UnregisterEventHandlers();
+		void OnToolTypeChange(const PixelPad::Application::ToolTypeChangedEvent& toolTypeChangedEvent);
+		void OnColorChange(const PixelPad::Application::ColorChangedEvent& colorChangedEvent);
 
 	private:
 		Core::Canvas& m_canvas;
@@ -36,5 +38,6 @@ namespace PixelPad::Presentation
 		PixelPad::Application::CanvasViewport& m_canvasViewport;
 		PixelPad::Infrastructure::EventBus::SubscriptionToken m_mouseEventToken;
 		PixelPad::Infrastructure::EventBus::SubscriptionToken m_toolTypeChangeEventToken;
+		PixelPad::Infrastructure::EventBus::SubscriptionToken m_toolColorChangeEventToken;
 	};
 }

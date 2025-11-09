@@ -22,7 +22,6 @@ namespace PixelPad::Infrastructure
 		void ProcessWindowResizeEvent(unsigned int type, const SDL_WindowEvent& window);
 		void ProcessMouseButtonEvent(unsigned int type, const SDL_MouseButtonEvent& button); 
 		void ProcessMouseMotionEvent(unsigned int type, const SDL_MouseMotionEvent& motion);
-		void ProcessKeyboardEvent(unsigned int type, const SDL_KeyboardEvent& key);
 
 	private:
 		EventBus& m_eventBus;

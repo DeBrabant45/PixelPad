@@ -1,11 +1,16 @@
 #pragma once
 
-#include "Enums/ToolType.hpp"
+#include "Tools/ToolType.hpp"
 
 namespace PixelPad::Application
 {
 	struct ToolTypeChangedEvent
 	{
-		PixelPad::Application::ToolType NewTool;
+		PixelPad::Core::ToolType NewTool;
+
+		ToolTypeChangedEvent(PixelPad::Core::ToolType tool)
+		{
+			NewTool = tool;
+		}
 	};
 }

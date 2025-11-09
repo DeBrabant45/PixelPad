@@ -3,7 +3,7 @@
 #include "Graphics/CanvasViewport.hpp"
 #include "Events/MouseButtonEvent.hpp"
 #include "Tools/DrawCommand.hpp"
-#include "Enums/ToolType.hpp"
+#include "Tools/ToolType.hpp"
 
 #include <iostream>
 
@@ -12,14 +12,14 @@ namespace PixelPad::Application
 	DrawService::DrawService(PixelPad::Core::Canvas& canvas, PixelPad::Application::IToolbox& toolbox) :
 		m_canvas{ canvas },
 		m_toolbox{ toolbox },
-		m_currentTool{ &m_toolbox.GetTool(ToolType::Pencil) },
-		m_canvasSnapshot{ }
+		m_currentTool{ &m_toolbox.GetTool(PixelPad::Core::ToolType::Pencil) },
+		m_canvasSnapshot{ },
+		m_currentColor(0xFF000000)
 	{
 		std::cout << "Size of DrawService: " << sizeof(*this) << std::endl; // 40
 	}
 
-	// ToDo: Add unit tests
-	void DrawService::SelectTool(const ToolType& toolType)
+	void DrawService::SetTool(const PixelPad::Core::ToolType& toolType)
 	{
 		if (m_currentTool)
 		{
@@ -29,17 +29,20 @@ namespace PixelPad::Application
 		m_currentTool = &m_toolbox.GetTool(toolType);
 	}
 
-	// ToDo: Add unit tests
+	void DrawService::SetColor(const PixelPad::Core::Color& color)
+	{
+		m_currentColor = color.ToRGBA();
+	}
+
 	void DrawService::ProcessDrawInput(const PixelPad::Application::MouseButtonEvent& mouseButtonEvent, CanvasViewport& canvasViewport)
 	{
 		auto [localX, localY] = canvasViewport.ToLocal(mouseButtonEvent.X, mouseButtonEvent.Y);
 
-		// ToDo: Look into adding radius
 		PixelPad::Core::DrawCommand command
 		{
 			localX,
 			localY,
-			0xFF000000,
+			m_currentColor,
 			mouseButtonEvent.IsPressed
 		};
 

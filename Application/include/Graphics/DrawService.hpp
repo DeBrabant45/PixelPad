@@ -2,6 +2,7 @@
 
 #include "Graphics/Canvas.hpp"
 #include "Graphics/CanvasSnapshot.hpp"
+#include "Graphics/Color.hpp"
 #include "IDrawService.hpp"
 #include "Tools/ITool.hpp"
 #include "Tools/IToolbox.hpp"
@@ -15,7 +16,8 @@ namespace PixelPad::Application
 	public:
 		DrawService(PixelPad::Core::Canvas & canvas, PixelPad::Application::IToolbox& toolbox);
 		~DrawService() = default;
-		void SelectTool(const ToolType& toolType) override;
+		void SetTool(const PixelPad::Core::ToolType& toolType) override;
+		void SetColor(const PixelPad::Core::Color& color) override;
         void ProcessDrawInput(const MouseButtonEvent& mouseButtonEvent, CanvasViewport& canvasViewport) override;
 		void ClearCanvas() override;
 		void ResizeCanvas(int width, int height) override;
@@ -28,5 +30,6 @@ namespace PixelPad::Application
 		PixelPad::Application::IToolbox& m_toolbox;
 		PixelPad::Core::ITool* m_currentTool;
 		std::unique_ptr<PixelPad::Core::CanvasSnapshot> m_canvasSnapshot;
+		uint32_t m_currentColor;
 	};
 }

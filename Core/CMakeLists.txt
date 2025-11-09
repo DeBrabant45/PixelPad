@@ -30,6 +30,10 @@ add_library(${PIXEL_PAD_CORE_TARGET_NAME}
     include/Tools/DrawCommand.hpp
 
     include/Geometries/Transform.hpp
+
+    include/Graphics/Color.hpp
+
+    include/Tools/ToolType.hpp
 )
 
 target_include_directories(${PIXEL_PAD_CORE_TARGET_NAME}

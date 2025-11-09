@@ -1,6 +1,6 @@
 #pragma once
 
-namespace PixelPad::Application
+namespace PixelPad::Core
 {
 	enum class ToolType
 	{

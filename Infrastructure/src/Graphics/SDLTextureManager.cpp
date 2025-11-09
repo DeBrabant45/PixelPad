@@ -7,7 +7,8 @@ namespace PixelPad::Infrastructure
 {
 	SDLTextureManager::SDLTextureManager(SDLRenderer& renderer, const IPathProvider& pathProvider) :
 		m_renderer(renderer),
-		m_cache(),
+		m_pathTextureCache(),
+		m_ColorTextureCache(),
 		m_defaultTexture(nullptr),
 		m_pathProvider(pathProvider)
 	{
@@ -25,8 +26,8 @@ namespace PixelPad::Infrastructure
 			return m_defaultTexture;
 		}
 
-		auto it = m_cache.find(assetPathStr);
-		if (it != m_cache.end())
+		auto it = m_pathTextureCache.find(assetPathStr);
+		if (it != m_pathTextureCache.end())
 		{
 			if (auto existingTexture = it->second.lock())
 				return existingTexture;
@@ -40,7 +41,25 @@ namespace PixelPad::Infrastructure
 		}
 
 		auto sharedTexture = std::make_shared<SDLTexture>(newTexture, newTexture->w, newTexture->h);
-		m_cache[assetPathStr] = sharedTexture;
+		m_pathTextureCache[assetPathStr] = sharedTexture;
+
+		return sharedTexture;
+	}
+
+	std::shared_ptr<PixelPad::Application::ITexture> SDLTextureManager::LoadTexture(PixelPad::Core::Color color)
+	{
+		const int DEFAULT_SIZE = 32;
+		auto key = color.ToRGBA();
+		auto it = m_ColorTextureCache.find(key);
+		if (it != m_ColorTextureCache.end())
+		{
+			if (auto existingTexture = it->second.lock())
+				return existingTexture;
+		}
+
+		auto newTexture = m_renderer.CreateSDLTexture(DEFAULT_SIZE, DEFAULT_SIZE, color);
+		auto sharedTexture = std::make_shared<SDLTexture>(newTexture, newTexture->w, newTexture->h);
+		m_ColorTextureCache[key] = sharedTexture;
 
 		return sharedTexture;
 	}
@@ -54,7 +73,7 @@ namespace PixelPad::Infrastructure
 		{
 			std::cerr << "Warning: Missing asset file not found: " << assetPathStr << std::endl;
 			const int DEFAULT_SIZE = 32;
-			SDL_Texture* pinkBoxTexture = m_renderer.CreateDefaultTexture(DEFAULT_SIZE, DEFAULT_SIZE);
+			SDL_Texture* pinkBoxTexture = m_renderer.CreateSDLTexture(DEFAULT_SIZE, DEFAULT_SIZE, PixelPad::Core::Color(255, 0, 255, 255));
 			return std::make_shared<SDLTexture>(pinkBoxTexture, pinkBoxTexture->w, pinkBoxTexture->h);
 		}
 

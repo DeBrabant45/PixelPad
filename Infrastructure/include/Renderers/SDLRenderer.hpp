@@ -14,6 +14,7 @@ struct SDL_Texture;
 namespace PixelPad::Core
 {
 	class Canvas;
+	struct Color;
 }
 
 namespace PixelPad::Application
@@ -36,7 +37,7 @@ namespace PixelPad::Infrastructure
 		void Render(PixelPad::Application::ISprite* sprite) override;
 		void Present() override;
 		SDL_Texture* CreateSDLTexture(const std::string& filePath);
-		SDL_Texture* CreateDefaultTexture(int width, int height);
+		SDL_Texture* CreateSDLTexture(int width, int height, const PixelPad::Core::Color& color);
 
 	private:
 		void CreateCanvasTexture(int width, int height);

@@ -4,6 +4,7 @@
 #include "Graphics/UIButton.hpp"
 #include "Graphics/Factories/ISpriteFactory.hpp"
 #include "Buses/EventBus.hpp"
+#include "Tools/Toolbox.hpp"
 
 #include <array>
 #include <memory>
@@ -26,6 +27,6 @@ namespace PixelPad::Infrastructure
 
 	private:
 		PixelPad::Application::ISpriteFactory& m_spriteFactory;
-		std::vector<std::unique_ptr<PixelPad::Infrastructure::UIButton>> m_buttons;
+		std::vector<std::unique_ptr<PixelPad::Infrastructure::UIButton<PixelPad::Core::ToolType>>> m_buttons;
 	};
 }

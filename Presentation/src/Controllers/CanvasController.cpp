@@ -1,6 +1,7 @@
 #include "Controllers/CanvasController.hpp"
 #include "Events/MouseButtonEvent.hpp"
 #include "Events/ToolTypeChangedEvent.hpp"
+#include "Events/ColorChangedEvent.hpp"
 
 namespace PixelPad::Presentation
 {
@@ -32,6 +33,12 @@ namespace PixelPad::Presentation
 			{
 				OnToolTypeChange(evt);
 			});
+
+		m_toolColorChangeEventToken = m_eventBus.Subscribe<PixelPad::Application::ColorChangedEvent>(
+			[this](const PixelPad::Application::ColorChangedEvent& evt)
+			{
+				OnColorChange(evt);
+			});
 	}
 
 	void CanvasController::OnDraw(const PixelPad::Application::MouseButtonEvent& mouseButtonEvent)
@@ -41,7 +48,12 @@ namespace PixelPad::Presentation
 
 	void CanvasController::OnToolTypeChange(const PixelPad::Application::ToolTypeChangedEvent& toolTypeChangedEvent)
 	{
-		m_drawService.SelectTool(toolTypeChangedEvent.NewTool);
+		m_drawService.SetTool(toolTypeChangedEvent.NewTool);
+	}
+
+	void CanvasController::OnColorChange(const PixelPad::Application::ColorChangedEvent& colorChangedEvent)
+	{
+		m_drawService.SetColor(colorChangedEvent.NewColor);
 	}
 
 	Presentation::CanvasController::~CanvasController()

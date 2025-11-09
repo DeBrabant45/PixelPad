@@ -16,7 +16,6 @@ add_library(${PIXEL_PAD_INFRASTRUCTURE_TARGET_NAME}
     src/Graphics/SDLTexture.cpp
     include/Graphics/SDLTexture.hpp
 
-    src/Graphics/UIButton.cpp
     include/Graphics/UIButton.hpp
 
     src/Graphics/UIRoot.cpp
@@ -24,6 +23,9 @@ add_library(${PIXEL_PAD_INFRASTRUCTURE_TARGET_NAME}
 
     src/Graphics/UIToolsPanel.cpp
     include/Graphics/UIToolsPanel.hpp
+
+    src/Graphics/UIColorPickerPanel.cpp
+    include/Graphics/UIColorPickerPanel.hpp
 
     src/Graphics/SDLTextureManager.cpp
     include/Graphics/SDLTextureManager.hpp

@@ -2,6 +2,7 @@
 #include "Graphics/ISprite.hpp"
 #include "Graphics/IButtonSprite.hpp"
 #include "Graphics/ButtonSprite.hpp"
+#include "Graphics/Color.hpp"
 
 namespace PixelPad::Application
 {
@@ -15,6 +16,19 @@ namespace PixelPad::Application
 	{
 		auto texture = m_textureManager.LoadTexture(path);
 		return std::make_unique<Sprite>(transform, texture);
+	}
+
+	std::unique_ptr<IButtonSprite> SpriteFactory::CreateButtonSprite(
+		const PixelPad::Core::Color& color, 
+		const PixelPad::Core::Transform& transform)
+	{
+		auto buttonSpriteTexture = PixelPad::Application::ButtonSpriteTexture
+		{
+			m_textureManager.LoadTexture(color),
+			m_textureManager.LoadTexture(color),
+			m_textureManager.LoadTexture(color)
+		};
+		return std::make_unique<ButtonSprite>(transform, buttonSpriteTexture);
 	}
 
 	std::unique_ptr<IButtonSprite> SpriteFactory::CreateButtonSprite(

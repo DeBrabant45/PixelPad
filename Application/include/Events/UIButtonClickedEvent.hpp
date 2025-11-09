@@ -1,11 +1,17 @@
 #pragma once
 
-#include "Graphics/IUIButton.hpp"
-
 namespace PixelPad::Application
 {
+	template<typename T>
 	struct UIButtonClickedEvent
 	{
-		PixelPad::Application::ClickResult ClickResult;
+		T Value;
+
+		UIButtonClickedEvent() = default;
+
+		explicit UIButtonClickedEvent(const T& value)
+		{
+			Value = value;
+		}
 	};
 }
