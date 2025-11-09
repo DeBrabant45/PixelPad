@@ -19,7 +19,6 @@ namespace PixelPad::Application
 		std::cout << "Size of DrawService: " << sizeof(*this) << std::endl; // 40
 	}
 
-	// ToDo: Add unit tests
 	void DrawService::SetTool(const PixelPad::Core::ToolType& toolType)
 	{
 		if (m_currentTool)
@@ -30,13 +29,11 @@ namespace PixelPad::Application
 		m_currentTool = &m_toolbox.GetTool(toolType);
 	}
 
-	// ToDo: Add unit tests
 	void DrawService::SetColor(const PixelPad::Core::Color& color)
 	{
 		m_currentColor = color.ToRGBA();
 	}
 
-	// ToDo: Add unit tests
 	void DrawService::ProcessDrawInput(const PixelPad::Application::MouseButtonEvent& mouseButtonEvent, CanvasViewport& canvasViewport)
 	{
 		auto [localX, localY] = canvasViewport.ToLocal(mouseButtonEvent.X, mouseButtonEvent.Y);

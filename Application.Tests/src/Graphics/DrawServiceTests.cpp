@@ -1,7 +1,10 @@
 #include <gtest/gtest.h>
 #include "Graphics/DrawService.hpp"
 #include "Graphics/canvas.hpp"
+#include "Graphics/CanvasViewport.hpp"
 #include "Tools/Toolbox.hpp"
+#include "Enums/MouseButton.hpp"
+#include "Events/MouseButtonEvent.hpp"
 
 namespace PixelPad::Tests::Application
 {
@@ -192,5 +195,21 @@ namespace PixelPad::Tests::Application
         drawService.LoadCanvasState();
 
         EXPECT_EQ(canvas.GetPixel(2, 2), 0);
+    }
+
+    TEST(DrawServiceTests, ProcessDrawInput_ShouldDrawCorrectColorWithSelectedTool_WhenCalled)
+    {
+        PixelPad::Core::Canvas canvas{ 5, 5, 0 };
+        PixelPad::Core::Color color(0, 255, 0, 255);
+        PixelPad::Application::Toolbox toolbox{ canvas };
+        PixelPad::Application::CanvasViewport viewport{ 5, 5, 0, 0 };
+        PixelPad::Application::DrawService drawService{ canvas, toolbox };
+        PixelPad::Application::MouseButtonEvent mouseEvent(2, 2, true, PixelPad::Application::MouseButton::Left);
+
+        drawService.SetColor(color);
+        drawService.SetTool(PixelPad::Core::ToolType::Pencil);
+        drawService.ProcessDrawInput(mouseEvent, viewport);
+
+        EXPECT_EQ(canvas.GetPixel(mouseEvent.X, mouseEvent.Y), color.ToRGBA());
     }
 }
