@@ -6,12 +6,7 @@ int main()
 {
     try
     {
-        std::cout << "Starting PixelPad..." << std::endl;
-
-        // Construct your application
         PixelPad::Presentation::PixelPadApplication entryPoint;
-
-        std::cout << "Running PixelPad..." << std::endl;
         entryPoint.Run();
     }
     catch (const std::bad_alloc& e)
