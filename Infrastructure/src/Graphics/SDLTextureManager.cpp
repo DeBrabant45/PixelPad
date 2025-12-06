@@ -12,9 +12,7 @@ namespace PixelPad::Infrastructure
 		m_defaultTexture(nullptr),
 		m_pathProvider(pathProvider)
 	{
-		std::cout << "SDLTextureManager: loading default texture..." << std::endl;
-		//m_defaultTexture = LoadDefaultTexture();
-		std::cout << "SDLTextureManager: default texture loaded successfully" << std::endl;
+		m_defaultTexture = LoadDefaultTexture();
 	}
 
 	std::shared_ptr<PixelPad::Application::ITexture> SDLTextureManager::LoadTexture(const std::string& path)
@@ -68,18 +66,8 @@ namespace PixelPad::Infrastructure
 
 	std::shared_ptr<PixelPad::Application::ITexture> SDLTextureManager::LoadDefaultTexture()
 	{
-		auto assetPath = m_pathProvider.GetAssetsPath() / m_missingTextureKey;
-		std::string assetPathStr = assetPath.string();
-
-		if (!std::filesystem::exists(assetPath))
-		{
-			std::cerr << "Warning: Missing asset file not found: " << assetPathStr << std::endl;
-			const int DEFAULT_SIZE = 32;
-			SDL_Texture* pinkBoxTexture = m_renderer.CreateSDLTexture(DEFAULT_SIZE, DEFAULT_SIZE, PixelPad::Core::Color(255, 0, 255, 255));
-			return std::make_shared<SDLTexture>(pinkBoxTexture, pinkBoxTexture->w, pinkBoxTexture->h);
-		}
-
-		auto defaultTexture = m_renderer.CreateSDLTexture(assetPathStr);
-		return std::make_shared<SDLTexture>(defaultTexture, defaultTexture->w, defaultTexture->h);
+		const int DEFAULT_SIZE = 32;
+		SDL_Texture* pinkBoxTexture = m_renderer.CreateSDLTexture(DEFAULT_SIZE, DEFAULT_SIZE, PixelPad::Core::Color(255, 0, 255, 255));
+		return std::make_shared<SDLTexture>(pinkBoxTexture, pinkBoxTexture->w, pinkBoxTexture->h);
 	}
 }
