@@ -26,6 +26,5 @@ namespace PixelPad::Infrastructure
 		std::unordered_map<uint32_t, std::weak_ptr<PixelPad::Application::ITexture>> m_ColorTextureCache;
 		std::shared_ptr<PixelPad::Application::ITexture> m_defaultTexture;
 		const IPathProvider& m_pathProvider;
-		const std::string m_missingTextureKey = "--missing--.bmp";
 	};
 }

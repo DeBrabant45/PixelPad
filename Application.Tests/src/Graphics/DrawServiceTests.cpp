@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 #include "Graphics/DrawService.hpp"
-#include "Graphics/canvas.hpp"
+#include "Graphics/Canvas.hpp"
 #include "Graphics/CanvasViewport.hpp"
 #include "Tools/Toolbox.hpp"
 #include "Enums/MouseButton.hpp"

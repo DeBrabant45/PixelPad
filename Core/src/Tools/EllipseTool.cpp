@@ -1,6 +1,8 @@
 #include "Tools/EllipseTool.hpp"
 #include "Tools/DrawCommand.hpp"
 
+#include <cmath>
+
 namespace PixelPad::Core
 {
 	EllipseTool::EllipseTool(Canvas& canvas) :
@@ -33,8 +35,8 @@ namespace PixelPad::Core
 		{
 			auto centerX = (m_startXCoordinate + command.X) / 2;
 			auto centerY = (m_startYCoordinate + command.Y) / 2;
-			auto radiusX = abs(command.X - m_startXCoordinate) / 2;
-			auto radiusY = abs(command.Y - m_startYCoordinate) / 2;
+			auto radiusX = std::abs(command.X - m_startXCoordinate) / 2.0;
+			auto radiusY = std::abs(command.Y - m_startYCoordinate) / 2.0;
 			m_canvas.DrawEllipse(centerX, centerY, radiusX, radiusY, command.Color);
 			Reset();
 		}

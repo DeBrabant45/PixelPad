@@ -9,6 +9,7 @@
 
 #include <iostream>
 #include <SDL3/SDL.h>
+#include <cstring>
 
 namespace PixelPad::Infrastructure
 {
@@ -156,7 +157,7 @@ namespace PixelPad::Infrastructure
 
         for (int y = 0; y < height; ++y)
         {
-            std::memcpy(
+            memcpy(
                 static_cast<uint8_t*>(texturePixels) + y * pitch,
                 &pixels[y * width],
                 width * sizeof(int)

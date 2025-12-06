@@ -5,7 +5,7 @@
 #include "Graphics/ISprite.hpp"
 #include "Graphics/SDLTexture.hpp"
 #include "Renderers/IRenderer.hpp"
-#include "Graphics/Factories/ISpritefactory.hpp"
+#include "Graphics/Factories/ISpriteFactory.hpp"
 #include "Geometries/Transform.hpp"
 #include "Graphics/UIColorPickerPanel.hpp"
 

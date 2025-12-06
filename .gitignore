@@ -1,6 +1,8 @@
 # Ignore build directories
 /build/
+/build-linux/
 /vcpkg/
+/vcpkg_installed/
 /CMakeCache.txt
 /CMakeFiles/
 /*.vs/

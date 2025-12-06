@@ -5,10 +5,11 @@
     "minor": 20,
     "patch": 0
   },
+
   "configurePresets": [
     {
       "name": "default",
-      "displayName": "Default build using vcpkg",
+      "displayName": "Default build using vcpkg (Windows)",
       "description": "Builds using Visual Studio 17 2022 and vcpkg toolchain",
       "generator": "Visual Studio 17 2022",
       "binaryDir": "${sourceDir}/build",
@@ -16,20 +17,49 @@
         "CMAKE_EXPORT_COMPILE_COMMANDS": "YES",
         "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/vcpkg/scripts/buildsystems/vcpkg.cmake"
       }
+    },
+
+    {
+      "name": "linux",
+      "displayName": "Linux build using vcpkg",
+      "description": "Builds using Unix Makefiles and vcpkg toolchain",
+      "generator": "Unix Makefiles",
+      "binaryDir": "${sourceDir}/build-linux",
+      "cacheVariables": {
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "YES",
+        "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/vcpkg/scripts/buildsystems/vcpkg.cmake",
+        "VCPKG_TARGET_TRIPLET": "x64-linux",
+        "CMAKE_BUILD_TYPE": "Debug"
+      }
     }
   ],
+
   "buildPresets": [
     {
       "name": "default",
       "configurePreset": "default",
-      "description": "Build the default preset",
+      "description": "Build the default Windows preset",
+      "jobs": 4
+    },
+    {
+      "name": "linux",
+      "configurePreset": "linux",
+      "description": "Build the Linux preset",
       "jobs": 4
     }
   ],
+
   "testPresets": [
     {
       "name": "default",
       "configurePreset": "default",
+      "output": {
+        "outputOnFailure": true
+      }
+    },
+    {
+      "name": "linux",
+      "configurePreset": "linux",
       "output": {
         "outputOnFailure": true
       }

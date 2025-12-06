@@ -37,6 +37,12 @@ add_library(${PIXEL_PAD_INFRASTRUCTURE_TARGET_NAME}
 
 find_package(SDL3 CONFIG REQUIRED)
 
+if(TARGET SDL3::SDL3-shared)
+    set(SDL3_TARGET SDL3::SDL3-shared)
+else()
+    set(SDL3_TARGET SDL3::SDL3)
+endif()
+
 target_include_directories(${PIXEL_PAD_INFRASTRUCTURE_TARGET_NAME}
     PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/include
@@ -44,7 +50,7 @@ target_include_directories(${PIXEL_PAD_INFRASTRUCTURE_TARGET_NAME}
 
 target_link_libraries(${PIXEL_PAD_INFRASTRUCTURE_TARGET_NAME}
     PRIVATE  
-        SDL3::SDL3-shared
+        ${SDL3_TARGET}
         ${PIXEL_PAD_CORE_TARGET_NAME}
         ${PIXEL_PAD_APPLICATION_TARGET_NAME}
 )
