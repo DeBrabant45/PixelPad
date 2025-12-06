@@ -36,7 +36,7 @@ namespace PixelPad::Infrastructure
 			return;
 		}
 
-		if (SDL_SetWindowResizable(m_window, resizable) != resizable)
+		if (!SDL_SetWindowResizable(m_window, resizable) != resizable)
 		{
 			std::cerr << "SDL Window Resizable failed: " << SDL_GetError() << std::endl;
 			return;

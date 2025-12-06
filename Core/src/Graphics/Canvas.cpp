@@ -3,6 +3,7 @@
 #include <iostream>
 #include <queue>
 #include <utility>
+#include <cmath>
 
 namespace PixelPad::Core
 {

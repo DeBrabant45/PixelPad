@@ -12,6 +12,7 @@ add_executable(${PIXEL_PAD_APPLICATION_TESTS_TARGET_NAME}
 target_include_directories(${PIXEL_PAD_APPLICATION_TESTS_TARGET_NAME}
     PRIVATE
         ${CMAKE_SOURCE_DIR}/Application/include
+        ${CMAKE_SOURCE_DIR}/Core/include
 )
 
 find_package(GTest CONFIG REQUIRED)

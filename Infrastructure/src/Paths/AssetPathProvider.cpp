@@ -1,6 +1,7 @@
 #include "Paths/AssetPathProvider.hpp"
 
 #include <iostream>
+#include <vector>
 
 namespace PixelPad::Infrastructure
 {

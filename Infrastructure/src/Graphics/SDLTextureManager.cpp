@@ -12,7 +12,9 @@ namespace PixelPad::Infrastructure
 		m_defaultTexture(nullptr),
 		m_pathProvider(pathProvider)
 	{
-		m_defaultTexture = LoadDefaultTexture();
+		std::cout << "SDLTextureManager: loading default texture..." << std::endl;
+		//m_defaultTexture = LoadDefaultTexture();
+		std::cout << "SDLTextureManager: default texture loaded successfully" << std::endl;
 	}
 
 	std::shared_ptr<PixelPad::Application::ITexture> SDLTextureManager::LoadTexture(const std::string& path)
