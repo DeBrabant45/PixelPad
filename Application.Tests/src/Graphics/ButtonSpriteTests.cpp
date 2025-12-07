@@ -29,7 +29,6 @@ namespace PixelPad::Tests::Application
         {
             std::make_shared<TestTexture>(10, 10), // UnClicked
             std::make_shared<TestTexture>(11, 11), // Clicked
-            std::make_shared<TestTexture>(12, 12)  // Hover
         };
         auto sut = PixelPad::Application::ButtonSprite(PixelPad::Core::Transform(0, 0, 0, 10, 10), buttonSpriteTexture);
 
@@ -44,27 +43,11 @@ namespace PixelPad::Tests::Application
         {
             std::make_shared<TestTexture>(10, 10), // UnClicked
             std::make_shared<TestTexture>(11, 11), // Clicked
-            std::make_shared<TestTexture>(12, 12)  // Hover
         };
         auto sut = PixelPad::Application::ButtonSprite(PixelPad::Core::Transform(0, 0, 0, 10, 10), buttonSpriteTexture);
 
         sut.SetState(PixelPad::Application::ButtonState::Clicked);
 
         EXPECT_EQ(sut.GetTexture(), buttonSpriteTexture.Clicked);
-    }
-
-    TEST(ButtonSprite, SetState_ShouldSetTextureToHover_WhenPassingHoverState)
-    {
-        auto buttonSpriteTexture = PixelPad::Application::ButtonSpriteTexture
-        {
-            std::make_shared<TestTexture>(10, 10), // UnClicked
-            std::make_shared<TestTexture>(11, 11), // Clicked
-            std::make_shared<TestTexture>(12, 12)  // Hover
-        };
-        auto sut = PixelPad::Application::ButtonSprite(PixelPad::Core::Transform(0, 0, 0, 10, 10), buttonSpriteTexture);
-
-        sut.SetState(PixelPad::Application::ButtonState::Hover);
-
-        EXPECT_EQ(sut.GetTexture(), buttonSpriteTexture.Hover);
     }
 }

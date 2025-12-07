@@ -26,7 +26,6 @@ namespace PixelPad::Application
 		{
 			m_textureManager.LoadTexture(color),
 			m_textureManager.LoadTexture(color),
-			m_textureManager.LoadTexture(color)
 		};
 		return std::make_unique<ButtonSprite>(transform, buttonSpriteTexture);
 	}
@@ -34,14 +33,12 @@ namespace PixelPad::Application
 	std::unique_ptr<IButtonSprite> SpriteFactory::CreateButtonSprite(
 		const std::string& unclickedPath, 
 		const std::string& clickedPath, 
-		const std::string& hoverPath, 
 		const PixelPad::Core::Transform& transform)
 	{
 		auto buttonSpriteTexture = PixelPad::Application::ButtonSpriteTexture
 		{
 			m_textureManager.LoadTexture(unclickedPath),
 			m_textureManager.LoadTexture(clickedPath),
-			m_textureManager.LoadTexture(hoverPath)
 		};
 		return std::make_unique<ButtonSprite>(transform, buttonSpriteTexture);
 	}

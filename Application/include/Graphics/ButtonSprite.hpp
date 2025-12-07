@@ -11,7 +11,6 @@ namespace PixelPad::Application
 	{
 		std::shared_ptr<ITexture> UnClicked;
 		std::shared_ptr<ITexture> Clicked;
-		std::shared_ptr<ITexture> Hover;
 	};
 
 	class ButtonSprite : public Sprite, public IButtonSprite

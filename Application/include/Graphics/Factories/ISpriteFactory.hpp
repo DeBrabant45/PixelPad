@@ -29,7 +29,6 @@ namespace PixelPad::Application
 		virtual std::unique_ptr<IButtonSprite> CreateButtonSprite(
 			const std::string& unclickedPath,
 			const std::string& clickedPath,
-			const std::string& hoverPath,
 			const PixelPad::Core::Transform& transform) = 0;
 	};
 }
