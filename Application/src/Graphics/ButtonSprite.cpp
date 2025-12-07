@@ -21,9 +21,6 @@ namespace PixelPad::Application
 		case PixelPad::Application::ButtonState::Clicked:
 			Texture = m_textures.Clicked;
 			break;
-		case PixelPad::Application::ButtonState::Hover:
-			Texture = m_textures.Hover;
-			break;
 		default:
 			break;
 		}

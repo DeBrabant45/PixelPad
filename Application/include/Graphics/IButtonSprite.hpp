@@ -8,7 +8,6 @@ namespace PixelPad::Application
 	{
 		UnClicked = 0,
 		Clicked = 1,
-		Hover = 2
 	};
 
 	class IButtonSprite : public virtual ISprite

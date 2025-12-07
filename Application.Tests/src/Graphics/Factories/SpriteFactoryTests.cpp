@@ -54,7 +54,7 @@ namespace PixelPad::Tests::Application
         PixelPad::Application::SpriteFactory spriteFactory{ testTextureManager };
         PixelPad::Core::Transform transform{ 20, 30, 1, 200, 200 };
 
-        auto buttonSprite = spriteFactory.CreateButtonSprite("unClickPath","clickedPath", "hoverPath", transform);
+        auto buttonSprite = spriteFactory.CreateButtonSprite("unClickPath","clickedPath", transform);
         auto texture = buttonSprite->GetTexture();
 
         ASSERT_NE(buttonSprite, nullptr);

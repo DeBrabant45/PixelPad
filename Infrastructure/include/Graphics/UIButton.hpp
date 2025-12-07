@@ -13,6 +13,7 @@
 #include <iostream>
 #include <memory>
 #include <string>
+#include <cstdint>
 
 namespace PixelPad::Application
 {
@@ -33,7 +34,9 @@ namespace PixelPad::Infrastructure
             : m_transform(std::move(transform)),
             m_sprite(std::move(sprite)),
             m_eventBus(eventBus),
-            m_clickEventValue(clickEventValue)
+            m_clickEventValue(clickEventValue),
+            m_id(NextId()),
+            m_isActive(false)
         {
             RegisterEventHandlers();
         }
@@ -54,9 +57,28 @@ namespace PixelPad::Infrastructure
                 clickY >= m_transform.Y && clickY <= m_transform.Y + m_transform.Height)
             {
                 m_eventBus.Publish(
+                    PixelPad::Application::UIButtonClickedEvent<PixelPad::Application::ClickResult>(
+                        PixelPad::Application::ClickResult({ m_id }))
+                );
+
+                m_eventBus.Publish(
                     PixelPad::Application::UIButtonClickedEvent<TClickEventValue>(m_clickEventValue));
             }
         }
+
+        void SetActive(bool active) override
+        {
+            if (m_isActive == active)
+                return;
+
+            m_isActive = active;
+            m_sprite->SetState(active 
+                ? PixelPad::Application::ButtonState::Clicked : PixelPad::Application::ButtonState::UnClicked);
+        }
+
+        bool IsActive() const { return m_isActive; }
+
+        std::uint32_t GetId() const override { return m_id; }
 
     private:
         void RegisterEventHandlers()
@@ -76,11 +98,19 @@ namespace PixelPad::Infrastructure
             m_eventBus.Unsubscribe<PixelPad::Application::MouseButtonEvent>(m_mouseEventToken);
         }
 
+        static std::uint32_t NextId()
+        {
+            static std::uint32_t counter = 0;
+            return counter++;
+        }
+
     private:
         PixelPad::Core::Transform m_transform;
         std::unique_ptr<PixelPad::Application::IButtonSprite> m_sprite;
         PixelPad::Infrastructure::EventBus& m_eventBus;
         TClickEventValue m_clickEventValue;
         PixelPad::Infrastructure::EventBus::SubscriptionToken m_mouseEventToken;
+        std::uint32_t m_id;
+        bool m_isActive;
     };
 }
