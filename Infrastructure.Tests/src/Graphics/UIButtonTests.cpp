@@ -60,4 +60,36 @@ namespace PixelPad::Tests::Infrastructure
 
         EXPECT_FALSE(eventReceived);
     }
+
+    TEST(UIButtonTests, GetId_ShouldReturnUniqueId)
+    {
+        PixelPad::Infrastructure::EventBus eventBus;
+        PixelPad::Core::Transform transform{ 0, 0, 1, 10, 10 };
+        auto sprite = std::make_unique<DummyButtonSprite>();
+
+        PixelPad::Infrastructure::UIButton<int> button1(transform, std::move(sprite), eventBus, 1);
+        auto id1 = button1.GetId();
+
+        auto sprite2 = std::make_unique<DummyButtonSprite>();
+        PixelPad::Infrastructure::UIButton<int> button2(transform, std::move(sprite2), eventBus, 2);
+        auto id2 = button2.GetId();
+
+        EXPECT_NE(id1, id2); 
+    }
+
+    TEST(UIButtonTests, SetActive_ShouldUpdateState)
+    {
+        PixelPad::Infrastructure::EventBus eventBus;
+        PixelPad::Core::Transform transform{ 0, 0, 1, 10, 10 };
+        auto sprite = std::make_unique<DummyButtonSprite>();
+        PixelPad::Infrastructure::UIButton<int> button(transform, std::move(sprite), eventBus, 42);
+
+        EXPECT_FALSE(button.IsActive());
+
+        button.SetActive(true);
+        EXPECT_TRUE(button.IsActive());
+
+        button.SetActive(false);
+        EXPECT_FALSE(button.IsActive());
+    }
 }
