@@ -18,6 +18,12 @@ namespace PixelPad::Application
 		return std::make_unique<Sprite>(transform, texture);
 	}
 
+	std::unique_ptr<ISprite> SpriteFactory::CreateSprite(const PixelPad::Core::Color& color, const PixelPad::Core::Transform& transform)
+	{
+		auto texture = m_textureManager.LoadTexture(color);	
+		return std::make_unique<Sprite>(transform, texture);
+	}
+
 	std::unique_ptr<IButtonSprite> SpriteFactory::CreateButtonSprite(
 		const PixelPad::Core::Color& color, 
 		const PixelPad::Core::Transform& transform)

@@ -22,6 +22,10 @@ namespace PixelPad::Application
 			const std::string& path,
 			const PixelPad::Core::Transform& transform) = 0;
 
+		virtual std::unique_ptr<ISprite> CreateSprite(
+			const PixelPad::Core::Color& color,
+			const PixelPad::Core::Transform& transform) = 0;
+
 		virtual std::unique_ptr<IButtonSprite> CreateButtonSprite(
 			const PixelPad::Core::Color& color,
 			const PixelPad::Core::Transform& transform) = 0;

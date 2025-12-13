@@ -28,7 +28,7 @@ namespace PixelPad::Tests::Application
         }
     };
 
-    TEST(SpriteFactoryTests, CreateSprite_ShouldReturnSprite_WhenCalled)
+    TEST(SpriteFactoryTests, CreateSprite_ShouldReturnSprite_WhenPathAndTransformArePassed)
     {
         TestTextureManager testTextureManager;
         PixelPad::Application::SpriteFactory spriteFactory{ testTextureManager };
@@ -38,6 +38,27 @@ namespace PixelPad::Tests::Application
         auto texture = sprite->GetTexture();
 
         ASSERT_NE(sprite, nullptr); 
+        EXPECT_EQ(sprite->GetWidth(), transform.Width);
+        EXPECT_EQ(sprite->GetHeight(), transform.Height);
+        EXPECT_EQ(sprite->GetXCoordinate(), transform.X);
+        EXPECT_EQ(sprite->GetYCoordinate(), transform.Y);
+        EXPECT_EQ(sprite->GetZCoordinate(), transform.Z);
+        ASSERT_NE(texture, nullptr);
+        EXPECT_EQ(texture->GetWidth(), 100);
+        EXPECT_EQ(texture->GetHeight(), 50);
+    }
+
+    TEST(SpriteFactoryTests, CreateSprite_ShouldReturnSprite_WhenColorAndTransformArePassed)
+    {
+        TestTextureManager testTextureManager;
+        PixelPad::Application::SpriteFactory spriteFactory{ testTextureManager };
+        PixelPad::Core::Transform transform{ 20, 30, 1, 200, 200 };
+        PixelPad::Core::Color color(20, 21, 22, 23);
+
+        auto sprite = spriteFactory.CreateSprite(color, transform);
+        auto texture = sprite->GetTexture();
+
+        ASSERT_NE(sprite, nullptr);
         EXPECT_EQ(sprite->GetWidth(), transform.Width);
         EXPECT_EQ(sprite->GetHeight(), transform.Height);
         EXPECT_EQ(sprite->GetXCoordinate(), transform.X);
