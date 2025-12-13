@@ -33,6 +33,9 @@ add_library(${PIXEL_PAD_INFRASTRUCTURE_TARGET_NAME}
     include/Paths/IPathProvider.hpp
     include/Paths/AssetPathProvider.hpp
     src/Paths/AssetPathProvider.cpp
+
+    src/Graphics/UIComponent.cpp
+    include/Graphics/UIComponent.hpp
 )
 
 find_package(SDL3 CONFIG REQUIRED)

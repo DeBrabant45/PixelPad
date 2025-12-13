@@ -4,6 +4,7 @@ add_executable(${PIXEL_PAD_INFRASTRUCTURE_TESTS_TARGET_NAME}
     src/Buses/EventBusTests.cpp
     src/Paths/AssetPathProviderTests.cpp
     src/Graphics/UIButtonTests.cpp
+    src/Graphics/UIComponentTests.cpp
 )
 
 target_include_directories(${PIXEL_PAD_INFRASTRUCTURE_TESTS_TARGET_NAME}
