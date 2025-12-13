@@ -46,6 +46,8 @@ add_library(${PIXEL_PAD_APPLICATION_TARGET_NAME}
 
     src/Tools/Toolbox.cpp
     include/Tools/Toolbox.hpp
+
+    include/Graphics/IUIComponent.hpp
 )
 
 target_include_directories(${PIXEL_PAD_APPLICATION_TARGET_NAME}

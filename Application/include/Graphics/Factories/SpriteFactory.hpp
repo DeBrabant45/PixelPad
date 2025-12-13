@@ -9,10 +9,18 @@ namespace PixelPad::Application
 	{
 	public:
 		SpriteFactory(ITextureManager& textureManager);
-		std::unique_ptr<ISprite> CreateSprite(const std::string& path, const PixelPad::Core::Transform& transform) override;
+		std::unique_ptr<ISprite> CreateSprite(
+			const std::string& path, 
+			const PixelPad::Core::Transform& transform) override;
+
+		std::unique_ptr<ISprite> CreateSprite(
+			const PixelPad::Core::Color& color,
+			const PixelPad::Core::Transform& transform) override;
+
 		std::unique_ptr<IButtonSprite> CreateButtonSprite(
 			const PixelPad::Core::Color& color, 
 			const PixelPad::Core::Transform& transform) override;
+
 		std::unique_ptr<IButtonSprite> CreateButtonSprite(
 			const std::string& unclickedPath, 
 			const std::string& clickedPath, 

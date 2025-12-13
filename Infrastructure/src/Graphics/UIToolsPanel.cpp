@@ -21,7 +21,6 @@ namespace PixelPad::Infrastructure
                     auto buttonId = evt.Value.ButtonId;
                     SetActiveButton(buttonId);
                 });
-
     }
 
     UIToolsPanel::~UIToolsPanel()
