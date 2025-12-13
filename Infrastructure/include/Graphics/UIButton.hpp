@@ -15,11 +15,6 @@
 #include <string>
 #include <cstdint>
 
-namespace PixelPad::Application
-{
-	class IRenderer;
-}
-
 namespace PixelPad::Infrastructure
 {
     template<typename TClickEventValue>
