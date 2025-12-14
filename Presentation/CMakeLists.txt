@@ -36,3 +36,11 @@ add_custom_command(TARGET ${PIXEL_PAD_PRESENTATION_TARGET_NAME} POST_BUILD
         $<TARGET_FILE_DIR:${PIXEL_PAD_PRESENTATION_TARGET_NAME}>/Assets
     COMMENT "Copying Assets folder to output directory"
 )
+
+# Used for Window Releases
+#if(WIN32)
+#    set_target_properties(${PIXEL_PAD_PRESENTATION_TARGET_NAME} PROPERTIES
+#        WIN32_EXECUTABLE TRUE
+#    )
+#    target_link_options(${PIXEL_PAD_PRESENTATION_TARGET_NAME} PRIVATE "/ENTRY:mainCRTStartup")
+#endif()

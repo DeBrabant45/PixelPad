@@ -1,16 +1,14 @@
 #include "PixelPadApplication.hpp"
 #include "Events/WindowCloseEvent.hpp"
 
-#include <iostream>
-
 namespace PixelPad::Presentation
 {
     PixelPadApplication::PixelPadApplication() :
         m_eventBus(),
-        m_window(800, 600, "PixelPad", false),
+        m_assetPathProvider(),
+        m_window(800, 600, "PixelPad", false, m_assetPathProvider),
         m_renderer(m_window),
         m_input(m_eventBus),
-        m_assetPathProvider(),
         m_textureManager(m_renderer, m_assetPathProvider),
         m_spriteFactory(m_textureManager),
         m_uiRoot(m_spriteFactory, m_eventBus),
@@ -23,7 +21,7 @@ namespace PixelPad::Presentation
         m_rendererController(m_renderer, m_canvas, m_uiRoot, m_canvasViewport),
         m_uiController(m_uiRoot, m_eventBus)
     {
-        std::cout << "Size of PixelPadApplication: " << sizeof(*this) << " bytes" << std::endl; // 392
+
     }
 
     PixelPadApplication::~PixelPadApplication()
