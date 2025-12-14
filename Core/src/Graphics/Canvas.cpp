@@ -13,7 +13,7 @@ namespace PixelPad::Core
 		m_backgroundColor{ backgroundColor },
 		m_canvas(width * height, backgroundColor) 
 	{
-		std::cout << "Size of Canvas: " << sizeof(*this) << std::endl; // 48
+
 	}
 
 	void Canvas::Clear()
@@ -237,7 +237,6 @@ namespace PixelPad::Core
 		}
 
 		std::fill(m_canvas.begin(), m_canvas.end(), color);
-		std::cout << "Canvas filled with color: " << color << std::endl;
 	}
 
 	// Iterative 4-directional scanline flood fill.

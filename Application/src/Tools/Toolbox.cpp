@@ -7,7 +7,6 @@
 #include "Tools/RectangleTool.hpp"
 #include "Tools/EllipseTool.hpp"
 #include <stdexcept>
-#include <iostream>
 
 namespace PixelPad::Application
 {
@@ -19,8 +18,6 @@ namespace PixelPad::Application
 		m_tools.emplace(PixelPad::Core::ToolType::Eraser, std::make_unique<PixelPad::Core::EraserTool>(canvas));
 		m_tools.emplace(PixelPad::Core::ToolType::Rectangle, std::make_unique<PixelPad::Core::RectangleTool>(canvas));
 		m_tools.emplace(PixelPad::Core::ToolType::Ellipse, std::make_unique<PixelPad::Core::EllipseTool>(canvas));
-
-		std::cout << "Size of Toolbox: " << sizeof(*this) << std::endl; // 32
 	}
 
 	PixelPad::Core::ITool& Toolbox::GetTool(PixelPad::Core::ToolType toolType)

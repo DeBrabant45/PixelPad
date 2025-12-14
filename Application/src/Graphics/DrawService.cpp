@@ -5,8 +5,6 @@
 #include "Tools/DrawCommand.hpp"
 #include "Tools/ToolType.hpp"
 
-#include <iostream>
-
 namespace PixelPad::Application
 {
 	DrawService::DrawService(PixelPad::Core::Canvas& canvas, PixelPad::Application::IToolbox& toolbox) :
@@ -16,7 +14,7 @@ namespace PixelPad::Application
 		m_canvasSnapshot{ },
 		m_currentColor(0xFF000000)
 	{
-		std::cout << "Size of DrawService: " << sizeof(*this) << std::endl; // 40
+
 	}
 
 	void DrawService::SetTool(const PixelPad::Core::ToolType& toolType)
